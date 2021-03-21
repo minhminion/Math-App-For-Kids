@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
+import 'package:math_app_for_kid/utils/app_assets.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
+import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,6 +17,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  void loadRiveFile() async {
+    final bytes = await rootBundle.load(AppAssets.origin().characterRiv);
+    final file = RiveFile();
+    if (file.import(bytes)) {
+      context.provider<CharacterProvider>().setRive(file);
+      startTime();
+    }
+  }
+
   startTime() async {
     var duration = new Duration(seconds: 5);
     return new Timer(duration,
@@ -22,16 +34,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    loadRiveFile();
     super.initState();
-    context.provider<CharacterProvider>().loadRiveFile();
-    startTime();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Artboard riveArtboard =
-        context.provider<CharacterProvider>().riveArtboard;
+    final riveArtboard = context.watch<CharacterProvider>().riveArtboard;
 
     return Scaffold(
       body: Center(

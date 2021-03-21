@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/services/app/app_dialog.dart';
 import 'package:math_app_for_kid/services/app/app_loading.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
