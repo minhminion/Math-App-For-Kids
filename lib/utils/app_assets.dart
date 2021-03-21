@@ -19,6 +19,8 @@ class AppAssets {
   String icAppIcon = 'assets/base/icons/app_icon_ad.png';
   String icEmpty = 'assets/base/icons/ic_empty.png';
 
+  String characterRiv = 'assets/base/character/astronaut.riv';
+
   ///#endregion
   ///#region VIDEOS
   /// -----------------

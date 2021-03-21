@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:math_app_for_kid/services/app/app_dialog.dart';
 import 'package:math_app_for_kid/services/app/app_loading.dart';
 import 'package:math_app_for_kid/services/app/auth_provider.dart';
+import 'package:math_app_for_kid/services/app/character_provider.dart';
 import 'package:math_app_for_kid/services/cache/cache.dart';
 import 'package:math_app_for_kid/services/cache/cache_preferences.dart';
 import 'package:math_app_for_kid/services/cache/credential.dart';
 import 'package:math_app_for_kid/services/rest_api/api_user.dart';
+import 'package:math_app_for_kid/pages/splash/splash_screen.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
 import 'package:math_app_for_kid/utils/app_theme.dart';
@@ -14,9 +17,9 @@ import 'package:provider/single_child_widget.dart';
 
 Future<void> myMain() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(MultiProvider(
-    providers: <SingleChildWidget>[
+  SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft])
+      .then((_) {
+    runApp(MultiProvider(providers: <SingleChildWidget>[
       Provider<AppRoute>(
         create: (_) => AppRoute(),
       ),
@@ -37,9 +40,11 @@ Future<void> myMain() async {
                 context.read<ApiUser>(),
                 context.read<Credential>(),
               )),
-    ],
-    child: MyApp(),
-  ));
+      ChangeNotifierProvider<CharacterProvider>(
+        create: (_) => CharacterProvider(),
+      )
+    ], child: MyApp()));
+  });
 }
 
 class MyApp extends StatefulWidget {
@@ -54,6 +59,11 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+
     // Init Page (Check User is logged)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final bool hasCredential = true;
@@ -62,9 +72,19 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final AppRoute appRoute = context.watch<AppRoute>();
     final AppTheme appTheme = context.appTheme();
+
     return MaterialApp(
       navigatorKey: appRoute.navigatorKey,
       debugShowCheckedModeBanner: false,

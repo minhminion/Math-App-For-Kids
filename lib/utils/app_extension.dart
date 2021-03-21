@@ -30,6 +30,10 @@ extension AppRouteExt on BuildContext {
   NavigatorState navigator() {
     return route().navigatorKey.currentState;
   }
+
+  T provider<T>() {
+    return Provider.of<T>(this, listen: false);
+  }
 }
 
 /// Extension for screen util

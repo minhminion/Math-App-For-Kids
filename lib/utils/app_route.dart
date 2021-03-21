@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/pages/home/home_page.dart';
+import 'package:math_app_for_kid/pages/landing/landing_page.dart';
+import 'package:math_app_for_kid/pages/splash/splash_screen.dart';
+import 'package:math_app_for_kid/widgets/r_fade_route.dart';
 import 'package:provider/provider.dart';
 
 class AppRoute {
@@ -15,6 +18,8 @@ class AppRoute {
   ///#region ROUTE NAMES
   /// -----------------
   static const String routeRoot = '/';
+  static const String routeHome = '/home';
+  static const String routeLanding = '/landing';
 
   ///#endregion
 
@@ -42,7 +47,15 @@ class AppRoute {
     switch (settings.name) {
       case routeRoot:
         return MaterialPageRoute<dynamic>(
-            settings: settings, builder: (_) => HomePage());
+            settings: settings, builder: (_) => SplashScreen());
+      case routeLanding:
+        return FadeRoute(page: LandingPage());
+      case routeHome:
+        return MaterialPageRoute<dynamic>(
+            settings: settings,
+            builder: (_) => HomePage(
+                  title: "Page 2",
+                ));
       default:
         return MaterialPageRoute<dynamic>(
             settings: settings,
