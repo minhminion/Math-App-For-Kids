@@ -83,7 +83,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: appTheme.buildThemeData(),
       initialRoute: AppRoute.routeRoot,
-      onGenerateRoute: appRoute.generateRoute,
+      onGenerateRoute: AppRoute.generateRoute,
+      onUnknownRoute: AppRoute.onUnknownRoute,
       navigatorObservers: <NavigatorObserver>[appRoute.routeObserver],
     );
   }

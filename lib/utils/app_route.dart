@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/pages/home/home_page.dart';
 import 'package:math_app_for_kid/pages/landing/landing_page.dart';
+import 'package:math_app_for_kid/pages/lesson/lesson_list_page.dart';
 import 'package:math_app_for_kid/pages/splash/splash_screen.dart';
 import 'package:math_app_for_kid/widgets/r_fade_route.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ class AppRoute {
   static const String routeRoot = '/';
   static const String routeHome = '/home';
   static const String routeLanding = '/landing';
+  static const String lessonRoute = '/lesson';
 
   ///#endregion
 
@@ -35,25 +37,39 @@ class AppRoute {
   BuildContext get appContext => navigatorKey.currentContext;
 
   // Generate route
-  Route<dynamic> generateRoute(RouteSettings settings) {
+  static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case routeRoot:
         return MaterialPageRoute<dynamic>(
-            settings: settings, builder: (_) => SplashScreen());
+          settings: settings,
+          builder: (_) => SplashScreen(),
+        );
       case routeLanding:
-        return FadeRoute(page: LandingPage());
+        return FadeRoute(
+          page: LandingPage(),
+        );
       case routeHome:
         return MaterialPageRoute<dynamic>(
-            settings: settings,
-            builder: (_) => HomePage(
-                  title: "Page 2",
-                ));
-      default:
+          settings: settings,
+          builder: (_) => HomePage(),
+        );
+      case lessonRoute:
         return MaterialPageRoute<dynamic>(
-            settings: settings,
-            builder: (_) => HomePage(
-                  title: "Page 2",
-                ));
+          settings: settings,
+          builder: (_) => LessonListPage(),
+        );
+      default:
+        return onUnknownRoute(settings);
     }
+  }
+
+  static Route<dynamic> onUnknownRoute(RouteSettings settings) {
+    return MaterialPageRoute(
+      builder: (_) => Scaffold(
+        body: Center(
+          child: Text('No route defined for ${settings.name}'),
+        ),
+      ),
+    );
   }
 }

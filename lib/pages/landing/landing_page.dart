@@ -49,7 +49,10 @@ class _LandingPageState extends State<LandingPage> {
                     onPressed: () =>
                         Navigator.pushNamed(context, AppRoute.routeHome),
                     child: Text("Start")),
-                ElevatedButton(onPressed: () => {}, child: Text("Settings"))
+                ElevatedButton(
+                    onPressed: () =>
+                        Navigator.pushNamed(context, AppRoute.lessonRoute),
+                    child: Text("Settings"))
               ],
             )
           ]),

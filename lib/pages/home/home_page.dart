@@ -5,7 +5,7 @@ import 'package:math_app_for_kid/services/app/app_loading.dart';
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
 
-  String title;
+  final String title;
 
   @override
   _HomePageState createState() => _HomePageState();
