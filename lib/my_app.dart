@@ -61,11 +61,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-    ]);
-
     // Init Page (Check User is logged)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final bool hasCredential = true;
@@ -75,10 +70,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-    ]);
     super.dispose();
   }
 

@@ -34,8 +34,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    loadRiveFile();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadRiveFile();
+    });
   }
 
   @override

@@ -7,14 +7,6 @@ import 'package:math_app_for_kid/widgets/r_fade_route.dart';
 import 'package:provider/provider.dart';
 
 class AppRoute {
-  factory AppRoute() => _instance;
-
-  AppRoute._private();
-
-  static final AppRoute _instance = AppRoute._private();
-
-  static AppRoute get I => _instance;
-
   ///#region ROUTE NAMES
   /// -----------------
   static const String routeRoot = '/';

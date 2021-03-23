@@ -20,7 +20,6 @@ Successful
  */
 
 import 'package:math_app_for_kid/models/local/token.dart';
-import 'package:math_app_for_kid/utils/app_log.dart';
 
 import 'base_response.dart';
 
@@ -36,9 +35,7 @@ class LoginResponse extends BaseResponse<Token> {
   Token jsonToData(dynamic dataJson) {
     try {
       return Token.fromJson(dataJson as Map<String, dynamic>);
-    } catch (e) {
-      logger.e('LoginResponse:jsonToData: $e');
-    }
+    } catch (e) {}
     return null;
   }
 }

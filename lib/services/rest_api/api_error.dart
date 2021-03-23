@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:math_app_for_kid/services/rest_api/api_error_type.dart';
-import 'package:math_app_for_kid/utils/app_log.dart';
 
 mixin ApiError {
   /// This function was called when trigger safeCallApi
@@ -76,9 +75,7 @@ mixin ApiError {
         errorCode = ApiErrorCode.unauthorized;
       }
       return ApiErrorType(code: errorCode, message: error.message);
-    } else {
-      logger.e(error);
-    }
+    } else {}
     return ApiErrorType();
   }
 }
