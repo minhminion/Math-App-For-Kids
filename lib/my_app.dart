@@ -8,13 +8,11 @@ import 'package:math_app_for_kid/services/cache/cache.dart';
 import 'package:math_app_for_kid/services/cache/cache_preferences.dart';
 import 'package:math_app_for_kid/services/cache/credential.dart';
 import 'package:math_app_for_kid/services/rest_api/api_user.dart';
-import 'package:math_app_for_kid/utils/app_assets.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
 import 'package:math_app_for_kid/utils/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:rive/rive.dart';
 
 Future<void> myMain() async {
   WidgetsFlutterBinding.ensureInitialized();

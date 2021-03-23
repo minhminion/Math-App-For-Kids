@@ -12,12 +12,16 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  @override
-  void initState() {
-    super.initState();
+  changeCharactorToSuccess() {
     context
         .provider<CharacterProvider>()
         .changeAnimation(CharacterType.success);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // changeCharactorToSuccess();
   }
 
   @override
@@ -42,6 +46,9 @@ class _LandingPageState extends State<LandingPage> {
                 ),
               ),
             ),
+            SizedBox(
+              width: 200.0,
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -49,6 +56,9 @@ class _LandingPageState extends State<LandingPage> {
                     onPressed: () =>
                         Navigator.pushNamed(context, AppRoute.routeHome),
                     child: Text("Start")),
+                SizedBox(
+                  height: 20,
+                ),
                 ElevatedButton(
                     onPressed: () =>
                         Navigator.pushNamed(context, AppRoute.lessonRoute),

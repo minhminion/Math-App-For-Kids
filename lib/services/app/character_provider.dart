@@ -1,36 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:math_app_for_kid/services/safety/change_notifier_safety.dart';
 import 'package:math_app_for_kid/utils/app_assets.dart';
 import 'package:rive/rive.dart';
 
 enum CharacterType { start, success, idle, fail, talk }
 
 class CharacterProvider extends ChangeNotifier {
+  CharacterProvider() {
+    loadRiveFile();
+  }
+
   AppAssets assets = AppAssets.origin();
   Artboard _riveArtboard;
   RiveAnimationController _controller;
 
   Artboard get riveArtboard => _riveArtboard;
 
-  // Future<void> loadRiveFile() async {
-  //   notifyListeners();
-  //   final bytes = await rootBundle.load(assets.characterRiv);
-  //   final file = RiveFile();
-  //   if (file.import(bytes)) {
-  //     riveArtboard = file.mainArtboard
-  //       ..addController(_controller = SimpleAnimation("Idle"));
-  //     print('Animation started playing');
-  //     notifyListeners();
-  //   }
-  //   // _controller.isActiveChanged.addListener(() {
-  //   //   if (_controller.isActive) {
-  //   //     print('Animation started playing');
-  //   //   } else {
-  //   //     changeAnimation(CharacterType.idle);
-  //   //   }
-  //   // });
-  // }
+  Future<void> loadRiveFile() async {
+    notifyListeners();
+    final bytes = await rootBundle.load(assets.characterRiv);
+    final file = RiveFile();
+    if (file.import(bytes)) {
+      _riveArtboard = file.mainArtboard
+        ..addController(_controller = SimpleAnimation("Idle"));
+      print('Animation started playing');
+      notifyListeners();
+    }
+    // _controller.isActiveChanged.addListener(() {
+    //   if (_controller.isActive) {
+    //     print('Animation started playing');
+    //   } else {
+    //     changeAnimation(CharacterType.idle);
+    //   }
+    // });
+  }
 
   void setRive(dynamic file) {
     _riveArtboard = file.mainArtboard
@@ -74,7 +77,4 @@ class CharacterProvider extends ChangeNotifier {
     _riveArtboard.addController(_controller);
     notifyListeners();
   }
-
-  @override
-  void resetState() {}
 }
