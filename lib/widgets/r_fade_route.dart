@@ -10,6 +10,7 @@ class FadeRoute extends PageRouteBuilder {
             Animation<double> secondaryAnimation,
           ) =>
               page,
+          transitionDuration: Duration(seconds: 1),
           transitionsBuilder: (
             BuildContext context,
             Animation<double> animation,

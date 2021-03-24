@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
-import 'package:math_app_for_kid/utils/app_assets.dart';
+import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
-import 'package:math_app_for_kid/utils/app_theme.dart';
 import 'package:math_app_for_kid/widgets/w_button_icon.dart';
 import 'package:rive/rive.dart';
 
@@ -15,19 +14,10 @@ class LandingPage extends StatefulWidget {
   _LandingPageState createState() => _LandingPageState();
 }
 
-class _LandingPageState extends State<LandingPage> {
-  AppTheme appTheme;
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      appTheme = context.appTheme();
-    });
-  }
-
+class _LandingPageState extends BaseStateful<LandingPage> {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final Artboard riveArtboard =
         context.provider<CharacterProvider>().riveArtboard;
 
@@ -42,7 +32,7 @@ class _LandingPageState extends State<LandingPage> {
               child: Material(
                 child: Container(
                   height: 200,
-                  width: 200,
+                  width: 150,
                   color: appTheme.backgroundColor,
                   child: riveArtboard == null
                       ? const SizedBox()
@@ -58,7 +48,7 @@ class _LandingPageState extends State<LandingPage> {
               children: [
                 WButtonIcon(
                   onPressed: () =>
-                      Navigator.pushNamed(context, AppRoute.routeHome),
+                      Navigator.pushNamed(context, AppRoute.lessonRoute),
                   color: appTheme.successColor,
                   text: Text("Start", style: TextStyle(fontSize: 20)),
                   icon: Icon(
@@ -66,39 +56,10 @@ class _LandingPageState extends State<LandingPage> {
                     size: 40,
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, AppRoute.lessonRoute),
-                    child: Text("Settings"))
               ],
             )
           ]),
         ),
-      ),
-    );
-  }
-
-  ElevatedButton _buildStartButton() {
-    return ElevatedButton.icon(
-      onPressed: () => Navigator.pushNamed(context, AppRoute.routeHome),
-      icon: Icon(
-        Icons.play_arrow,
-        size: 40,
-      ),
-      label: Text(
-        "Start",
-        style: TextStyle(fontSize: 20),
-      ),
-      style: ElevatedButton.styleFrom(
-        shape: new RoundedRectangleBorder(
-          borderRadius:
-              new BorderRadius.circular(AppConstant.defaultSpacing * 4),
-        ),
-        padding: EdgeInsets.fromLTRB(10, 10, 20, 10),
-        primary: appTheme.successColor,
       ),
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/pages/lesson/lesson_list_page_body.dart';
+import 'package:math_app_for_kid/utils/app_extension.dart';
+import 'package:math_app_for_kid/utils/app_theme.dart';
 
 class LessonListPage extends StatefulWidget {
   @override
@@ -7,6 +9,16 @@ class LessonListPage extends StatefulWidget {
 }
 
 class _LessonListPageState extends State<LessonListPage> {
+  AppTheme appTheme;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      appTheme = context.appTheme();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Container _lessonFloatingButton() {
@@ -15,13 +27,14 @@ class _LessonListPageState extends State<LessonListPage> {
         height: 60.0,
         child: FloatingActionButton(
           onPressed: () => Navigator.of(context).pop(),
-          backgroundColor: Color(0xFF008E9B),
+          backgroundColor: appTheme.successColor,
           child: Icon(Icons.keyboard_return_outlined),
         ),
       );
     }
 
     return Scaffold(
+      backgroundColor: appTheme.backgroundColor,
       body: SafeArea(
         child: Column(
           children: <Widget>[

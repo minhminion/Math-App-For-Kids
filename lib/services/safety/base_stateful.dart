@@ -20,6 +20,9 @@ abstract class BaseStateful<T extends StatefulWidget> extends State<T> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      appTheme = context.appTheme();
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       afterFirstBuild(context);
     });

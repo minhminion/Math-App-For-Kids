@@ -59,6 +59,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
+    SystemChrome.setEnabledSystemUIOverlays([]);
     // Init Page (Check User is logged)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final bool hasCredential = true;

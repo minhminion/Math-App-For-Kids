@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/lessons.dart';
 import 'package:math_app_for_kid/pages/lesson/lesson_row.dart';
+import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 
-class LessonListPageBody extends StatelessWidget {
+// ignore: must_be_immutable
+class LessonListPageBody extends BaseStateless {
   SliverAppBar _lessonAppBar() {
     return SliverAppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: Color(0xFF845EC2),
+      backgroundColor: appTheme.errorColor,
       pinned: true,
       snap: true,
       floating: true,
@@ -19,10 +21,11 @@ class LessonListPageBody extends StatelessWidget {
       ),
       flexibleSpace: FlexibleSpaceBar(
           centerTitle: true,
-          title: Text('Bài học'),
+          // title: Text('Bài học'),
           background: Image(
-            image: AssetImage('assets/base/images/lesson/bg_appbar.jpg'),
-            fit: BoxFit.fill,
+            image: AssetImage('assets/base/images/lesson/bg_appbar_1.png'),
+            fit: BoxFit.cover,
+            alignment: Alignment.center,
           )),
     );
   }
@@ -42,9 +45,10 @@ class LessonListPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Expanded(
         child: Container(
-      color: Color(0xFFB39CD0),
+      // color: Color(0xFFB39CD0),
       child: CustomScrollView(
         scrollDirection: Axis.vertical,
         slivers: <Widget>[
