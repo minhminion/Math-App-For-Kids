@@ -10,13 +10,12 @@ class _LessonListPageState extends State<LessonListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          AppBar(
-            title: Text('Lesson'),
-          ),
-          LessonListPageBody(),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            LessonListPageBody(),
+          ],
+        ),
       ),
     );
   }

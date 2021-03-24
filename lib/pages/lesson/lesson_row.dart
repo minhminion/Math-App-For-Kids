@@ -49,7 +49,7 @@ class LessonRow extends StatelessWidget {
           BoxShadow(
             color: Colors.black12,
             blurRadius: 10.0,
-            offset: Offset(0.0, 10.0), // Shadow position
+            offset: Offset(0.0, 10.0),
           ),
         ],
       ),
