@@ -24,16 +24,21 @@ class AppTheme {
 
   AppAssets assets = AppAssets.origin();
   bool isDark = true;
-  Color primaryColor = Colors.blueGrey;
+  Color primaryColor = Color(0xFF845EC2);
   Color accentColor = Colors.blueGrey;
-  Color backgroundColor = const Color(0xFFF2F2F2);
+  Color backgroundColor = Color(0xFF845EC2);
   Color headerBgColor = Colors.blueGrey;
+
+  Color successColor = Color(0xFF00C9A7);
+  Color errorColor = Color(0xFFFF9671);
+  Color warningColor = Color(0xFFF9F871);
 
   /// Build theme data
   ThemeData buildThemeData() {
     return ThemeData(
       primaryColor: primaryColor,
       accentColor: accentColor,
+      backgroundColor: backgroundColor,
       fontFamily: assets.fontRoboto,
       pageTransitionsTheme: _buildPageTransitionsTheme(),
       buttonTheme: _buildButtonTheme(),

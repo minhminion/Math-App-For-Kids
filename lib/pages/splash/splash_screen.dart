@@ -38,12 +38,15 @@ class _SplashScreenState extends State<SplashScreen> {
     final riveArtboard = context.watch<CharacterProvider>().riveArtboard;
 
     return Scaffold(
+      backgroundColor: context.appTheme().backgroundColor,
       body: Center(
         child: Hero(
           tag: "character",
           child: Material(
             child: Container(
               height: 300,
+              width: 300,
+              color: context.appTheme().backgroundColor,
               child: riveArtboard == null
                   ? const SizedBox()
                   : Rive(

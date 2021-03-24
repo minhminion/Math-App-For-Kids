@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
+import 'package:math_app_for_kid/utils/app_theme.dart';
 import 'package:rive/rive.dart';
 
 class LandingPage extends StatefulWidget {
@@ -12,16 +13,14 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  changeCharactorToSuccess() {
-    context
-        .provider<CharacterProvider>()
-        .changeAnimation(CharacterType.success);
-  }
+  AppTheme appTheme;
 
   @override
   void initState() {
     super.initState();
-    // changeCharactorToSuccess();
+    setState(() {
+      appTheme = context.appTheme();
+    });
   }
 
   @override
@@ -30,6 +29,7 @@ class _LandingPageState extends State<LandingPage> {
         context.provider<CharacterProvider>().riveArtboard;
 
     return Scaffold(
+      backgroundColor: appTheme.backgroundColor,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -39,7 +39,8 @@ class _LandingPageState extends State<LandingPage> {
               child: Material(
                 child: Container(
                   height: 200,
-                  width: 300,
+                  width: 200,
+                  color: appTheme.backgroundColor,
                   child: riveArtboard == null
                       ? const SizedBox()
                       : Rive(artboard: riveArtboard, fit: BoxFit.contain),
@@ -52,10 +53,7 @@ class _LandingPageState extends State<LandingPage> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, AppRoute.routeHome),
-                    child: Text("Start")),
+                _buildStartButton(),
                 SizedBox(
                   height: 20,
                 ),
@@ -67,6 +65,27 @@ class _LandingPageState extends State<LandingPage> {
             )
           ]),
         ),
+      ),
+    );
+  }
+
+  ElevatedButton _buildStartButton() {
+    return ElevatedButton.icon(
+      onPressed: () => Navigator.pushNamed(context, AppRoute.routeHome),
+      icon: Icon(
+        Icons.play_arrow,
+        size: 40,
+      ),
+      label: Text(
+        "Start",
+        style: TextStyle(fontSize: 20),
+      ),
+      style: ElevatedButton.styleFrom(
+        shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(30.0),
+        ),
+        padding: EdgeInsets.fromLTRB(10, 10, 20, 10),
+        primary: appTheme.successColor,
       ),
     );
   }
