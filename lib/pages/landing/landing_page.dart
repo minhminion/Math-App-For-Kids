@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
+import 'package:math_app_for_kid/utils/app_assets.dart';
+import 'package:math_app_for_kid/utils/app_constant.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
 import 'package:math_app_for_kid/utils/app_theme.dart';
+import 'package:math_app_for_kid/widgets/w_button_icon.dart';
 import 'package:rive/rive.dart';
 
 class LandingPage extends StatefulWidget {
@@ -32,7 +35,7 @@ class _LandingPageState extends State<LandingPage> {
       backgroundColor: appTheme.backgroundColor,
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(AppConstant.defaultSpacing),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Hero(
               tag: "character",
@@ -53,7 +56,16 @@ class _LandingPageState extends State<LandingPage> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildStartButton(),
+                WButtonIcon(
+                  onPressed: () =>
+                      Navigator.pushNamed(context, AppRoute.routeHome),
+                  color: appTheme.successColor,
+                  text: Text("Start", style: TextStyle(fontSize: 20)),
+                  icon: Icon(
+                    Icons.play_arrow,
+                    size: 40,
+                  ),
+                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -82,7 +94,8 @@ class _LandingPageState extends State<LandingPage> {
       ),
       style: ElevatedButton.styleFrom(
         shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(30.0),
+          borderRadius:
+              new BorderRadius.circular(AppConstant.defaultSpacing * 4),
         ),
         padding: EdgeInsets.fromLTRB(10, 10, 20, 10),
         primary: appTheme.successColor,

@@ -3,9 +3,8 @@ import 'package:math_app_for_kid/models/local/lessons.dart';
 import 'package:math_app_for_kid/pages/lesson/lesson_row.dart';
 
 class LessonListPageBody extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final lessonAppBar = SliverAppBar(
+  SliverAppBar _lessonAppBar() {
+    return SliverAppBar(
       backgroundColor: Color(0xFF845EC2),
       pinned: true,
       snap: true,
@@ -24,8 +23,10 @@ class LessonListPageBody extends StatelessWidget {
             fit: BoxFit.cover,
           )),
     );
+  }
 
-    final lessonRow = SliverPadding(
+  SliverPadding _lessonRow() {
+    return SliverPadding(
       padding: const EdgeInsets.symmetric(vertical: 24.0),
       sliver: SliverFixedExtentList(
         itemExtent: 130.0,
@@ -35,15 +36,18 @@ class LessonListPageBody extends StatelessWidget {
         ),
       ),
     );
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
         child: Container(
       color: Color(0xFFB39CD0),
       child: CustomScrollView(
         scrollDirection: Axis.vertical,
         slivers: <Widget>[
-          lessonAppBar,
-          lessonRow,
+          _lessonAppBar(),
+          _lessonRow(),
         ],
       ),
     ));
