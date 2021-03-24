@@ -9,6 +9,18 @@ class LessonListPage extends StatefulWidget {
 class _LessonListPageState extends State<LessonListPage> {
   @override
   Widget build(BuildContext context) {
+    Container _lessonFloatingButton() {
+      return Container(
+        width: 60.0,
+        height: 60.0,
+        child: FloatingActionButton(
+          onPressed: () => Navigator.of(context).pop(),
+          backgroundColor: Color(0xFF008E9B),
+          child: Icon(Icons.keyboard_return_outlined),
+        ),
+      );
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -17,6 +29,7 @@ class _LessonListPageState extends State<LessonListPage> {
           ],
         ),
       ),
+      floatingActionButton: _lessonFloatingButton(),
     );
   }
 }

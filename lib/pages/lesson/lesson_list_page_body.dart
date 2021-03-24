@@ -5,11 +5,13 @@ import 'package:math_app_for_kid/pages/lesson/lesson_row.dart';
 class LessonListPageBody extends StatelessWidget {
   SliverAppBar _lessonAppBar() {
     return SliverAppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Color(0xFF845EC2),
       pinned: true,
       snap: true,
       floating: true,
       expandedHeight: 120.0,
+      elevation: 1.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           bottom: Radius.circular(40.0),
@@ -20,7 +22,7 @@ class LessonListPageBody extends StatelessWidget {
           title: Text('Bài học'),
           background: Image(
             image: AssetImage('assets/base/images/lesson/bg_appbar.jpg'),
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           )),
     );
   }
