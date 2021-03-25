@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/lessons.dart';
 import 'package:math_app_for_kid/pages/lesson/lesson_row.dart';
+import 'package:math_app_for_kid/pages/lesson/lesson_space_bar.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 
 // ignore: must_be_immutable
@@ -13,20 +14,21 @@ class LessonListPageBody extends BaseStateless {
       snap: true,
       floating: true,
       expandedHeight: 120.0,
-      elevation: 1.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           bottom: Radius.circular(40.0),
         ),
       ),
-      flexibleSpace: FlexibleSpaceBar(
-          centerTitle: true,
-          // title: Text('Bài học'),
-          background: Image(
-            image: AssetImage('assets/base/images/lesson/bg_appbar_1.png'),
-            fit: BoxFit.cover,
-            alignment: Alignment.center,
-          )),
+      flexibleSpace: LessonSpaceBar(),
+      // flexibleSpace: FlexibleSpaceBar(
+      //   centerTitle: true,
+      //   // title: Text('Bài học'),
+      //   background: Image(
+      //     image: AssetImage('assets/base/images/lesson/bg_appbar_1.png'),
+      //     fit: BoxFit.cover,
+      //     alignment: Alignment.center,
+      //   ),
+      // ),
     );
   }
 
