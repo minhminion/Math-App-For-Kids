@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:math_app_for_kid/pages/draggable/draggable_page.dart';
 import 'package:math_app_for_kid/pages/landing/landing_page.dart';
+import 'package:math_app_for_kid/pages/lesson/details/lesson_detail.dart';
 import 'package:math_app_for_kid/pages/lesson/lesson_list_page.dart';
 import 'package:math_app_for_kid/pages/splash/splash_screen.dart';
 import 'package:math_app_for_kid/widgets/r_fade_route.dart';
@@ -12,6 +14,9 @@ class AppRoute {
   static const String routeRoot = '/';
   static const String routeLanding = '/landing';
   static const String lessonRoute = '/lesson';
+  static const String lessonDetailRoute = '/lesson-detail';
+
+  static const String testRoute = '/test';
 
   ///#endregion
 
@@ -51,6 +56,17 @@ class AppRoute {
           settings: settings,
           builder: (_) => LessonListPage(),
         );
+      case lessonDetailRoute:
+        return MaterialPageRoute<dynamic>(
+            settings: settings,
+            builder: (_) => settings.arguments != null
+                ? LessonDetailPage(
+                    lesson: settings.arguments,
+                  )
+                : onUnknownRoute(settings));
+      case testRoute:
+        return MaterialPageRoute<dynamic>(
+            settings: settings, builder: (_) => DraggablePage());
       default:
         return onUnknownRoute(settings);
     }

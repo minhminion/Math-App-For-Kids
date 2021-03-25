@@ -10,9 +10,9 @@ class LessonListPageBody extends BaseStateless {
     return SliverAppBar(
       automaticallyImplyLeading: false,
       backgroundColor: appTheme.errorColor,
+      floating: false,
       pinned: true,
-      snap: true,
-      floating: true,
+      snap: false,
       expandedHeight: 120.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
