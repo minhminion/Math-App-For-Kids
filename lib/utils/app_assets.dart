@@ -10,6 +10,8 @@ class AppAssets {
   /// -----------------
   String fontRoboto = 'Roboto';
   String fontLato = 'Lato';
+  String fontUntoldStory = 'UntoldStory';
+  String fontFira = 'Fira';
   String fontIOSDisplay = '.SF UI Display';
   String fontIOSDefault = '.SF UI Text';
 
@@ -19,6 +21,8 @@ class AppAssets {
   String icAppIcon = 'assets/base/icons/app_icon_ad.png';
   String icEmpty = 'assets/base/icons/ic_empty.png';
   String characterRiv = 'assets/base/character/astronaut.riv';
+
+  String backgroundLanding = 'assets/base/images/bg_landing.png';
 
   ///#endregion
   ///#region VIDEOS

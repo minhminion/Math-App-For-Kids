@@ -23,15 +23,23 @@ class AppTheme {
   }
 
   AppAssets assets = AppAssets.origin();
+
+  double defaultSpacing = 8.0;
+
   bool isDark = true;
   Color primaryColor = Color(0xFF845EC2);
   Color accentColor = Colors.blueGrey;
   Color backgroundColor = Color(0xFF845EC2);
+  // Color backgroundColor = Colors.white;
   Color headerBgColor = Colors.blueGrey;
 
   Color successColor = Color(0xFF00C9A7);
   Color errorColor = Color(0xFFFF9671);
   Color warningColor = Color(0xFFF9F871);
+
+  double spacing(double value) {
+    return (value * defaultSpacing).floorToDouble();
+  }
 
   /// Build theme data
   ThemeData buildThemeData() {
@@ -39,7 +47,7 @@ class AppTheme {
       primaryColor: primaryColor,
       accentColor: accentColor,
       backgroundColor: backgroundColor,
-      fontFamily: assets.fontRoboto,
+      fontFamily: assets.fontFira,
       pageTransitionsTheme: _buildPageTransitionsTheme(),
       buttonTheme: _buildButtonTheme(),
       textTheme: _buildTextTheme(),

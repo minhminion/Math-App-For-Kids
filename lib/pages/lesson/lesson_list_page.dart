@@ -35,12 +35,10 @@ class _LessonListPageState extends State<LessonListPage> {
 
     return Scaffold(
       backgroundColor: appTheme.backgroundColor,
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            LessonListPageBody(),
-          ],
-        ),
+      body: Column(
+        children: <Widget>[
+          LessonListPageBody(),
+        ],
       ),
       floatingActionButton: _lessonFloatingButton(),
     );

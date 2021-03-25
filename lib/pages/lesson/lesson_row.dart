@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/lessons.dart';
+import 'package:math_app_for_kid/utils/app_route.dart';
 
 class LessonRow extends StatelessWidget {
   final Lesson lesson;
@@ -9,10 +10,13 @@ class LessonRow extends StatelessWidget {
   Container _lessonThumbnail() => Container(
         margin: EdgeInsets.symmetric(vertical: 16.0),
         alignment: FractionalOffset.centerLeft,
-        child: Image(
-          image: AssetImage('assets/base/images/lesson/${lesson.image}'),
-          height: 92.0,
-          width: 92.0,
+        child: Hero(
+          tag: "lesson_image_${lesson.id}",
+          child: Image(
+            image: AssetImage('assets/base/images/lesson/${lesson.image}'),
+            height: 92.0,
+            width: 92.0,
+          ),
         ),
       );
 
@@ -57,7 +61,8 @@ class LessonRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pop(context);
+        Navigator.pushNamed(context, AppRoute.lessonDetailRoute,
+            arguments: lesson);
       },
       child: Container(
         margin: EdgeInsets.symmetric(

@@ -40,13 +40,13 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: context.appTheme().backgroundColor,
       body: Center(
-        child: Hero(
-          tag: "character",
-          child: Material(
-            child: Container(
-              height: 300,
-              width: 300,
-              color: context.appTheme().backgroundColor,
+        child: SizedBox(
+          height: 300,
+          width: 200,
+          child: Hero(
+            tag: "character",
+            child: Material(
+              color: Colors.transparent,
               child: riveArtboard == null
                   ? const SizedBox()
                   : Rive(
