@@ -20,15 +20,6 @@ class LessonListPageBody extends BaseStateless {
         ),
       ),
       flexibleSpace: LessonSpaceBar(),
-      // flexibleSpace: FlexibleSpaceBar(
-      //   centerTitle: true,
-      //   // title: Text('Bài học'),
-      //   background: Image(
-      //     image: AssetImage('assets/base/images/lesson/bg_appbar_1.png'),
-      //     fit: BoxFit.cover,
-      //     alignment: Alignment.center,
-      //   ),
-      // ),
     );
   }
 

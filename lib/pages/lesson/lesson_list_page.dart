@@ -19,20 +19,20 @@ class _LessonListPageState extends State<LessonListPage> {
     });
   }
 
+  Container _lessonFloatingButton() {
+    return Container(
+      width: 60.0,
+      height: 60.0,
+      child: FloatingActionButton(
+        onPressed: () => Navigator.of(context).pop(),
+        backgroundColor: appTheme.successColor,
+        child: Icon(Icons.keyboard_return_outlined),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Container _lessonFloatingButton() {
-      return Container(
-        width: 60.0,
-        height: 60.0,
-        child: FloatingActionButton(
-          onPressed: () => Navigator.of(context).pop(),
-          backgroundColor: appTheme.successColor,
-          child: Icon(Icons.keyboard_return_outlined),
-        ),
-      );
-    }
-
     return Scaffold(
       backgroundColor: appTheme.backgroundColor,
       body: Column(

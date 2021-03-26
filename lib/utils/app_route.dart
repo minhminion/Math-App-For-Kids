@@ -49,6 +49,7 @@ class AppRoute {
         );
       case routeLanding:
         return FadeRoute(
+          transitionDuration: Duration(milliseconds: 1000),
           page: LandingPage(),
         );
       case lessonRoute:
@@ -57,13 +58,15 @@ class AppRoute {
           builder: (_) => LessonListPage(),
         );
       case lessonDetailRoute:
-        return MaterialPageRoute<dynamic>(
-            settings: settings,
-            builder: (_) => settings.arguments != null
-                ? LessonDetailPage(
-                    lesson: settings.arguments,
-                  )
-                : onUnknownRoute(settings));
+        if (settings.arguments != null) {
+          return FadeRoute(
+            transitionDuration: Duration(milliseconds: 500),
+            page: LessonDetailPage(
+              lesson: settings.arguments,
+            ),
+          );
+        }
+        return onUnknownRoute(settings);
       case testRoute:
         return MaterialPageRoute<dynamic>(
             settings: settings, builder: (_) => DraggablePage());

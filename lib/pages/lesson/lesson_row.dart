@@ -1,40 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/lessons.dart';
+import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
+import 'package:math_app_for_kid/widgets/w_progess_circular.dart';
 
-class LessonRow extends StatelessWidget {
+// ignore: must_be_immutable
+class LessonRow extends BaseStateless {
   final Lesson lesson;
 
   LessonRow(this.lesson);
 
   Container _lessonThumbnail() => Container(
-        margin: EdgeInsets.symmetric(vertical: 16.0),
+        // margin: EdgeInsets.symmetric(vertical: 16.0),
         alignment: FractionalOffset.centerLeft,
         child: Hero(
           tag: "lesson_image_${lesson.id}",
-          child: Image(
-            image: AssetImage('assets/base/images/lesson/${lesson.image}'),
-            height: 92.0,
-            width: 92.0,
+          child: WProgessCircular(
+            size: 80.0,
+            progessPercent: lesson.completeGameID.length / lesson.totalGame,
+            child: Image(
+              image: AssetImage('assets/base/images/lesson/${lesson.image}'),
+              height: double.infinity,
+              width: double.infinity,
+            ),
           ),
         ),
       );
 
-  Container _lessonCard() => Container(
-        child: _lessonCardContent(),
-        height: 124.0,
-        margin: EdgeInsets.only(left: 46.0),
-        decoration: BoxDecoration(
-          color: Color(0xFF333366),
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(8.0),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 10.0,
-              offset: Offset(0.0, 10.0),
-            ),
-          ],
+  Hero _lessonCard() => Hero(
+        tag: "lesson_content_${lesson.id}",
+        child: Container(
+          child: _lessonCardContent(),
+          height: 124.0,
+          margin: EdgeInsets.only(left: 46.0),
+          decoration: BoxDecoration(
+            color: Color(0xFF333366),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(8.0),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10.0,
+                offset: Offset(0.0, 10.0),
+              ),
+            ],
+          ),
         ),
       );
 
@@ -48,8 +58,10 @@ class LessonRow extends StatelessWidget {
               lesson.title,
               textAlign: TextAlign.center,
               style: TextStyle(
+                fontFamily: appTheme.assets.fontRoboto,
                 color: Colors.white,
                 fontSize: 30.0,
+                decoration: TextDecoration.none,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -59,6 +71,7 @@ class LessonRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, AppRoute.lessonDetailRoute,
