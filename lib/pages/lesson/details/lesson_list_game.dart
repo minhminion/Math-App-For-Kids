@@ -77,39 +77,36 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
   }
 
   Widget _buildLessonContentItem(BaseGamePlay game) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 0, horizontal: 16.0),
-      decoration: BoxDecoration(
-          color: Colors.grey,
-          borderRadius: BorderRadius.circular(AppConstant.defaultSpacing)),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(AppConstant.defaultSpacing),
-          onTap: () => openGameDialog(game),
-          child: Hero(
+    return InkWell(
+      borderRadius: BorderRadius.circular(AppConstant.defaultSpacing),
+      onTap: () => openGameDialog(game),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Hero(
             tag: "game_item_${game.id}",
             child: Container(
+              margin: EdgeInsets.symmetric(vertical: 0, horizontal: 16.0),
               width: 300,
               decoration: BoxDecoration(
                   color: Colors.grey,
                   borderRadius:
                       BorderRadius.circular(AppConstant.defaultSpacing)),
-              child: Center(
-                child: Text(
-                  game.id,
-                  style: TextStyle(
-                    fontFamily: appTheme.assets.fontRoboto,
-                    color: Colors.white,
-                    fontSize: 30.0,
-                    decoration: TextDecoration.none,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+            ),
+          ),
+          Center(
+            child: Text(
+              game.id,
+              style: TextStyle(
+                fontFamily: appTheme.assets.fontRoboto,
+                color: Colors.white,
+                fontSize: 30.0,
+                decoration: TextDecoration.none,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

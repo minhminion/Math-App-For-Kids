@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/pages/draggable/draggable_page.dart';
+import 'package:math_app_for_kid/pages/game/game_page.dart';
+import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/landing/landing_page.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_detail.dart';
 import 'package:math_app_for_kid/pages/lesson/lesson_list_page.dart';
@@ -15,6 +17,7 @@ class AppRoute {
   static const String routeLanding = '/landing';
   static const String lessonRoute = '/lesson';
   static const String lessonDetailRoute = '/lesson-detail';
+  static const String gamePlayRoute = '/game-play';
 
   static const String testRoute = '/test';
 
@@ -67,6 +70,13 @@ class AppRoute {
           );
         }
         return onUnknownRoute(settings);
+
+      case gamePlayRoute:
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (_) => AppRoute.createProvider(
+                (context) => GameProvider(game: settings.arguments),
+                GamePlayPage()));
       case testRoute:
         return MaterialPageRoute<dynamic>(
             settings: settings, builder: (_) => DraggablePage());

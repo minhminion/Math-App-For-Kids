@@ -30,7 +30,7 @@ class AppTheme {
   Color primaryColor = Color(0xFF845EC2);
   Color accentColor = Colors.blueGrey;
   Color backgroundColor = Color(0xFF845EC2);
-  // Color backgroundColor = Colors.white;
+  Color cardBackgroundColor = Color(0xFF333366);
   Color headerBgColor = Colors.blueGrey;
 
   Color successColor = Color(0xFF00C9A7);

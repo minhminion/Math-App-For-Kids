@@ -29,17 +29,17 @@ List<Lesson> lessons = [
         "3"
       ],
       data: <BaseGamePlay>[
-        BaseGamePlay<CounterGame>(
+        CounterGamePlay(
             "1", GameType.countNumber, false, CounterGame(5, [1, 2, 5])),
-        BaseGamePlay<CounterGame>(
+        CounterGamePlay(
             "2", GameType.countNumber, false, CounterGame(5, [1, 2, 5])),
-        BaseGamePlay<CounterGame>(
+        CounterGamePlay(
             "3", GameType.countNumber, false, CounterGame(5, [1, 2, 5])),
-        BaseGamePlay<CounterGame>(
+        CounterGamePlay(
             "4", GameType.countNumber, false, CounterGame(5, [1, 2, 5])),
-        BaseGamePlay<CounterGame>(
+        CounterGamePlay(
             "5", GameType.countNumber, false, CounterGame(5, [1, 2, 5])),
-        BaseGamePlay<CounterGame>(
+        CounterGamePlay(
             "6", GameType.countNumber, false, CounterGame(5, [1, 2, 5])),
       ]),
   Lesson(

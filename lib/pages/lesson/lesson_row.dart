@@ -34,7 +34,7 @@ class LessonRow extends BaseStateless {
           height: 124.0,
           margin: EdgeInsets.only(left: 46.0),
           decoration: BoxDecoration(
-            color: Color(0xFF333366),
+            color: appTheme.cardBackgroundColor,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(8.0),
             boxShadow: <BoxShadow>[

@@ -71,7 +71,7 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
           height: double.infinity,
           margin: EdgeInsets.only(top: AppConstant.defaultSpacing * 6),
           decoration: BoxDecoration(
-            color: Color(0xFF333366),
+            color: appTheme.cardBackgroundColor,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(8.0),
             boxShadow: <BoxShadow>[

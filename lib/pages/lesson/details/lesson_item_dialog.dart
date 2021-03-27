@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/game.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
+import 'package:math_app_for_kid/utils/app_route.dart';
 
 // ignore: must_be_immutable
 class LessonItemDialog extends BaseStateless {
@@ -29,7 +30,10 @@ class LessonItemDialog extends BaseStateless {
                           borderRadius: BorderRadius.circular(40)),
                       primary: appTheme.successColor,
                       padding: EdgeInsets.all(AppConstant.defaultSpacing * 4)),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoute.gamePlayRoute,
+                        arguments: game);
+                  },
                   child: Icon(
                     Icons.play_arrow,
                     size: 80.0,
