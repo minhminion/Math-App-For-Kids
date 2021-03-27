@@ -9,6 +9,7 @@ import 'package:math_app_for_kid/services/cache/cache.dart';
 import 'package:math_app_for_kid/services/cache/cache_preferences.dart';
 import 'package:math_app_for_kid/services/cache/credential.dart';
 import 'package:math_app_for_kid/services/rest_api/api_user.dart';
+import 'package:math_app_for_kid/services/store/database_helper.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
 import 'package:math_app_for_kid/utils/app_theme.dart';
@@ -17,36 +18,43 @@ import 'package:provider/single_child_widget.dart';
 
 Future<void> myMain() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft])
-      .then((_) {
-    runApp(MultiProvider(providers: <SingleChildWidget>[
-      Provider<AppRoute>(
-        create: (_) => AppRoute(),
-      ),
-      Provider<Cache>(create: (_) => CachePreferences()),
-      ChangeNotifierProvider<Credential>(
-          create: (BuildContext context) => Credential(context.read<Cache>())),
-      ProxyProvider<Credential, ApiUser>(
-          create: (_) => ApiUser(),
-          update: (_, Credential credential, ApiUser userApi) {
-            return userApi..token = credential.token;
-          }),
-      Provider<AppDialogProvider>(create: (_) => AppDialogProvider()),
-      Provider<AppLoadingProvider>(create: (_) => AppLoadingProvider()),
-      ChangeNotifierProvider<AppThemeProvider>(
-          create: (_) => AppThemeProvider()),
-      ChangeNotifierProvider<AuthProvider>(
-          create: (BuildContext context) => AuthProvider(
-                context.read<ApiUser>(),
-                context.read<Credential>(),
-              )),
-      ChangeNotifierProvider<CharacterProvider>(
-        create: (_) => new CharacterProvider(),
-        lazy: false,
-      ),
-      ChangeNotifierProvider<LessonProvider>(create: (_) => LessonProvider())
-    ], child: MyApp()));
-  });
+  await SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.landscapeLeft],
+  );
+  await DatabaseHelper.dbHelper.initDB();
+  runApp(
+    MultiProvider(
+      providers: <SingleChildWidget>[
+        Provider<AppRoute>(
+          create: (_) => AppRoute(),
+        ),
+        Provider<Cache>(create: (_) => CachePreferences()),
+        ChangeNotifierProvider<Credential>(
+            create: (BuildContext context) =>
+                Credential(context.read<Cache>())),
+        ProxyProvider<Credential, ApiUser>(
+            create: (_) => ApiUser(),
+            update: (_, Credential credential, ApiUser userApi) {
+              return userApi..token = credential.token;
+            }),
+        Provider<AppDialogProvider>(create: (_) => AppDialogProvider()),
+        Provider<AppLoadingProvider>(create: (_) => AppLoadingProvider()),
+        ChangeNotifierProvider<AppThemeProvider>(
+            create: (_) => AppThemeProvider()),
+        ChangeNotifierProvider<AuthProvider>(
+            create: (BuildContext context) => AuthProvider(
+                  context.read<ApiUser>(),
+                  context.read<Credential>(),
+                )),
+        ChangeNotifierProvider<CharacterProvider>(
+          create: (_) => new CharacterProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<LessonProvider>(create: (_) => LessonProvider())
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {

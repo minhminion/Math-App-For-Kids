@@ -1,5 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/lessons.dart';
+import 'package:math_app_for_kid/models/local/lessons_for_test.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
+import 'package:math_app_for_kid/services/store/database_helper.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
 
@@ -49,7 +55,31 @@ class _LandingPageState extends BaseStateful<LandingPage> {
                     primary: appTheme.successColor,
                   ),
                 ),
-              )
+              ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () async {
+                    Lesson2 list =
+                        await DatabaseHelper.dbHelper.getLessonWithGameplays(1);
+
+                    log(list.toString());
+                  },
+
+                  // Navigator.pushNamed(context, AppRoute.testRoute),
+                  child: Icon(
+                    Icons.play_arrow,
+                    size: 70.0,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(
+                          AppConstant.defaultSpacing * 2),
+                    ),
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    primary: appTheme.successColor,
+                  ),
+                ),
+              ),
             ],
           )
         ],

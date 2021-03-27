@@ -39,7 +39,7 @@ class CountGameQuestions extends BaseStateless {
     for (var i = 0; i < length; i++) {
       list.add(Container(
         margin: EdgeInsets.all(8.0),
-        // color: Colors.blue,
+        color: Colors.blue,
         child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
           double size = constraints.maxWidth * 0.5;
