@@ -100,7 +100,7 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
           ),
           Center(
             child: Text(
-              game.id,
+              game.id.toString(),
               style: TextStyle(
                 fontFamily: appTheme.assets.fontRoboto,
                 color: Colors.white,

@@ -75,7 +75,7 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
                           AlwaysStoppedAnimation<Color>(appTheme.errorColor),
                     ))
                 : LessonListGames(
-                    data: widget.lesson.data,
+                    data: widget.lesson.gameplays,
                   )
           ],
         ),

@@ -19,6 +19,7 @@ class AppRoute {
   static const String gamePlayRoute = '/game-play';
 
   static const String testRoute = '/test';
+  static const String dbTestRoute = '/db-test';
 
   ///#endregion
 
