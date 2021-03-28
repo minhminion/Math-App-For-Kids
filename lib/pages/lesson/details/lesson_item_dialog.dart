@@ -18,6 +18,9 @@ class LessonItemDialog extends BaseStateless {
       child: Hero(
         tag: "game_item_${game.id}",
         child: Container(
+          margin: EdgeInsets.symmetric(
+              horizontal: AppConstant.defaultSpacing * 4,
+              vertical: AppConstant.defaultSpacing * 3),
           width: double.infinity,
           decoration: BoxDecoration(
               color: Colors.grey,

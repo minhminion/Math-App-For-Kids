@@ -73,6 +73,7 @@ flutter:
     - assets/base/character/
     - assets/base/images/lesson/
     - assets/base/images/
+    - assets/planet/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

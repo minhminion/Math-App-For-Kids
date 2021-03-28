@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/lessons.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_list_game.dart';
+import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
+import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:math_app_for_kid/widgets/w_progess_circular.dart';
+import 'package:provider/provider.dart';
 
 class LessonDetailPage extends StatefulWidget {
   LessonDetailPage({Key key, @required this.lesson}) : super(key: key);
@@ -15,9 +18,25 @@ class LessonDetailPage extends StatefulWidget {
 }
 
 class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
+  LessonProvider _lessonProvider;
+
+  @override
+  void initDependencies(BuildContext context) {
+    super.initDependencies(context);
+    _lessonProvider = context.provider<LessonProvider>();
+  }
+
   @override
   void initState() {
     super.initState();
+    setState(() {
+      _lessonProvider = context.provider<LessonProvider>();
+    });
+
+    // TODO: Get game detail from DB
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getLessonDetails();
+    });
   }
 
   @override
@@ -25,9 +44,14 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
     super.dispose();
   }
 
+  void getLessonDetails() async {
+    await _lessonProvider.updateLesson(widget.lesson);
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    int completedGame = context.watch<LessonProvider>().lesson?.completedGame;
 
     return Scaffold(
       backgroundColor: appTheme.backgroundColor,
@@ -41,19 +65,29 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
           alignment: Alignment.topCenter,
           children: [
             _buildLessonContentBox(widget.lesson),
-            _buildLessonThumbnail(widget.lesson),
-            LessonListGames(data: widget.lesson.data)
+            _buildLessonThumbnail(
+                lesson: widget.lesson, completedGame: completedGame),
+            context.watch<LessonProvider>().loadingLesson
+                ? Padding(
+                    padding: EdgeInsets.only(top: 200),
+                    child: CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(appTheme.errorColor),
+                    ))
+                : LessonListGames(
+                    data: widget.lesson.data,
+                  )
           ],
         ),
       ),
     );
   }
 
-  Hero _buildLessonThumbnail(Lesson lesson) {
+  Hero _buildLessonThumbnail({@required Lesson lesson, int completedGame = 0}) {
     return Hero(
       tag: "lesson_image_${lesson.id}",
       child: WProgessCircular(
-        progessPercent: 0.5,
+        progessPercent: lesson.totalGame / 100 * completedGame,
         child: Image(
           image: AssetImage('assets/base/images/lesson/${lesson.image}'),
           height: AppConstant.defaultSpacing * 13,

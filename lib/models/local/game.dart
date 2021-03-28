@@ -19,5 +19,5 @@ class CounterGame {
   final int result;
   final List<int> options;
 
-  CounterGame(this.result, this.options);
+  CounterGame(this.result, this.options) : assert(result <= 10);
 }

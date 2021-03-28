@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/game.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_item_dialog.dart';
+import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
 import 'package:math_app_for_kid/widgets/r_hero_dialog_router.dart';
+import 'package:provider/provider.dart';
 
 class LessonListGames extends StatefulWidget {
   LessonListGames({Key key, this.data}) : super(key: key);
@@ -72,7 +74,9 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
           padding: EdgeInsets.fromLTRB(8.0, 160, 8.0, 32.0),
           itemCount: widget.data.length,
           itemBuilder: (context, index) =>
-              _buildLessonContentItem(widget.data[index])),
+              index > context.watch<LessonProvider>().lesson.completedGame
+                  ? _buildLockedLessonContentItem(widget.data[index])
+                  : _buildLessonContentItem(widget.data[index])),
     );
   }
 
@@ -108,6 +112,33 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildLockedLessonContentItem(BaseGamePlay game) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 0, horizontal: 16.0),
+          width: 300,
+          decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(AppConstant.defaultSpacing)),
+        ),
+        Center(
+          child: Text(
+            "Locked",
+            style: TextStyle(
+              fontFamily: appTheme.assets.fontRoboto,
+              color: Colors.white,
+              fontSize: 30.0,
+              decoration: TextDecoration.none,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
