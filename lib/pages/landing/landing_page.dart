@@ -34,25 +34,6 @@ class _LandingPageState extends BaseStateful<LandingPage> {
               Center(
                 child: ElevatedButton(
                   onPressed: () =>
-                      // Navigator.pushNamed(context, AppRoute.lessonRoute),
-                      Navigator.pushNamed(context, AppRoute.testRoute),
-                  child: Icon(
-                    Icons.settings,
-                    size: 70.0,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(
-                          AppConstant.defaultSpacing * 2),
-                    ),
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    primary: appTheme.successColor,
-                  ),
-                ),
-              ),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () =>
                       Navigator.pushNamed(context, AppRoute.lessonRoute),
                   // Navigator.pushNamed(context, AppRoute.testRoute),
                   child: Icon(

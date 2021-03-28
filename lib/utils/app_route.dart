@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/pages/draggable/draggable_page.dart';
 import 'package:math_app_for_kid/pages/game/game_page.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/landing/landing_page.dart';
@@ -55,6 +54,7 @@ class AppRoute {
           transitionDuration: Duration(milliseconds: 1000),
           page: LandingPage(),
         );
+
       case lessonRoute:
         return MaterialPageRoute<dynamic>(
           settings: settings,
@@ -77,9 +77,7 @@ class AppRoute {
             builder: (_) => AppRoute.createProvider(
                 (context) => GameProvider(game: settings.arguments),
                 GamePlayPage()));
-      case testRoute:
-        return MaterialPageRoute<dynamic>(
-            settings: settings, builder: (_) => DraggablePage());
+
       default:
         return onUnknownRoute(settings);
     }

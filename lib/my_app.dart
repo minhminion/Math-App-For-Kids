@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/services/app/app_dialog.dart';
 import 'package:math_app_for_kid/services/app/app_loading.dart';
 import 'package:math_app_for_kid/services/app/auth_provider.dart';
@@ -42,7 +43,8 @@ Future<void> myMain() async {
       ChangeNotifierProvider<CharacterProvider>(
         create: (_) => new CharacterProvider(),
         lazy: false,
-      )
+      ),
+      ChangeNotifierProvider<LessonProvider>(create: (_) => LessonProvider())
     ], child: MyApp()));
   });
 }

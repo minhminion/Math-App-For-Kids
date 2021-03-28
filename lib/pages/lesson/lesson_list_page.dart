@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/pages/lesson/lesson_list_page_body.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:math_app_for_kid/utils/app_theme.dart';
+import 'package:math_app_for_kid/widgets/w_floating_button.dart';
 
 class LessonListPage extends StatefulWidget {
   @override
@@ -19,18 +20,6 @@ class _LessonListPageState extends State<LessonListPage> {
     });
   }
 
-  Container _lessonFloatingButton() {
-    return Container(
-      width: 60.0,
-      height: 60.0,
-      child: FloatingActionButton(
-        onPressed: () => Navigator.of(context).pop(),
-        backgroundColor: appTheme.successColor,
-        child: Icon(Icons.keyboard_return_outlined),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +29,7 @@ class _LessonListPageState extends State<LessonListPage> {
           LessonListPageBody(),
         ],
       ),
-      floatingActionButton: _lessonFloatingButton(),
+      floatingActionButton: WFloatingButton(),
     );
   }
 }

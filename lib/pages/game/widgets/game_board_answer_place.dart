@@ -14,12 +14,12 @@ class GameAnswerPlace extends StatefulWidget {
 
 class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace> {
   int result = 0;
-  GameProvider gameProvider;
+  GameProvider _gameProvider;
 
   @override
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
-    gameProvider = context.provider<GameProvider>();
+    _gameProvider = context.provider<GameProvider>();
   }
 
   @override
@@ -27,24 +27,21 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace> {
     super.build(context);
 
     return Container(
-      // height: 150.0,
-      child: DragTarget<int>(
-          onWillAccept: (value) => gameProvider.checkResult(value),
-          onAccept: (value) {
-            setState(() {
-              result = value;
-            });
-          },
-          builder: (context, candicates, reject) {
-            print(candicates);
-            return context.watch<GameProvider>().isComplete
-                ? GameOptionItem.option(
-                    value: result,
-                  )
-                : GameOptionItem(
-                    text: Text("?"),
-                  );
-          }),
+      child: DragTarget<int>(onAccept: (value) {
+        if (_gameProvider.checkResult(value))
+          setState(() {
+            result = value;
+          });
+      }, builder: (context, candicates, reject) {
+        return context.watch<GameProvider>().isComplete
+            ? GameOptionItem.option(
+                value: result,
+              )
+            : GameOptionItem(
+                text: Text("?"),
+                isDisable: true,
+              );
+      }),
     );
   }
 }
