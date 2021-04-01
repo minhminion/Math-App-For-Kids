@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/lessons.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_item_dialog.dart';
-import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
 import 'package:math_app_for_kid/widgets/r_hero_dialog_router.dart';
-import 'package:provider/provider.dart';
 
 class LessonListGames extends StatefulWidget {
-  LessonListGames({Key key, this.data}) : super(key: key);
+  LessonListGames({Key key, this.lesson}) : super(key: key);
 
-  final List<BaseGamePlay> data;
+  final Lesson lesson;
 
   @override
   _LessonListGamesState createState() => _LessonListGamesState();
@@ -48,7 +47,8 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if (widget.data == null || widget.data.length == 0)
+    List<GamePlay> gamePlays = widget.lesson.gameplays;
+    if (gamePlays == null || gamePlays.length == 0)
       return FadeTransition(
         opacity: _animation,
         child: Center(
@@ -72,15 +72,14 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           padding: EdgeInsets.fromLTRB(8.0, 160, 8.0, 32.0),
-          itemCount: widget.data.length,
-          itemBuilder: (context, index) =>
-              index > context.watch<LessonProvider>().lesson.completedGame
-                  ? _buildLockedLessonContentItem(widget.data[index])
-                  : _buildLessonContentItem(widget.data[index])),
+          itemCount: gamePlays.length,
+          itemBuilder: (context, index) => index > widget.lesson.completedGame
+              ? _buildLockedLessonContentItem(gamePlays[index])
+              : _buildLessonContentItem(gamePlays[index])),
     );
   }
 
-  Widget _buildLessonContentItem(BaseGamePlay game) {
+  Widget _buildLessonContentItem(GamePlay game) {
     return InkWell(
       borderRadius: BorderRadius.circular(AppConstant.defaultSpacing),
       onTap: () => openGameDialog(game),
@@ -115,7 +114,7 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
     );
   }
 
-  Widget _buildLockedLessonContentItem(BaseGamePlay game) {
+  Widget _buildLockedLessonContentItem(GamePlay game) {
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -142,7 +141,7 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
     );
   }
 
-  void openGameDialog(BaseGamePlay game) {
+  void openGameDialog(GamePlay game) {
     Navigator.push(
         context,
         HeroDialogRoute(

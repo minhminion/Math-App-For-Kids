@@ -13,7 +13,7 @@ class CountGameQuestions extends BaseStateless {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    CounterGame gameData = context.read<GameProvider>().game.data;
+    CounterGame gameData = context.read<GameProvider>().game;
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       int crossAxisCount =

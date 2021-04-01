@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/lessons.dart';
+import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/pages/lesson/lesson_row.dart';
 import 'package:math_app_for_kid/pages/lesson/lesson_space_bar.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class LessonListPageBody extends BaseStateless {
@@ -23,7 +25,7 @@ class LessonListPageBody extends BaseStateless {
     );
   }
 
-  SliverPadding _lessonRow() {
+  SliverPadding _lessonRow(List<Lesson> lessons) {
     return SliverPadding(
       padding: const EdgeInsets.symmetric(vertical: 24.0),
       sliver: SliverFixedExtentList(
@@ -46,7 +48,7 @@ class LessonListPageBody extends BaseStateless {
         scrollDirection: Axis.vertical,
         slivers: <Widget>[
           _lessonAppBar(),
-          _lessonRow(),
+          _lessonRow(context.watch<LessonProvider>().listLesson),
         ],
       ),
     ));

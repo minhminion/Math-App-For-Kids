@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
+import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
 
 // ignore: must_be_immutable
 class LessonItemDialog extends BaseStateless {
-  final BaseGamePlay game;
+  final GamePlay game;
 
   LessonItemDialog({Key key, this.game}) : super(key: key);
+
+  playGame(int gameId, BuildContext context) async {
+    await context.provider<GameProvider>().getGameById(gameId);
+
+    Navigator.pushNamed(context, AppRoute.gamePlayRoute, arguments: game.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +41,7 @@ class LessonItemDialog extends BaseStateless {
                           borderRadius: BorderRadius.circular(40)),
                       primary: appTheme.successColor,
                       padding: EdgeInsets.all(AppConstant.defaultSpacing * 4)),
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoute.gamePlayRoute,
-                        arguments: game);
-                  },
+                  onPressed: () => playGame(game.id, context),
                   child: Icon(
                     Icons.play_arrow,
                     size: 80.0,

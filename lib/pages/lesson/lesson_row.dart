@@ -75,7 +75,7 @@ class LessonRow extends BaseStateless {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, AppRoute.lessonDetailRoute,
-            arguments: lesson);
+            arguments: lesson.id);
       },
       child: Container(
         margin: EdgeInsets.symmetric(

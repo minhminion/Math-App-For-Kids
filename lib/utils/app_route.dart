@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/pages/game/game_page.dart';
-import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/landing/landing_page.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_detail.dart';
 import 'package:math_app_for_kid/pages/lesson/lesson_list_page.dart';
@@ -66,7 +65,7 @@ class AppRoute {
           return FadeRoute(
             transitionDuration: Duration(milliseconds: 500),
             page: LessonDetailPage(
-              lesson: settings.arguments,
+              lessonId: settings.arguments,
             ),
           );
         }
@@ -74,10 +73,7 @@ class AppRoute {
 
       case gamePlayRoute:
         return MaterialPageRoute(
-            settings: settings,
-            builder: (_) => AppRoute.createProvider(
-                (context) => GameProvider(game: settings.arguments),
-                GamePlayPage()));
+            settings: settings, builder: (_) => GamePlayPage());
 
       default:
         return onUnknownRoute(settings);

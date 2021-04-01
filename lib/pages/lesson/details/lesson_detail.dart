@@ -4,39 +4,28 @@ import 'package:math_app_for_kid/pages/lesson/details/lesson_list_game.dart';
 import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
-import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:math_app_for_kid/widgets/w_progess_circular.dart';
 import 'package:provider/provider.dart';
 
 class LessonDetailPage extends StatefulWidget {
-  LessonDetailPage({Key key, @required this.lesson}) : super(key: key);
+  LessonDetailPage({Key key, @required this.lessonId}) : super(key: key);
 
-  final Lesson lesson;
+  final int lessonId;
 
   @override
   _LessonDetailPageState createState() => _LessonDetailPageState();
 }
 
 class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
-  LessonProvider _lessonProvider;
-
   @override
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
-    _lessonProvider = context.provider<LessonProvider>();
   }
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _lessonProvider = context.provider<LessonProvider>();
-    });
-
-    // TODO: Get game detail from DB
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      getLessonDetails();
-    });
+    setState(() {});
   }
 
   @override
@@ -44,14 +33,14 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
     super.dispose();
   }
 
-  void getLessonDetails() async {
-    await _lessonProvider.updateLesson(widget.lesson);
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    int completedGame = context.watch<LessonProvider>().lesson?.completedGame;
+    Lesson lesson = context
+        .watch<LessonProvider>()
+        .listLesson
+        .firstWhere((element) => element.id == widget.lessonId);
+    int completedGame = lesson?.completedGame;
 
     return Scaffold(
       backgroundColor: appTheme.backgroundColor,
@@ -64,9 +53,8 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            _buildLessonContentBox(widget.lesson),
-            _buildLessonThumbnail(
-                lesson: widget.lesson, completedGame: completedGame),
+            _buildLessonContentBox(lesson),
+            _buildLessonThumbnail(lesson: lesson, completedGame: completedGame),
             context.watch<LessonProvider>().loadingLesson
                 ? Padding(
                     padding: EdgeInsets.only(top: 200),
@@ -75,7 +63,7 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
                           AlwaysStoppedAnimation<Color>(appTheme.errorColor),
                     ))
                 : LessonListGames(
-                    data: widget.lesson.gameplays,
+                    lesson: lesson,
                   )
           ],
         ),

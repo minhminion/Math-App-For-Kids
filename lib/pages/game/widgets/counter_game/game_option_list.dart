@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/game.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
-import 'package:math_app_for_kid/pages/game/widgets/game_option_item.dart';
+import 'package:math_app_for_kid/pages/game/widgets/counter_game/game_option_item.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +19,7 @@ class _GameOptionListState extends BaseStateful<GameOptionList> {
   @override
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
-    _gameData = context.provider<GameProvider>().game.data as CounterGame;
+    _gameData = context.provider<GameProvider>().game;
   }
 
   @override
