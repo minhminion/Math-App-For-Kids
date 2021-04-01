@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/pages/game/widgets/game_board_answer_place.dart';
-import 'package:math_app_for_kid/pages/game/widgets/count_game_board_question.dart';
+import 'package:math_app_for_kid/pages/game/widgets/counter_game/game_board_answer_place.dart';
+import 'package:math_app_for_kid/pages/game/widgets/counter_game/count_game_board_question.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
 

@@ -2,25 +2,29 @@ import 'dart:async';
 
 import 'package:math_app_for_kid/models/local/lessons.dart';
 import 'package:math_app_for_kid/services/safety/change_notifier_safety.dart';
+import 'package:math_app_for_kid/services/store/database_helper.dart';
 
 class LessonProvider extends ChangeNotifierSafety {
+  List<Lesson> listLesson;
   Lesson lesson;
-  bool loadingLesson = true;
+  bool loadingLesson = false;
 
-  Future<void> updateLesson(Lesson lesson) async {
-    this.lesson = lesson;
-    // TODO: Get game detail
-    // Fake call DB
-    // print("Start Loading Lesson");
+  Future<void> fetchAllLesson() async {
+    this.listLesson = await DatabaseHelper.dbHelper.getAllLesson();
+  }
+
+  Future<void> updateLesson(int lessonId) async {
+    // this.lesson = lesson;
     loadingLesson = true;
     notifyListeners();
 
-    var duration = new Duration(seconds: 2);
-    new Timer(duration, () {
-      loadingLesson = false;
-      // print("End Loading Lesson");
-      notifyListeners();
-    });
+    dynamic response =
+        await DatabaseHelper.dbHelper.getLessonWithGameplays(lessonId);
+    this.lesson = response;
+
+    loadingLesson = false;
+    // print("End Loading Lesson");
+    notifyListeners();
   }
 
   @override

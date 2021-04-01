@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
@@ -27,10 +28,16 @@ class _SplashScreenState extends State<SplashScreen> {
     return new Timer(duration, () => navigateToLanding());
   }
 
+  fetchAllLesson() async {
+    await context.provider<LessonProvider>().fetchAllLesson();
+    navigateToLanding();
+  }
+
   @override
   void initState() {
     super.initState();
-    startTime();
+    fetchAllLesson();
+    // startTime();
   }
 
   @override
