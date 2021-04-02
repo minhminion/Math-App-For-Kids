@@ -12,6 +12,7 @@ class CharacterProvider extends ChangeNotifier {
 
   AppAssets assets = AppAssets.origin();
   Artboard _riveArtboard;
+  CharacterType _characterType = CharacterType.idle;
   RiveAnimationController _controller;
 
   Artboard get riveArtboard => _riveArtboard;
@@ -43,9 +44,9 @@ class CharacterProvider extends ChangeNotifier {
   }
 
   void changeAnimation(CharacterType type) {
-    if (_riveArtboard == null) return;
+    if (_riveArtboard == null || type == _characterType) return;
     _riveArtboard.removeController(_controller);
-
+    this._characterType = type;
     switch (type) {
       case CharacterType.fail: // False
 
