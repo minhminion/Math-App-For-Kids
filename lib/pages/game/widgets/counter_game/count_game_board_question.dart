@@ -18,7 +18,7 @@ class CountGameQuestions extends BaseStateless {
         builder: (BuildContext context, BoxConstraints constraints) {
       int crossAxisCount =
           gameData.result > 2 ? (gameData.result / 2).round() : gameData.result;
-      double childAspectRadio = crossAxisCount > 2
+      double childAspectRadio = gameData.result > 2
           ? (constraints.maxWidth / (gameData.result / 2).round()) /
               (constraints.maxHeight / 2)
           : (constraints.maxWidth / gameData.result) / constraints.maxHeight;
@@ -39,7 +39,7 @@ class CountGameQuestions extends BaseStateless {
     for (var i = 0; i < length; i++) {
       list.add(Container(
         margin: EdgeInsets.all(8.0),
-        color: Colors.blue,
+        // color: Colors.blue,
         child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
           double size = constraints.maxWidth * 0.5;

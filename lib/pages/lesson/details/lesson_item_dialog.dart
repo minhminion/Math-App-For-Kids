@@ -5,6 +5,7 @@ import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class LessonItemDialog extends BaseStateless {
@@ -13,8 +14,8 @@ class LessonItemDialog extends BaseStateless {
   LessonItemDialog({Key key, this.game}) : super(key: key);
 
   playGame(int gameId, BuildContext context) async {
-    await context.provider<GameProvider>().getGameById(gameId);
-
+    var response =
+        await context.provider<GameProvider>().getGameById(gameId, context);
     Navigator.pushNamed(context, AppRoute.gamePlayRoute, arguments: game.id);
   }
 
@@ -22,13 +23,13 @@ class LessonItemDialog extends BaseStateless {
   Widget build(BuildContext context) {
     super.build(context);
     return Dialog(
+      insetPadding: EdgeInsets.symmetric(
+          horizontal: AppConstant.defaultSpacing * 6,
+          vertical: AppConstant.defaultSpacing * 6),
       backgroundColor: Colors.transparent,
       child: Hero(
         tag: "game_item_${game.id}",
         child: Container(
-          margin: EdgeInsets.symmetric(
-              horizontal: AppConstant.defaultSpacing * 4,
-              vertical: AppConstant.defaultSpacing * 3),
           width: double.infinity,
           decoration: BoxDecoration(
               color: Colors.grey,
@@ -42,10 +43,15 @@ class LessonItemDialog extends BaseStateless {
                       primary: appTheme.successColor,
                       padding: EdgeInsets.all(AppConstant.defaultSpacing * 4)),
                   onPressed: () => playGame(game.id, context),
-                  child: Icon(
-                    Icons.play_arrow,
-                    size: 80.0,
-                  ))),
+                  child: context.watch<GameProvider>().isLoading
+                      ? CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              appTheme.errorColor),
+                        )
+                      : Icon(
+                          Icons.play_arrow,
+                          size: 80.0,
+                        ))),
         ),
       ),
     );

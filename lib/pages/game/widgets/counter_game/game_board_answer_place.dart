@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/game/widgets/counter_game/game_option_item.dart';
+import 'package:math_app_for_kid/services/app/character_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
 import 'package:provider/provider.dart';
@@ -28,10 +29,19 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace> {
 
     return Container(
       child: DragTarget<int>(onAccept: (value) {
-        if (_gameProvider.checkResult(value))
+        if (_gameProvider.checkResult(value)) {
+          // Change Character Type
+          context
+              .read<CharacterProvider>()
+              .changeAnimation(CharacterType.success);
+
           setState(() {
             result = value;
           });
+        } else {
+          // Change Character Type
+          context.read<CharacterProvider>().changeAnimation(CharacterType.fail);
+        }
       }, builder: (context, candicates, reject) {
         return context.watch<GameProvider>().isComplete
             ? GameOptionItem.option(

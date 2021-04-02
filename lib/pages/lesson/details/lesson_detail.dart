@@ -17,9 +17,15 @@ class LessonDetailPage extends StatefulWidget {
 }
 
 class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
+  Lesson lesson;
+
   @override
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
+    lesson = context
+        .watch<LessonProvider>()
+        .listLesson
+        .firstWhere((element) => element.id == widget.lessonId);
   }
 
   @override
@@ -36,10 +42,7 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    Lesson lesson = context
-        .watch<LessonProvider>()
-        .listLesson
-        .firstWhere((element) => element.id == widget.lessonId);
+
     int completedGame = lesson?.completedGame;
 
     return Scaffold(
@@ -59,8 +62,7 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
                 ? Padding(
                     padding: EdgeInsets.only(top: 200),
                     child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(appTheme.errorColor),
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ))
                 : LessonListGames(
                     lesson: lesson,
