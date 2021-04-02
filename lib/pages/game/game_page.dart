@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/pages/game/game_board.dart';
 import 'package:math_app_for_kid/pages/game/game_character.dart';
-import 'package:math_app_for_kid/pages/game/widgets/counter_game/game_option_list.dart';
+import 'package:math_app_for_kid/pages/game/widgets/game_option_list.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
 import 'package:math_app_for_kid/widgets/w_floating_button.dart';
@@ -18,7 +18,9 @@ class GamePlayPage extends BaseStateless {
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // Game character
           GameCharacter(),
+          // Game Board
           Expanded(
             child: Container(
               margin: EdgeInsets.fromLTRB(
@@ -29,6 +31,7 @@ class GamePlayPage extends BaseStateless {
               child: GameBoard(),
             ),
           ),
+          // Game Option
           GameOptionList()
         ],
       ),

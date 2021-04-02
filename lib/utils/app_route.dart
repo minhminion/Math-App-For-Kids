@@ -72,7 +72,7 @@ class AppRoute {
         return onUnknownRoute(settings);
 
       case gamePlayRoute:
-        return MaterialPageRoute(
+        return MaterialPageRoute<dynamic>(
             settings: settings, builder: (_) => GamePlayPage());
 
       default:

@@ -6,18 +6,18 @@ class CounterGame extends GamePlay {
       bool isComplete,
       lessonId,
       GameType gameType,
-      this.options,
-      this.result,
+      List<int> options,
+      int result,
       this.images})
       : super(
             id: id,
             gameType: gameType,
             isComplete: isComplete,
-            lessonId: lessonId);
+            lessonId: lessonId,
+            options: options,
+            result: result);
 
   String images;
-  List<int> options;
-  int result;
 
   @override
   factory CounterGame.fromMap(Map<String, dynamic> map) => CounterGame(
@@ -32,6 +32,45 @@ class CounterGame extends GamePlay {
       images: map['images']);
 }
 
+class MathGame extends GamePlay {
+  MathGame(
+      {id,
+      bool isComplete,
+      lessonId,
+      GameType gameType,
+      List<int> options,
+      int result,
+      this.operator,
+      this.numA,
+      this.numB})
+      : super(
+            id: id,
+            gameType: gameType,
+            isComplete: isComplete,
+            lessonId: lessonId,
+            options: options,
+            result: result);
+
+  String operator;
+  int numA;
+  int numB;
+
+  @override
+  factory MathGame.fromMap(Map<String, dynamic> map) => MathGame(
+        id: map['id'],
+        options: [map['option1'], map['option2'], map['option3']]
+            .map((data) => int.parse(data))
+            .toList(),
+        result: int.parse(map['result']),
+        isComplete: map['isComplete'] == 1 ? true : false,
+        lessonId: map['lessonId'],
+        gameType: GameType.values[map['gameType'] as int],
+        operator: map['operator'],
+        numA: map['numA'],
+        numB: map['numB'],
+      );
+}
+
 class GamePlay {
   static final String tableName = 'Gameplays';
 
@@ -39,11 +78,23 @@ class GamePlay {
   GameType gameType;
   bool isComplete;
   int lessonId;
+  List<int> options;
+  int result;
 
-  GamePlay({this.id, this.isComplete, this.lessonId, this.gameType});
+  GamePlay(
+      {this.id,
+      this.isComplete,
+      this.lessonId,
+      this.gameType,
+      this.options,
+      this.result});
 
   factory GamePlay.fromMap(Map<String, dynamic> map) => GamePlay(
       id: map['id'],
+      options: [map['option1'], map['option2'], map['option3']]
+          .map((data) => int.parse(data))
+          .toList(),
+      result: int.parse(map['result']),
       isComplete: map['isComplete'] == 1 ? true : false,
       lessonId: map['lessonId'],
       gameType: GameType.values[map['gameType'] as int]);

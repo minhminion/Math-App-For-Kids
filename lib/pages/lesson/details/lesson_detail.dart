@@ -17,33 +17,16 @@ class LessonDetailPage extends StatefulWidget {
 }
 
 class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
-  Lesson lesson;
-
   @override
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
-    lesson = context
-        .watch<LessonProvider>()
-        .listLesson
-        .firstWhere((element) => element.id == widget.lessonId);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {});
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    context.read<LessonProvider>().getLessonById(widget.lessonId);
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
-    int completedGame = lesson?.completedGame;
+    Lesson lesson = context.watch<LessonProvider>().currentLesson;
 
     return Scaffold(
       backgroundColor: appTheme.backgroundColor,
@@ -57,8 +40,8 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
           alignment: Alignment.topCenter,
           children: [
             _buildLessonContentBox(lesson),
-            _buildLessonThumbnail(lesson: lesson, completedGame: completedGame),
-            context.watch<LessonProvider>().loadingLesson
+            _buildLessonThumbnail(lesson: lesson),
+            context.watch<LessonProvider>().isLoading
                 ? Padding(
                     padding: EdgeInsets.only(top: 200),
                     child: CircularProgressIndicator(
@@ -73,11 +56,13 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
     );
   }
 
-  Hero _buildLessonThumbnail({@required Lesson lesson, int completedGame = 0}) {
+  Hero _buildLessonThumbnail({@required Lesson lesson}) {
     return Hero(
       tag: "lesson_image_${lesson.id}",
       child: WProgessCircular(
-        progessPercent: lesson.totalGame / 100 * completedGame,
+        progessPercent: lesson.gameplays.length > 0
+            ? lesson.completedGame / lesson.gameplays.length
+            : 0,
         child: Image(
           image: AssetImage('assets/base/images/lesson/${lesson.image}'),
           height: AppConstant.defaultSpacing * 13,
