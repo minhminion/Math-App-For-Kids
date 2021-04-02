@@ -24,7 +24,7 @@ class AppAssets {
 
   String backgroundLanding = 'assets/base/images/bg_landing.png';
 
-  String planet(id) => 'assets/planet/planet_$id.png';
+  String planet(id) => 'assets/base/images/planet/planet_$id.png';
 
   ///#endregion
   ///#region VIDEOS

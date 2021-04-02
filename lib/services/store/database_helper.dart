@@ -76,7 +76,7 @@ class DatabaseHelper {
       ''');
     await db.execute('''
       INSERT INTO Lessons (title, image, completedGame)
-      VALUES('Phép cộng trong phạm vi 10', 'moon.png', 3)
+      VALUES('Phép cộng trong phạm vi 10', 'moon.png', 0)
       ''');
     await db.execute('''
       INSERT INTO Lessons (title, image, completedGame)
@@ -135,6 +135,15 @@ class DatabaseHelper {
     await db.execute('''
       INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType)
       VALUES('4', '7', '3', '7', 0, 1, 0)
+      ''');
+
+    await db.execute('''
+      INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType, numA, numB, operator)
+      VALUES('4', '7', '3', '7', 0, 4, 1, '5', '2', '+')
+      ''');
+    await db.execute('''
+      INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType, numA, numB, operator)
+      VALUES('4', '7', '3', '3', 0, 4, 1, '1', '2', '+')
       ''');
   }
 

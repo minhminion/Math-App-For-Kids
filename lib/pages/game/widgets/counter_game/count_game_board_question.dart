@@ -2,18 +2,17 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/game.dart';
-import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
-import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class CountGameQuestions extends BaseStateless {
-  CountGameQuestions({Key key}) : super(key: key);
+  CountGameQuestions({Key key, this.gameData}) : super(key: key);
+
+  CounterGame gameData;
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    CounterGame gameData = context.read<GameProvider>().game;
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       int crossAxisCount =

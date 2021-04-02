@@ -75,11 +75,11 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
           itemCount: gamePlays.length,
           itemBuilder: (context, index) => index > widget.lesson.completedGame
               ? _buildLockedLessonContentItem(gamePlays[index])
-              : _buildLessonContentItem(gamePlays[index])),
+              : _buildLessonContentItem(gamePlays[index], index + 1)),
     );
   }
 
-  Widget _buildLessonContentItem(GamePlay game) {
+  Widget _buildLessonContentItem(GamePlay game, int index) {
     return InkWell(
       borderRadius: BorderRadius.circular(AppConstant.defaultSpacing),
       onTap: () => openGameDialog(game),
@@ -99,7 +99,7 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
           ),
           Center(
             child: Text(
-              game.id.toString(),
+              index.toString(),
               style: TextStyle(
                 fontFamily: appTheme.assets.fontRoboto,
                 color: Colors.white,

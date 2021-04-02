@@ -14,8 +14,9 @@ class LessonItemDialog extends BaseStateless {
   LessonItemDialog({Key key, this.game}) : super(key: key);
 
   playGame(int gameId, BuildContext context) async {
-    var response =
-        await context.provider<GameProvider>().getGameById(gameId, context);
+    await context
+        .provider<GameProvider>()
+        .startGame(gameId: gameId, context: context);
     Navigator.pushNamed(context, AppRoute.gamePlayRoute, arguments: game.id);
   }
 
