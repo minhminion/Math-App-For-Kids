@@ -15,19 +15,23 @@ class GameCharacter extends StatefulWidget {
 class _GameCharacterState extends BaseStateful<GameCharacter>
     with TickerProviderStateMixin {
   AnimationController _controller;
-  Animation<double> _animation;
+  Animation<Offset> _animation;
 
   @override
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
     _controller = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1000));
+        vsync: this, duration: Duration(milliseconds: 1500));
 
-    _animation = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Interval(0.5, 1.0)),
-    );
+    _animation = Tween<Offset>(
+      begin: Offset(-1.5, 0.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.elasticInOut,
+    ));
 
-    _controller.forward(from: 0.0);
+    _controller.forward();
   }
 
   @override
@@ -39,21 +43,24 @@ class _GameCharacterState extends BaseStateful<GameCharacter>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final riveArtboard = context.watch<CharacterProvider>().riveArtboard;
 
     return Container(
+      height: 180,
       width: 200,
-      // color: Colors.blue,
-      padding: EdgeInsets.symmetric(horizontal: AppConstant.defaultSpacing * 4),
-      child: Material(
-        color: Colors.transparent,
-        child: riveArtboard == null
-            ? const SizedBox()
-            : Rive(
-                artboard: riveArtboard,
-                fit: BoxFit.contain,
-              ),
-      ),
+      child: SlideTransition(
+          position: _animation,
+          child: Selector<CharacterProvider, Artboard>(
+            selector: (_, _charaterProvider) => _charaterProvider.riveArtboard,
+            builder: (_, riveArtboard, __) => Material(
+              color: Colors.transparent,
+              child: riveArtboard == null
+                  ? const SizedBox()
+                  : Rive(
+                      artboard: riveArtboard,
+                      fit: BoxFit.contain,
+                    ),
+            ),
+          )),
     );
   }
 }

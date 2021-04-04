@@ -19,6 +19,8 @@ class GameProvider extends ChangeNotifierSafety {
 
   BuildContext _context;
 
+  int get currentGameIndex => _currentGameIndex;
+
   Future<void> startGame({int gameId, BuildContext context}) async {
     this.isComplete = false;
     this._context = context;
@@ -35,8 +37,6 @@ class GameProvider extends ChangeNotifierSafety {
 
     this._currentGameIndex = _lessonProvider.currentLesson.gameplays
         .indexWhere((element) => element.id == gameId);
-
-    print(_currentGameIndex);
 
     await getGameById(gameId: gameId);
     this.isLoading = false;

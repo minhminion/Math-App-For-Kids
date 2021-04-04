@@ -25,6 +25,7 @@ class AppAssets {
   String backgroundLanding = 'assets/base/images/bg_landing.png';
 
   String planet(id) => 'assets/base/images/planet/planet_$id.png';
+  String gameTrophy = 'assets/base/images/others/game_trophy.png';
 
   ///#endregion
   ///#region VIDEOS

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/game.dart';
 import 'package:math_app_for_kid/models/local/lessons.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_item_dialog.dart';
+import 'package:math_app_for_kid/pages/lesson/details/lesson_list_game_locked_item.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
 import 'package:math_app_for_kid/widgets/r_hero_dialog_router.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class LessonListGames extends StatefulWidget {
   LessonListGames({Key key, this.lesson}) : super(key: key);
@@ -17,25 +19,39 @@ class LessonListGames extends StatefulWidget {
 
 class _LessonListGamesState extends BaseStateful<LessonListGames>
     with TickerProviderStateMixin {
+  final _scrollDirection = Axis.horizontal;
+  List<GamePlay> gamePlays;
+
   AnimationController _controller;
   Animation<double> _animation;
+  Duration _animtionDuration = Duration(milliseconds: 800);
+
+  ItemScrollController _itemScrollController;
+  ItemPositionsListener _itemPositionsListener;
 
   @override
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
-    _controller = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1000));
+    _controller = AnimationController(vsync: this, duration: _animtionDuration);
 
     _animation = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: Interval(0.5, 1.0)),
     );
 
+    _itemScrollController = ItemScrollController();
+    _itemPositionsListener = ItemPositionsListener.create();
+
+    gamePlays = widget.lesson.gameplays;
+
     _controller.forward(from: 0.0);
   }
 
   @override
-  void initState() {
-    super.initState();
+  void afterFirstBuild(BuildContext context) {
+    super.afterFirstBuild(context);
+    if (gamePlays != null && gamePlays.length > 3) {
+      scrollTo(widget.lesson.completedGame);
+    }
   }
 
   @override
@@ -47,7 +63,7 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    List<GamePlay> gamePlays = widget.lesson.gameplays;
+    gamePlays = widget.lesson.gameplays;
     if (gamePlays == null || gamePlays.length == 0)
       return FadeTransition(
         opacity: _animation,
@@ -69,20 +85,24 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
 
     return FadeTransition(
       opacity: _animation,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
+      child: ScrollablePositionedList.builder(
           padding: EdgeInsets.fromLTRB(8.0, 160, 8.0, 32.0),
+          scrollDirection: _scrollDirection,
+          itemPositionsListener: _itemPositionsListener,
+          itemScrollController: _itemScrollController,
           itemCount: gamePlays.length,
           itemBuilder: (context, index) => index > widget.lesson.completedGame
-              ? _buildLockedLessonContentItem(gamePlays[index])
-              : _buildLessonContentItem(gamePlays[index], index + 1)),
+              ? LockedGameItem(
+                  key: Key(index.toString()), gamePlay: gamePlays[index])
+              : _buildLessonContentItem(gamePlays[index], index + 1,
+                  index == widget.lesson.completedGame)),
     );
   }
 
-  Widget _buildLessonContentItem(GamePlay game, int index) {
+  Widget _buildLessonContentItem(GamePlay game, int index, bool isCurrentGame) {
     return InkWell(
       borderRadius: BorderRadius.circular(AppConstant.defaultSpacing),
-      onTap: () => openGameDialog(game),
+      onTap: () => openGameDialog(game, index),
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -92,62 +112,71 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
               margin: EdgeInsets.symmetric(vertical: 0, horizontal: 16.0),
               width: 300,
               decoration: BoxDecoration(
-                  color: Colors.grey,
+                  // Color grey: IsCompleted, blueAccent: IsCurrentGame
+                  // ecoration: BoxDecoration(
+                  color: isCurrentGame ? Colors.blueAccent : Colors.grey,
+                  border: Border.all(color: Colors.white, width: 4),
                   borderRadius:
                       BorderRadius.circular(AppConstant.defaultSpacing)),
             ),
           ),
-          Center(
-            child: Text(
-              index.toString(),
-              style: TextStyle(
-                fontFamily: appTheme.assets.fontRoboto,
-                color: Colors.white,
-                fontSize: 30.0,
-                decoration: TextDecoration.none,
-                fontWeight: FontWeight.w600,
+          Hero(
+            tag: "game_item_index_${game.id}",
+            child: Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                  color: appTheme.errorColor,
+                  border: Border.all(color: Colors.white, width: 4),
+                  borderRadius: BorderRadius.all(Radius.circular(80))),
+              child: Center(
+                child: Text(
+                  index.toString(),
+                  style: TextStyle(
+                    fontFamily: appTheme.assets.fontRoboto,
+                    color: Colors.white,
+                    fontSize: 30.0,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
           ),
+          if (!isCurrentGame)
+            Positioned(
+              right: AppConstant.defaultSpacing * 2,
+              top: 0,
+              child: Hero(
+                tag: "game_item_trophy_${game.id}",
+                child: Image(
+                  image: AssetImage(appTheme.assets.gameTrophy),
+                  height: AppConstant.defaultSpacing * 8,
+                  width: AppConstant.defaultSpacing * 8,
+                ),
+              ),
+            ),
         ],
       ),
     );
   }
 
-  Widget _buildLockedLessonContentItem(GamePlay game) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 0, horizontal: 16.0),
-          width: 300,
-          decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(AppConstant.defaultSpacing)),
-        ),
-        Center(
-          child: Text(
-            "Locked",
-            style: TextStyle(
-              fontFamily: appTheme.assets.fontRoboto,
-              color: Colors.white,
-              fontSize: 30.0,
-              decoration: TextDecoration.none,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-      ],
-    );
+  void scrollTo(int index) {
+    _itemScrollController.scrollTo(
+        index: index,
+        duration: Duration(seconds: 2),
+        curve: Curves.easeInOutCubic,
+        alignment: 0);
   }
 
-  void openGameDialog(GamePlay game) {
+  void openGameDialog(GamePlay game, int index) {
     Navigator.push(
         context,
         HeroDialogRoute(
             builder: (BuildContext context) => Center(
                   child: LessonItemDialog(
                     game: game,
+                    gameIndex: index,
                   ),
                 )));
   }
