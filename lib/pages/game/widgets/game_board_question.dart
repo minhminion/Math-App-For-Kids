@@ -3,15 +3,11 @@ import 'package:math_app_for_kid/models/local/game.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/game/widgets/counter_game/count_game_board_question.dart';
 import 'package:math_app_for_kid/pages/game/widgets/math_game/math_game_board_question.dart';
-import 'package:math_app_for_kid/services/safety/base_stateful.dart';
+import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 import 'package:provider/provider.dart';
 
-class GameQuestion extends StatefulWidget {
-  @override
-  _GameQuestionState createState() => _GameQuestionState();
-}
-
-class _GameQuestionState extends BaseStateful<GameQuestion> {
+// ignore: must_be_immutable
+class GameQuestion extends BaseStateless {
   @override
   Widget build(BuildContext context) {
     super.build(context);

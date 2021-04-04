@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/pages/game/widgets/counter_game/count_game_question_item.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 
 // ignore: must_be_immutable
@@ -34,6 +35,8 @@ class CountGameQuestions extends BaseStateless {
 
   List<Widget> _buildListQuesion(int length) {
     List<Widget> list = [];
+    int planetId =
+        1 + Random().nextInt(2); // Generate Planet ID 1 -> 2 to get image
 
     for (var i = 0; i < length; i++) {
       list.add(Container(
@@ -52,7 +55,10 @@ class CountGameQuestions extends BaseStateless {
                   width: size,
                   top: (Random().nextDouble() * (constraints.maxHeight - size)),
                   left: (Random().nextDouble() * (constraints.maxWidth - size)),
-                  child: _buildQuestionItem()),
+                  child: CountGameQuestionItem(
+                    key: Key(i.toString()),
+                    planetId: planetId,
+                  )),
             ],
           );
         }),
@@ -60,12 +66,5 @@ class CountGameQuestions extends BaseStateless {
     }
 
     return list;
-  }
-
-  Widget _buildQuestionItem() {
-    return Image(
-      fit: BoxFit.fitHeight,
-      image: AssetImage(appTheme.assets.planet(2)),
-    );
   }
 }

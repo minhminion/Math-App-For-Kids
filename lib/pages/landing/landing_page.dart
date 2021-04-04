@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/models/local/lessons_for_test.dart';
+import 'package:math_app_for_kid/pages/landing/test_page.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
-import 'package:math_app_for_kid/services/store/database_helper.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
 
@@ -57,13 +54,11 @@ class _LandingPageState extends BaseStateful<LandingPage> {
               Center(
                 child: ElevatedButton(
                   onPressed: () async {
-                    Lesson2 list =
-                        await DatabaseHelper.dbHelper.getLessonWithGameplays(1);
-
-                    log(list.toString());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyTestPage()),
+                    );
                   },
-
-                  // Navigator.pushNamed(context, AppRoute.testRoute),
                   child: Icon(
                     Icons.play_arrow,
                     size: 70.0,
