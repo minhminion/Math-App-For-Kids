@@ -41,12 +41,17 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace> {
             result = value;
           });
 
-          Timer(Duration(seconds: 2), () {
+          Timer(Duration(seconds: 3), () {
             context.read<GameProvider>().nextGame();
           });
         } else {
           // Change Character Type
           context.read<CharacterProvider>().changeAnimation(CharacterType.fail);
+          Timer(Duration(seconds: 3), () {
+            context
+                .read<CharacterProvider>()
+                .changeAnimation(CharacterType.none);
+          });
         }
       }, builder: (context, candicates, reject) {
         return context.watch<GameProvider>().isComplete

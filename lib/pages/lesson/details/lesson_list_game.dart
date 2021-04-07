@@ -162,11 +162,7 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
   }
 
   void scrollTo(int index) {
-    _itemScrollController.scrollTo(
-        index: index,
-        duration: Duration(seconds: 2),
-        curve: Curves.easeInOutCubic,
-        alignment: 0);
+    _itemScrollController.jumpTo(index: index, alignment: 0);
   }
 
   void openGameDialog(GamePlay game, int index) {

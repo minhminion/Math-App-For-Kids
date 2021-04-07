@@ -86,7 +86,7 @@ class GameProvider extends ChangeNotifierSafety {
 
   Future<void> nextGame() async {
     if (_context != null)
-      _context.read<CharacterProvider>().changeAnimation(CharacterType.idle);
+      _context.read<CharacterProvider>().changeAnimation(CharacterType.none);
 
     // Not last game
     List<GamePlay> gamePlays = _lessonProvider.currentLesson.gameplays;
