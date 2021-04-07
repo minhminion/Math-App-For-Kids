@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:math_app_for_kid/utils/app_assets.dart';
 import 'package:rive/rive.dart';
 
-enum CharacterType { start, success, idle, fail, talk }
+enum CharacterType { start, success, idle, fail, talk, none }
 
 class CharacterProvider extends ChangeNotifier {
   CharacterProvider() {
@@ -16,6 +16,8 @@ class CharacterProvider extends ChangeNotifier {
   RiveAnimationController _controller;
 
   Artboard get riveArtboard => _riveArtboard;
+
+  CharacterType get characterType => _characterType;
 
   Future<void> loadRiveFile() async {
     notifyListeners();
@@ -66,6 +68,11 @@ class CharacterProvider extends ChangeNotifier {
       case CharacterType.start: // Start
 
         _controller = SimpleAnimation('Start');
+
+        break;
+      case CharacterType.idle: // Start
+
+        _controller = SimpleAnimation('Idle');
 
         break;
       default: // Idle
