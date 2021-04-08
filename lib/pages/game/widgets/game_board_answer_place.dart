@@ -44,7 +44,8 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace> {
           Timer(Duration(seconds: 3), () {
             context.read<GameProvider>().nextGame();
           });
-        } else {
+        } else if (context.read<CharacterProvider>().characterType !=
+            CharacterType.fail) {
           // Change Character Type
           context.read<CharacterProvider>().changeAnimation(CharacterType.fail);
           Timer(Duration(seconds: 3), () {

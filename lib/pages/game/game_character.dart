@@ -81,16 +81,19 @@ class _GameCharacterState extends BaseStateful<GameCharacter>
     switch (type) {
       case CharacterType.success:
         return BubbleChat(
+          key: ValueKey(CharacterType.success),
           text: 'Đúng rồi, bạn thật giỏi',
         );
 
       case CharacterType.fail:
         return BubbleChat(
+          key: ValueKey(CharacterType.fail),
           text: 'Sai rồi, bạn hãy thử lại',
         );
 
       case CharacterType.idle:
         return BubbleChat(
+          key: ValueKey(CharacterType.idle),
           text: 'Xin chào bạn!',
         );
       default:
