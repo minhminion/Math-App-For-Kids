@@ -83,18 +83,21 @@ class _GameCharacterState extends BaseStateful<GameCharacter>
         return BubbleChat(
           key: ValueKey(CharacterType.success),
           text: 'Đúng rồi, bạn thật giỏi',
+          audioUrl: 'base/audios/success_audio.mp3',
         );
 
       case CharacterType.fail:
         return BubbleChat(
           key: ValueKey(CharacterType.fail),
           text: 'Sai rồi, bạn hãy thử lại',
+          audioUrl: 'base/audios/error_audio.mp3',
         );
 
       case CharacterType.idle:
         return BubbleChat(
           key: ValueKey(CharacterType.idle),
           text: 'Xin chào bạn!',
+          audioUrl: 'base/audios/hello_audio.mp3',
         );
       default:
         return SizedBox(

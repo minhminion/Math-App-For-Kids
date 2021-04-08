@@ -18,7 +18,14 @@ class GameOptionItem extends BaseStateless {
     return GameOptionItem(
       key: key,
       size: size,
-      text: Text(value.toString()),
+      text: Text(
+        value.toString(),
+        style: TextStyle(
+          fontSize: 40.0,
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
       isDisable: isDisable,
     );
   }

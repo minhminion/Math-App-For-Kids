@@ -1,7 +1,32 @@
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/widgets/w_bubble_chat.dart';
 
-class MyTestPage extends StatelessWidget {
+class MyTestPage extends StatefulWidget {
+  @override
+  _MyTestPageState createState() => _MyTestPageState();
+}
+
+class _MyTestPageState extends State<MyTestPage> {
+  AudioPlayer advancedPlayer;
+  AudioCache audioCache;
+
+  @override
+  void initState() {
+    super.initState();
+    initAudio();
+  }
+
+  initAudio() {
+    advancedPlayer = AudioPlayer();
+    audioCache = AudioCache(fixedPlayer: advancedPlayer);
+  }
+
+  playAudio() {
+    advancedPlayer.stop();
+    audioCache.play('base/audios/hello_audio.mp3');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,12 +34,22 @@ class MyTestPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Text page'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
+      body: Center(
         child: Column(
           children: [
-            BubbleChat(
-              text: 'Sai rồi, bạn hãy thử lại',
+            TextButton(
+              onPressed: () {
+                playAudio();
+              },
+              child: Text('Play audio'),
+            ),
+            TextButton(
+              onPressed: () => advancedPlayer.pause(),
+              child: Text('Pause audio'),
+            ),
+            TextButton(
+              onPressed: () => advancedPlayer.stop(),
+              child: Text('Stop audio'),
             ),
           ],
         ),
