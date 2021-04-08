@@ -64,15 +64,15 @@ class DatabaseHelper {
     /* LESSON */
     await db.execute('''
       INSERT INTO Lessons (title, image, completedGame)
-      VALUES('Đếm các số trong phạm vi 10', 'mars.png', 5)
+      VALUES('Đếm các số trong phạm vi 10', 'mars.png', 0)
       ''');
     await db.execute('''
       INSERT INTO Lessons (title, image, completedGame)
-      VALUES('Hình vuông - Hình tròn\nHình tam giác - Hình chữ nhật', 'earth.png', 10)
+      VALUES('Hình vuông - Hình tròn\nHình tam giác - Hình chữ nhật', 'earth.png', 0)
       ''');
     await db.execute('''
       INSERT INTO Lessons (title, image, completedGame)
-      VALUES('Nhiều hơn - Ít hơn - Bằng nhau', 'mercury.png', 4)
+      VALUES('Nhiều hơn - Ít hơn - Bằng nhau', 'mercury.png', 0)
       ''');
     await db.execute('''
       INSERT INTO Lessons (title, image, completedGame)
@@ -80,12 +80,12 @@ class DatabaseHelper {
       ''');
     await db.execute('''
       INSERT INTO Lessons (title, image, completedGame)
-      VALUES('Phép trừ trong phạm vi 10', 'neptune.png', 5)
+      VALUES('Phép trừ trong phạm vi 10', 'neptune.png', 0)
       ''');
 
     /* GAMEPLAY */
     /* COUNTING GAME */
-    // GAME TYPE { countGame: 0, mathGame: 1 }
+    // GAME TYPE { countGame: 0, mathGame: 1, compareGame: 2 }
     /* 2 */
     await db.execute('''
       INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType)
@@ -145,6 +145,15 @@ class DatabaseHelper {
       INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType, numA, numB, operator)
       VALUES('4', '7', '3', '3', 0, 4, 1, '1', '2', '+')
       ''');
+
+    await db.execute('''
+      INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType, numA, numB)
+      VALUES('0', '1', '2', '2', 0, 3, 2, '3', '5')
+      ''');
+    await db.execute('''
+      INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType, numA, numB)
+      VALUES('0', '1', '2', '1', 0, 3, 2, '4', '4')
+      ''');
   }
 
   Future<List<Map<String, dynamic>>> getAll(String tableName) async {
@@ -197,6 +206,8 @@ class DatabaseHelper {
       List<GamePlay> gamePlays = await getGamePlayByLessonId(lesson.id);
       lesson.totalGame = gamePlays?.length;
       lesson.gameplays = gamePlays;
+      lesson.completedGame = gamePlays.fold(
+          0, (value, element) => element.isComplete ? value + 1 : value);
       return lesson;
     }));
   }

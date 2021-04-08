@@ -58,6 +58,9 @@ class GameProvider extends ChangeNotifierSafety {
           case GameType.mathGame:
             this.game = MathGame.fromMap(response);
             break;
+          case GameType.compareGame:
+            this.game = CompareGame.fromMap(response);
+            break;
         }
       }
 
@@ -75,6 +78,11 @@ class GameProvider extends ChangeNotifierSafety {
         break;
       case GameType.mathGame:
         MathGame game = this.game;
+        isComplete = value == game.result;
+        break;
+
+      case GameType.compareGame:
+        CompareGame game = this.game;
         isComplete = value == game.result;
         break;
       default:

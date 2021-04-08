@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/game.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
+import 'package:math_app_for_kid/pages/game/widgets/compare_game/compare_game_board_question.dart';
 import 'package:math_app_for_kid/pages/game/widgets/counter_game/count_game_board_question.dart';
 import 'package:math_app_for_kid/pages/game/widgets/math_game/math_game_board_question.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
@@ -28,7 +29,11 @@ class GameQuestion extends BaseStateless {
         return MathGameQuestion(
           gameData: _gameData as MathGame,
         );
-        return null;
+
+      case GameType.compareGame:
+        return CompareGameQuestion(
+          gameData: _gameData as CompareGame,
+        );
       default:
         return null;
     }

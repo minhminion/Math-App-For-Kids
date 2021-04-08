@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 
@@ -42,7 +40,7 @@ class _BubbleChatState extends BaseStateful<BubbleChat>
   void playAnimation() async {
     if (_controller != null) {
       await _controller.forward().orCancel;
-      await _controller.reverse().orCancel;
+      // await _controller.reverse().orCancel;
     }
   }
 

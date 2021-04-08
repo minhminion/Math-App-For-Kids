@@ -1,4 +1,6 @@
-enum GameType { countGame, mathGame }
+enum GameType { countGame, mathGame, compareGame }
+
+enum CompareGameOption { greater, equal, less }
 
 class CounterGame extends GamePlay {
   CounterGame(
@@ -66,6 +68,42 @@ class MathGame extends GamePlay {
         lessonId: map['lessonId'],
         gameType: GameType.values[map['gameType'] as int],
         operator: map['operator'],
+        numA: map['numA'],
+        numB: map['numB'],
+      );
+}
+
+class CompareGame extends GamePlay {
+  CompareGame(
+      {id,
+      bool isComplete,
+      lessonId,
+      GameType gameType,
+      List<int> options,
+      int result,
+      this.numA,
+      this.numB})
+      : super(
+            id: id,
+            gameType: gameType,
+            isComplete: isComplete,
+            lessonId: lessonId,
+            options: options,
+            result: result);
+
+  int numA;
+  int numB;
+
+  @override
+  factory CompareGame.fromMap(Map<String, dynamic> map) => CompareGame(
+        id: map['id'],
+        options: [map['option1'], map['option2'], map['option3']]
+            .map((data) => int.parse(data))
+            .toList(),
+        result: int.parse(map['result']),
+        isComplete: map['isComplete'] == 1 ? true : false,
+        lessonId: map['lessonId'],
+        gameType: GameType.values[map['gameType'] as int],
         numA: map['numA'],
         numB: map['numB'],
       );
