@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:math_app_for_kid/services/app/app_audio.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 
 // ignore: must_be_immutable
 class BubbleChat extends StatefulWidget {
   String text;
+  String audioUrl;
 
-  BubbleChat({Key key, this.text}) : super(key: key);
+  BubbleChat({Key key, this.text, this.audioUrl}) : super(key: key);
 
   @override
   _BubbleChatState createState() => _BubbleChatState();
@@ -47,6 +49,8 @@ class _BubbleChatState extends BaseStateful<BubbleChat>
   @override
   void initState() {
     super.initState();
+    AppAudio.appAudio.initAudio();
+    AppAudio.appAudio.playAudio(widget.audioUrl);
   }
 
   @override

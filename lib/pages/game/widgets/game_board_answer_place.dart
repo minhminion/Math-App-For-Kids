@@ -60,7 +60,14 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace> {
                 value: result,
               )
             : GameOptionItem(
-                text: Text("?"),
+                text: Text(
+                  "?",
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
                 isDisable: true,
               );
       }),
