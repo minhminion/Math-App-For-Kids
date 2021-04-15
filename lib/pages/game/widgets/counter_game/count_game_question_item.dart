@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:math_app_for_kid/services/app/character_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class CountGameQuestionItem extends StatefulWidget {

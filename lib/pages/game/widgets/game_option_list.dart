@@ -39,8 +39,13 @@ class _GameOptionListState extends BaseStateful<GameOptionList> {
                           option != _gameData.result
                       ? Draggable<int>(
                           data: option,
-                          child: GameOptionItem.option(value: option),
-                          feedback: GameOptionItem.option(value: option),
+                          child: GameOptionItem.option(
+                            value: option,
+                          ),
+                          feedback: GameOptionItem.option(
+                            value: option,
+                            isDragging: true,
+                          ),
                           childWhenDragging: _buildEmptyOption(),
                         )
                       : _buildEmptyOption())

@@ -1,6 +1,13 @@
-enum GameType { countGame, mathGame, compareGame }
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
+import 'package:math_app_for_kid/utils/app_assets.dart';
+
+enum GameType { countGame, mathGame, compareGame, shapeGame }
 
 enum CompareGameOption { greater, equal, less }
+
+enum ShapeType { circle, square, rectangle, triangle }
 
 class CounterGame extends GamePlay {
   CounterGame(
@@ -107,6 +114,81 @@ class CompareGame extends GamePlay {
         numA: map['numA'],
         numB: map['numB'],
       );
+}
+
+class ShapeGame extends GamePlay {
+  ShapeGame(
+      {id,
+      bool isComplete,
+      lessonId,
+      GameType gameType,
+      List<int> options,
+      int result})
+      : super(
+            id: id,
+            gameType: gameType,
+            isComplete: isComplete,
+            lessonId: lessonId,
+            options: options,
+            result: result);
+
+  final int numberCorrect = 4;
+  List<ShapeGameItem> listAcceptItem = [];
+  List<ShapeGameItem> items = [];
+
+  @override
+  factory ShapeGame.fromMap(Map<String, dynamic> map) => ShapeGame(
+      id: map['id'],
+      options: [map['option1'], map['option2'], map['option3']]
+          .map((data) => int.parse(data))
+          .toList(),
+      result: int.parse(map['result']),
+      isComplete: map['isComplete'] == 1 ? true : false,
+      lessonId: map['lessonId'],
+      gameType: GameType.values[map['gameType'] as int]);
+
+  void createListShape() {
+    ShapeType resultType = ShapeType.values[this.result];
+    List<ShapeGameItem> list = [];
+    int imageId;
+
+    // Create result shape item
+    for (int i = 0; i < numberCorrect; i++) {
+      imageId = 1 + Random().nextInt(2);
+      list.add(ShapeGameItem(
+        i,
+        resultType,
+        AppAssets.origin().getShapeImages(resultType, imageId),
+      ));
+    }
+
+    // Create random shape item
+    for (int i = numberCorrect; i < 9; i++) {
+      ShapeType shapeType;
+      do {
+        shapeType = ShapeType.values[Random().nextInt(4)];
+      } while (shapeType == resultType);
+
+      imageId = 1 + Random().nextInt(2);
+      list.add(ShapeGameItem(
+        i,
+        shapeType,
+        AppAssets.origin().getShapeImages(shapeType, imageId),
+      ));
+    }
+
+    list.shuffle();
+
+    this.items = list;
+  }
+}
+
+class ShapeGameItem {
+  int id;
+  ShapeType shapeType;
+  String imageUrl;
+
+  ShapeGameItem(this.id, this.shapeType, this.imageUrl);
 }
 
 class GamePlay {

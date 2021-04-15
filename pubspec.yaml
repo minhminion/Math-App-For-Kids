@@ -74,6 +74,7 @@ flutter:
     - assets/base/images/
     - assets/base/images/lesson/
     - assets/base/images/planet/
+    - assets/base/images/shapes/
     - assets/base/images/others/
     - assets/base/audios/
   # An image asset can refer to one or more resolution-specific "variants", see
