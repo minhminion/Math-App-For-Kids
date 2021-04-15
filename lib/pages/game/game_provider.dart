@@ -61,6 +61,9 @@ class GameProvider extends ChangeNotifierSafety {
           case GameType.compareGame:
             this.game = CompareGame.fromMap(response);
             break;
+          case GameType.shapeGame:
+            this.game = ShapeGame.fromMap(response)..createListShape();
+            break;
         }
       }
 
@@ -83,6 +86,15 @@ class GameProvider extends ChangeNotifierSafety {
 
       case GameType.compareGame:
         CompareGame game = this.game;
+        isComplete = value == game.result;
+        break;
+      case GameType.shapeGame:
+        ShapeGame game = this.game;
+        ShapeGameItem gameItem = value;
+        if (gameItem.shapeType == ShapeType.values[game.result]) {
+          print("Accept Item");
+          game.listAcceptItem.add(gameItem);
+        }
         isComplete = value == game.result;
         break;
       default:

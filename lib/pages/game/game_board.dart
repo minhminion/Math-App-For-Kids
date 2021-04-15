@@ -27,6 +27,7 @@ class GameBoard extends BaseStateless {
       case GameType.countGame:
       case GameType.mathGame:
         return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Game Question
             Flexible(

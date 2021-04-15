@@ -41,8 +41,10 @@ class _BubbleChatState extends BaseStateful<BubbleChat>
 
   void playAnimation() async {
     if (_controller != null) {
-      await _controller.forward().orCancel;
-      // await _controller.reverse().orCancel;
+      try {
+        await _controller.forward().orCancel;
+        await _controller.reverse().orCancel;
+      } on TickerCanceled {}
     }
   }
 

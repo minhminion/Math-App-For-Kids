@@ -1,3 +1,5 @@
+import 'package:math_app_for_kid/models/local/game.dart';
+
 class AppAssets {
   AppAssets._();
 
@@ -26,6 +28,20 @@ class AppAssets {
 
   String planet(id) => 'assets/base/images/planet/planet_$id.png';
   String gameTrophy = 'assets/base/images/others/game_trophy.png';
+
+  String getShapeImages(ShapeType shapeType, int id) {
+    switch (shapeType) {
+      case ShapeType.circle:
+        return 'assets/base/images/shapes/circle_$id.png';
+      case ShapeType.square:
+        return 'assets/base/images/shapes/square_$id.png';
+      case ShapeType.rectangle:
+        return 'assets/base/images/shapes/rectangle_$id.png';
+      case ShapeType.triangle:
+        return 'assets/base/images/shapes/triangle_$id.png';
+    }
+    return "";
+  }
 
   ///#endregion
   ///#region VIDEOS

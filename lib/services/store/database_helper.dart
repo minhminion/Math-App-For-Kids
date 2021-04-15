@@ -85,7 +85,7 @@ class DatabaseHelper {
 
     /* GAMEPLAY */
     /* COUNTING GAME */
-    // GAME TYPE { countGame: 0, mathGame: 1, compareGame: 2 }
+    // GAME TYPE { countGame: 0, mathGame: 1, compareGame: 2, shapeGame: 3 }
     /* 2 */
     await db.execute('''
       INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType)
@@ -137,6 +137,14 @@ class DatabaseHelper {
       VALUES('4', '7', '3', '7', 0, 1, 0)
       ''');
 
+    // Game chọn hình
+    // enum Shape { circle, square, rectangle, triangle }
+    await db.execute('''
+      INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType)
+      VALUES('2', '2', '1', '1', 0, 2, 3)
+      ''');
+
+    // Game cộng
     await db.execute('''
       INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType, numA, numB, operator)
       VALUES('4', '7', '3', '7', 0, 4, 1, '5', '2', '+')
@@ -146,6 +154,7 @@ class DatabaseHelper {
       VALUES('4', '7', '3', '3', 0, 4, 1, '1', '2', '+')
       ''');
 
+    // Game So sánh
     await db.execute('''
       INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType, numA, numB)
       VALUES('0', '1', '2', '2', 0, 3, 2, '3', '5')
