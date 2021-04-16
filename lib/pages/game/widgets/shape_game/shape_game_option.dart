@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/game.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
@@ -6,17 +5,56 @@ import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:provider/provider.dart';
 
 class ShapeGameOption extends StatefulWidget {
+  ShapeGameOption(Key key) : super(key: key);
+
   @override
   _ShapeGameOptionState createState() => _ShapeGameOptionState();
 }
 
-class _ShapeGameOptionState extends BaseStateful<ShapeGameOption> {
-  ShapeGame _gameData;
+class _ShapeGameOptionState extends BaseStateful<ShapeGameOption>
+    with TickerProviderStateMixin {
+  ShapeGame gameData;
+
+  AnimationController _controller;
+  Animation<double> _animation;
 
   @override
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
-    _gameData = context.watch<GameProvider>().game as ShapeGame;
+    gameData = context.watch<GameProvider>().game as ShapeGame;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    );
+
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.elasticOut,
+    );
+
+    _controller.forward(from: 0);
+
+    print("Rebuild");
+  }
+
+  @override
+  void didUpdateWidget(ShapeGameOption oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.key != widget.key) {
+      _controller.forward(from: 0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.stop();
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -33,16 +71,16 @@ class _ShapeGameOptionState extends BaseStateful<ShapeGameOption> {
         physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: crossAxisCount,
         childAspectRatio: childAspectRatio,
-        children: _buildListOption(),
+        children: _buildListOption(gameData.items),
       );
     });
   }
 
-  List<Widget> _buildListOption() {
+  List<Widget> _buildListOption(List<ShapeGameItem> items) {
     List<Widget> list = [];
 
-    for (ShapeGameItem item in _gameData.items) {
-      if (_gameData.listAcceptItem.contains(item)) {
+    for (ShapeGameItem item in items) {
+      if (gameData.listAcceptItem.contains(item)) {
         list.add(Container(
           width: double.infinity,
           height: double.infinity,
@@ -51,7 +89,6 @@ class _ShapeGameOptionState extends BaseStateful<ShapeGameOption> {
         list.add(Container(
           padding: EdgeInsets.all(8.0),
           alignment: Alignment.center,
-          // color: Colors.blue,
           child: Draggable<ShapeGameItem>(
             data: item,
             feedback: _getItemShape(item.imageUrl),
@@ -66,33 +103,8 @@ class _ShapeGameOptionState extends BaseStateful<ShapeGameOption> {
   }
 
   Widget _getItemShape(String imageUrl) {
-    return Image(width: 80, image: AssetImage(imageUrl));
-  }
-}
-
-class DrawTriangleShape extends CustomPainter {
-  Paint painter;
-
-  DrawTriangleShape() {
-    painter = Paint()
-      ..color = Colors.purpleAccent
-      ..style = PaintingStyle.fill;
-  }
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    var path = Path();
-
-    path.moveTo(size.width / 2, 0);
-    path.lineTo(0, size.height);
-    path.lineTo(size.height, size.width);
-    path.close();
-
-    canvas.drawPath(path, painter);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
+    return ScaleTransition(
+        scale: _animation,
+        child: Image(width: 90, image: AssetImage(imageUrl)));
   }
 }

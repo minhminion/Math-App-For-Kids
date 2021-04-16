@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:math_app_for_kid/utils/app_assets.dart';
 
 enum GameType { countGame, mathGame, compareGame, shapeGame }
@@ -132,7 +131,7 @@ class ShapeGame extends GamePlay {
             options: options,
             result: result);
 
-  final int numberCorrect = 4;
+  final int numberCorrect = 3;
   List<ShapeGameItem> listAcceptItem = [];
   List<ShapeGameItem> items = [];
 
@@ -189,6 +188,9 @@ class ShapeGameItem {
   String imageUrl;
 
   ShapeGameItem(this.id, this.shapeType, this.imageUrl);
+
+  @override
+  factory ShapeGameItem.blank() => ShapeGameItem(0, ShapeType.circle, "");
 }
 
 class GamePlay {
