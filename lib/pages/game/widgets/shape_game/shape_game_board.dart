@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/game/widgets/shape_game/shape_game_answer_place.dart';
 import 'package:math_app_for_kid/pages/game/widgets/shape_game/shape_game_option.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class ShapeGameBoard extends BaseStateless {
@@ -12,8 +14,6 @@ class ShapeGameBoard extends BaseStateless {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           ShapeGameAnswerPlace(),
           Expanded(
@@ -25,7 +25,10 @@ class ShapeGameBoard extends BaseStateless {
                     color: appTheme.cardBackgroundColor,
                     borderRadius:
                         BorderRadius.circular(AppConstant.defaultSpacing)),
-                child: ShapeGameOption()),
+                child: Selector<GameProvider, int>(
+                    selector: (_, _gameProvider) => _gameProvider.game.id,
+                    builder: (_, _gameId, __) =>
+                        ShapeGameOption(ValueKey(_gameId)))),
           )
         ],
       ),

@@ -138,10 +138,22 @@ class DatabaseHelper {
       ''');
 
     // Game chọn hình
-    // enum Shape { circle, square, rectangle, triangle }
+    // enum ShapeType { circle, square, rectangle, triangle }
     await db.execute('''
       INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType)
       VALUES('2', '2', '1', '1', 0, 2, 3)
+      ''');
+    await db.execute('''
+      INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType)
+      VALUES('2', '2', '1', '0', 0, 2, 3)
+      ''');
+    await db.execute('''
+      INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType)
+      VALUES('2', '2', '1', '2', 0, 2, 3)
+      ''');
+    await db.execute('''
+      INSERT INTO Gameplays (option1, option2, option3, result, isComplete, lessonId, gameType)
+      VALUES('2', '2', '1', '3', 0, 2, 3)
       ''');
 
     // Game cộng

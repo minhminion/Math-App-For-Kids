@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:math_app_for_kid/models/local/bubble.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/game/widgets/game_option_item.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
@@ -19,6 +20,7 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace>
     with TickerProviderStateMixin {
   int result = 0;
   GameProvider _gameProvider;
+  CharacterProvider _characterProvider;
   AnimationController _controller;
   Animation<double> _offsetAnimation;
 
@@ -38,6 +40,7 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace>
           });
 
     _gameProvider = context.provider<GameProvider>();
+    _characterProvider = context.provider<CharacterProvider>();
   }
 
   @override
@@ -54,32 +57,26 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace>
             child: DragTarget<int>(onAccept: (value) async {
               if (_gameProvider.checkResult(value)) {
                 // Change Character Type
-                context
-                    .read<CharacterProvider>()
-                    .changeAnimation(CharacterType.success);
-
+                _characterProvider.changeAnimation(CharacterType.success);
+                _characterProvider.showBubble(BubbleType.success);
                 setState(() {
                   result = value;
                 });
 
                 Timer(Duration(seconds: 3), () {
-                  context.read<GameProvider>().nextGame();
+                  _gameProvider.nextGame();
                 });
               } else {
                 // Animate Shake effect for answer place
                 _controller.forward();
 
                 // Kiểm tra Character có đang chuyển động fail ?
-                if (context.read<CharacterProvider>().characterType !=
-                    CharacterType.fail) {
+                if (_characterProvider.characterType != CharacterType.fail) {
                   // Change Character Type
-                  context
-                      .read<CharacterProvider>()
-                      .changeAnimation(CharacterType.fail);
+                  _characterProvider.changeAnimation(CharacterType.fail);
+                  _characterProvider.showBubble(BubbleType.error);
                   Timer(Duration(seconds: 3), () {
-                    context
-                        .read<CharacterProvider>()
-                        .changeAnimation(CharacterType.none);
+                    _characterProvider.changeAnimation(CharacterType.idle);
                   });
                 }
               }

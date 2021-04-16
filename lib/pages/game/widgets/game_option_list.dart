@@ -32,25 +32,31 @@ class _GameOptionListState extends BaseStateful<GameOptionList> {
             borderRadius: BorderRadius.circular(8.0)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: _gameData.options
-              .map<Widget>((option) =>
-                  // Game is complete
-                  !context.watch<GameProvider>().isComplete ||
-                          option != _gameData.result
-                      ? Draggable<int>(
-                          data: option,
-                          child: GameOptionItem.option(
-                            value: option,
-                          ),
-                          feedback: GameOptionItem.option(
-                            value: option,
-                            isDragging: true,
-                          ),
-                          childWhenDragging: _buildEmptyOption(),
-                        )
-                      : _buildEmptyOption())
-              .toList(),
+          children: _gameData.options.map<Widget>(_buildOptionItem).toList(),
         ));
+  }
+
+  Widget _buildOptionItem(int option) {
+    if (!context.watch<GameProvider>().isComplete ||
+        option != _gameData.result) {
+      return context.watch<GameProvider>().rejecteds.contains(option)
+          ? GameOptionItem.option(
+              value: option,
+              isDisable: true,
+            )
+          : Draggable<int>(
+              data: option,
+              child: GameOptionItem.option(
+                value: option,
+              ),
+              feedback: GameOptionItem.option(
+                value: option,
+                isDragging: true,
+              ),
+              childWhenDragging: _buildEmptyOption(),
+            );
+    }
+    return _buildEmptyOption();
   }
 
   Widget _buildEmptyOption() {

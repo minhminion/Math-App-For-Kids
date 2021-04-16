@@ -17,20 +17,17 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   navigateToLanding() {
-    context
-        .provider<CharacterProvider>()
-        .changeAnimation(CharacterType.success);
     Navigator.pushReplacementNamed(context, AppRoute.routeLanding);
   }
 
   startTime() async {
-    var duration = new Duration(seconds: 3);
+    var duration = new Duration(seconds: 2);
     return new Timer(duration, () => navigateToLanding());
   }
 
   fetchAllLesson() async {
     await context.provider<LessonProvider>().fetchAllLesson();
-    navigateToLanding();
+    startTime();
   }
 
   @override

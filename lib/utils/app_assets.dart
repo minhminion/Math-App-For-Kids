@@ -1,3 +1,4 @@
+import 'package:math_app_for_kid/models/local/bubble.dart';
 import 'package:math_app_for_kid/models/local/game.dart';
 
 class AppAssets {
@@ -7,6 +8,8 @@ class AppAssets {
   factory AppAssets.origin() {
     return AppAssets._();
   }
+
+  static String rootAsset = "assets/base";
 
   ///#region FONTS
   /// -----------------
@@ -20,27 +23,47 @@ class AppAssets {
   ///#endregion
   ///#region IMAGES, ICONS
   /// -----------------
-  String icAppIcon = 'assets/base/icons/app_icon_ad.png';
-  String icEmpty = 'assets/base/icons/ic_empty.png';
-  String characterRiv = 'assets/base/character/astronaut.riv';
+  String icAppIcon = '$rootAsset/app_icon_ad.png';
+  String icEmpty = '$rootAsset/ic_empty.png';
+  String characterRiv = '$rootAsset/character/astronaut.riv';
+  String characterWithBoxRiv = '$rootAsset/character/astronaut_with_box.riv';
 
-  String backgroundLanding = 'assets/base/images/bg_landing.png';
+  String backgroundLanding = '$rootAsset/images/bg_landing.png';
 
-  String planet(id) => 'assets/base/images/planet/planet_$id.png';
-  String gameTrophy = 'assets/base/images/others/game_trophy.png';
+  String planet(id) => '$rootAsset/images/planet/planet_$id.png';
+  String gameTrophy = '$rootAsset/images/others/game_trophy.png';
+  String gameBox = '$rootAsset/images/others/box.png';
 
   String getShapeImages(ShapeType shapeType, int id) {
     switch (shapeType) {
       case ShapeType.circle:
-        return 'assets/base/images/shapes/circle_$id.png';
+        return '$rootAsset/images/shapes/circle_$id.png';
       case ShapeType.square:
-        return 'assets/base/images/shapes/square_$id.png';
+        return '$rootAsset/images/shapes/square_$id.png';
       case ShapeType.rectangle:
-        return 'assets/base/images/shapes/rectangle_$id.png';
+        return '$rootAsset/images/shapes/rectangle_$id.png';
       case ShapeType.triangle:
-        return 'assets/base/images/shapes/triangle_$id.png';
+        return '$rootAsset/images/shapes/triangle_$id.png';
     }
     return "";
+  }
+
+  String getCharacterVoice(BubbleType bubbleType) {
+    String audioUrl = "";
+
+    switch (bubbleType) {
+      case BubbleType.success:
+        audioUrl = 'base/audios/success_audio.mp3';
+        break;
+      case BubbleType.hello:
+        audioUrl = 'base/audios/hello_audio.mp3';
+        break;
+      case BubbleType.error:
+        audioUrl = 'base/audios/error_audio.mp3';
+        break;
+    }
+
+    return audioUrl;
   }
 
   ///#endregion

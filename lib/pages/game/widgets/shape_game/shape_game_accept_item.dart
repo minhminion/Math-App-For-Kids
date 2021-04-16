@@ -2,12 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
-import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 
 // ignore: must_be_immutable
 class ShapeGameAcceptItem extends StatefulWidget {
-  ShapeGameAcceptItem({Key key, this.imageUrl}) : super(key: key);
+  ShapeGameAcceptItem({Key key, this.imageUrl, this.parentWidth})
+      : super(key: key);
   String imageUrl;
+  double parentWidth;
 
   _ShapeGameAcceptItemState createState() => _ShapeGameAcceptItemState();
 }
@@ -21,6 +22,8 @@ class _ShapeGameAcceptItemState extends BaseStateful<ShapeGameAcceptItem>
   @override
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
+    double position = widget.parentWidth / 2;
+    print("Build Accept Item");
 
     _animationCotroller =
         AnimationController(duration: Duration(milliseconds: 800), vsync: this);
@@ -30,8 +33,8 @@ class _ShapeGameAcceptItemState extends BaseStateful<ShapeGameAcceptItem>
         curve: Interval(0.0, 0.7, curve: Curves.ease)));
 
     _position = RelativeRectTween(
-      begin: RelativeRect.fromLTRB(100, 0, 0, 100),
-      end: RelativeRect.fromLTRB(0, 100, 100, 0),
+      begin: RelativeRect.fromLTRB(position, 0, 0, position),
+      end: RelativeRect.fromLTRB(0, position, position, 0),
     ).animate(_animationCotroller);
 
     _animationCotroller.forward(from: 0);

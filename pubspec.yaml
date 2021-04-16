@@ -30,7 +30,7 @@ dependencies:
   npreferences: ^3.0.0+1
   path_provider: ^2.0.1
   provider: ^5.0.0
-  rive: ^0.6.8
+  rive: ^0.7.2
   scrollable_positioned_list: ^0.1.10
   sqflite: ^2.0.0+3
   xml: ^5.0.0
