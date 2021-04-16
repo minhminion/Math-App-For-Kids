@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/lessons.dart';
+import 'package:math_app_for_kid/pages/lesson/details/lesson_guide_dialog.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_list_game.dart';
 import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
+import 'package:math_app_for_kid/widgets/r_hero_dialog_router.dart';
 import 'package:math_app_for_kid/widgets/w_progess_circular.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +51,8 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
                     ))
                 : LessonListGames(
                     lesson: lesson,
-                  )
+                  ),
+            _lessonGuideButton(lesson),
           ],
         ),
       ),
@@ -102,6 +105,56 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
         onPressed: () => Navigator.of(context).pop(),
         backgroundColor: appTheme.successColor,
         child: Icon(Icons.keyboard_return_outlined),
+      ),
+    );
+  }
+
+  Hero _lessonGuideButton(Lesson lesson) {
+    return Hero(
+      tag: 'lesson_guide_${lesson.id}',
+      child: Container(
+        margin: EdgeInsets.fromLTRB(479.0, 50.0, 0, 70.0),
+        width: 156.0,
+        height: 50.0,
+        decoration: ShapeDecoration(
+          shape: CircleBorder(),
+        ),
+        child: TextButton(
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 5.0),
+                child: Text(
+                  'Hướng dẫn',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+              SizedBox(width: 1.0),
+              Icon(
+                Icons.help_outline_outlined,
+                color: Colors.white,
+                size: 40.0,
+              ),
+            ],
+          ),
+          onPressed: () => openGuideDialog(lesson.id),
+        ),
+      ),
+    );
+  }
+
+  void openGuideDialog(int lessonId) {
+    Navigator.push(
+      context,
+      HeroDialogRoute(
+        builder: (BuildContext context) => Center(
+          child: LessonGuideDialog(
+            lessonId: lessonId,
+          ),
+        ),
       ),
     );
   }
