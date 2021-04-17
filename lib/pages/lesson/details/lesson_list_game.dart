@@ -156,6 +156,14 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
                 ),
               ),
             ),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: Hero(
+              tag: "game_item_closebtn_${game.id}",
+              child: Container(),
+            ),
+          )
         ],
       ),
     );

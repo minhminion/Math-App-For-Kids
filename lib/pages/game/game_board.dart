@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
+import 'package:math_app_for_kid/pages/game/widgets/common/game_success.dart';
 import 'package:math_app_for_kid/pages/game/widgets/game_board_answer_place.dart';
 import 'package:math_app_for_kid/pages/game/widgets/game_board_question.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
@@ -18,7 +19,18 @@ class GameBoard extends BaseStateless {
       decoration: BoxDecoration(
           color: appTheme.cardBackgroundColor,
           borderRadius: BorderRadius.circular(AppConstant.defaultSpacing)),
-      child: _buildGameBoard(context.read<GameProvider>().game.gameType),
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          _buildGameBoard(context.read<GameProvider>().game.gameType),
+          Positioned(
+              bottom: -80,
+              top: 100,
+              child: Selector<GameProvider, bool>(
+                  selector: (_, gameProvider) => gameProvider.isComplete,
+                  builder: (_, isCompleted, __) => GameSuccess(isCompleted)))
+        ],
+      ),
     );
   }
 

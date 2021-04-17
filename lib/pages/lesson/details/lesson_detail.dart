@@ -109,16 +109,13 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
     );
   }
 
-  Hero _lessonGuideButton(Lesson lesson) {
-    return Hero(
-      tag: 'lesson_guide_${lesson.id}',
-      child: Container(
-        margin: EdgeInsets.fromLTRB(479.0, 50.0, 0, 70.0),
-        width: 156.0,
-        height: 50.0,
-        decoration: ShapeDecoration(
-          shape: CircleBorder(),
-        ),
+  Widget _lessonGuideButton(Lesson lesson) {
+    return Positioned(
+      right: 5,
+      top: 50,
+      height: 50.0,
+      child: Hero(
+        tag: 'lesson_guide_${lesson.id}',
         child: TextButton(
           child: Row(
             children: [

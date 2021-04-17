@@ -1,44 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/services/safety/base_stateful.dart';
+import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 
 // ignore: must_be_immutable
-class CountingGameQuestionItem extends StatefulWidget {
-  CountingGameQuestionItem({Key key, this.planetId}) : super(key: key);
+class CountingGameQuestionItem extends BaseStateless {
+  CountingGameQuestionItem({Key key, this.planetId, this.controller})
+      : super(key: key);
 
   int planetId;
-
-  @override
-  _CountingGameQuestionItemState createState() =>
-      _CountingGameQuestionItemState();
-}
-
-class _CountingGameQuestionItemState
-    extends BaseStateful<CountingGameQuestionItem>
-    with TickerProviderStateMixin {
-  AnimationController _controller;
+  final AnimationController controller;
   Animation<double> _animation;
 
   @override
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
 
-    _controller = AnimationController(
-      duration: const Duration(seconds: 3),
-      vsync: this,
-    );
-
     _animation = CurvedAnimation(
-      parent: _controller,
+      parent: controller,
       curve: Curves.elasticOut,
     );
-
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -48,7 +27,7 @@ class _CountingGameQuestionItemState
       scale: _animation,
       child: Image(
         fit: BoxFit.fitHeight,
-        image: AssetImage(appTheme.assets.planet(widget.planetId ?? 2)),
+        image: AssetImage(appTheme.assets.planet(planetId ?? 2)),
       ),
     );
   }

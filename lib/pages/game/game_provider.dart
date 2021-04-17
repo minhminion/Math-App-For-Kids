@@ -136,7 +136,6 @@ class GameProvider extends ChangeNotifierSafety {
         ShapeGame game = this.game;
         ShapeGameItem gameItem = value;
         if (gameItem.shapeType == ShapeType.values[game.result]) {
-          print("Accept Item");
           game.listAcceptItem.add(gameItem);
         }
         if (game.numberCorrect == game.listAcceptItem.length) {

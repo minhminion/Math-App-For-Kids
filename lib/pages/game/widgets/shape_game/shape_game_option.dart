@@ -38,8 +38,6 @@ class _ShapeGameOptionState extends BaseStateful<ShapeGameOption>
     );
 
     _controller.forward(from: 0);
-
-    print("Rebuild");
   }
 
   @override

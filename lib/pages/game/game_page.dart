@@ -35,7 +35,6 @@ class GamePlayPage extends BaseStateless {
         width: 200,
         child: Column(
           children: [
-            SizedBox(height: 50),
             Selector<CharacterProvider, Bubble>(
               selector: (_, _charaterProvider) => _charaterProvider.bubble,
               builder: (_, bubble, __) => Material(
@@ -44,6 +43,7 @@ class GamePlayPage extends BaseStateless {
               ),
             ),
             Expanded(child: GameCharacter()),
+            SizedBox(height: 50),
           ],
         ),
       ),

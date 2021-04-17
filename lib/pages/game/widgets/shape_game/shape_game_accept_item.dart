@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:math_app_for_kid/pages/game/widgets/common/game_success.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 
 // ignore: must_be_immutable
@@ -23,7 +24,6 @@ class _ShapeGameAcceptItemState extends BaseStateful<ShapeGameAcceptItem>
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
     double position = widget.parentWidth / 2;
-    print("Build Accept Item");
 
     _animationCotroller =
         AnimationController(duration: Duration(milliseconds: 800), vsync: this);
@@ -52,6 +52,11 @@ class _ShapeGameAcceptItemState extends BaseStateful<ShapeGameAcceptItem>
     super.build(context);
     return Stack(
       children: [
+        Positioned(
+            bottom: widget.parentWidth / 4,
+            left: 0,
+            right: 0,
+            child: GameSuccess(true)),
         PositionedTransition(
           rect: _position,
           child: ScaleTransition(

@@ -87,11 +87,13 @@ class _ShapeGameAnswerPlaceState extends BaseStateful<ShapeGameAnswerPlace>
       child: Stack(
         fit: StackFit.expand,
         children: [
+          // Game Character
           Container(
             width: maxWidth,
             alignment: Alignment.bottomCenter,
             child: GameCharacter(),
           ),
+          // Shape Question and Drag tagert for answer
           Selector<GameProvider, ShapeGame>(
               selector: (_, _gameProvider) => _gameProvider.game,
               builder: (_, shapeGame, __) {
