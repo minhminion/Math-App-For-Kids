@@ -36,6 +36,7 @@ dependencies:
   xml: ^5.0.0
   yaml: ^3.1.0
   audioplayers: ^0.18.0
+  carousel_slider: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +77,7 @@ flutter:
     - assets/base/images/planet/
     - assets/base/images/shapes/
     - assets/base/images/others/
+    - assets/base/images/carousel/
     - assets/base/audios/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
