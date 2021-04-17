@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/game/widgets/game_option_item.dart';
+import 'package:math_app_for_kid/services/app/character_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:provider/provider.dart';
+
+class OptionItem {
+  OptionItem(this.value, this.color) : super();
+
+  int value;
+  Color color;
+}
 
 class GameOptionList extends StatefulWidget {
   GameOptionList({Key key}) : super(key: key);
@@ -14,11 +22,22 @@ class GameOptionList extends StatefulWidget {
 
 class _GameOptionListState extends BaseStateful<GameOptionList> {
   Game _gameData;
+  List<Color> _colors = [];
 
   @override
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
+
     _gameData = context.watch<GameProvider>().game;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _colors.add(Colors.red);
+    _colors.add(Colors.green);
+    _colors.add(Colors.orange[800]);
+    _colors.shuffle();
   }
 
   @override
@@ -32,12 +51,17 @@ class _GameOptionListState extends BaseStateful<GameOptionList> {
             borderRadius: BorderRadius.circular(8.0)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children:
-              _getGameOptions(_gameData).map<Widget>(_buildOptionItem).toList(),
+          children: _getGameOptions(_gameData)
+              .asMap()
+              .entries
+              .map<Widget>(_buildOptionItem)
+              .toList(),
         ));
   }
 
-  Widget _buildOptionItem(int option) {
+  Widget _buildOptionItem(MapEntry<int, int> entry) {
+    int option = entry.value;
+    int index = entry.key;
     if (!context.watch<GameProvider>().isComplete ||
         option != _gameData.result) {
       return context.watch<GameProvider>().rejecteds.contains(option)
@@ -45,14 +69,28 @@ class _GameOptionListState extends BaseStateful<GameOptionList> {
               value: option,
               isDisable: true,
             )
-          : Draggable<int>(
-              data: option,
+          : Draggable<OptionItem>(
+              data: OptionItem(option, _colors[index]),
+              onDragStarted: () {
+                context
+                    .read<CharacterProvider>()
+                    .changeAnimation(CharacterType.talk);
+                return;
+              },
+              onDraggableCanceled: (_, __) {
+                context
+                    .read<CharacterProvider>()
+                    .changeAnimation(CharacterType.idle);
+                return;
+              },
               child: GameOptionItem.option(
                 value: option,
+                color: _colors[index],
               ),
               feedback: GameOptionItem.option(
                 value: option,
                 isDragging: true,
+                color: _colors[index],
               ),
               childWhenDragging: _buildEmptyOption(),
             );

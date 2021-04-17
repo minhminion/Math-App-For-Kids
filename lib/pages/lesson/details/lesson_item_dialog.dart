@@ -33,14 +33,15 @@ class LessonItemDialog extends BaseStateless {
     super.build(context);
     return Dialog(
       insetPadding: EdgeInsets.symmetric(
-          horizontal: AppConstant.defaultSpacing * 6,
-          vertical: AppConstant.defaultSpacing * 6),
+          horizontal: AppConstant.defaultSpacing * 3,
+          vertical: AppConstant.defaultSpacing * 3),
       backgroundColor: Colors.transparent,
       child: Stack(
         children: [
           Hero(
             tag: "game_item_${game.id}",
             child: Container(
+              margin: EdgeInsets.all(AppConstant.defaultSpacing * 2),
               width: double.infinity,
               decoration: BoxDecoration(
                   color: isCurrentGame ? Colors.blueAccent : Colors.grey,
@@ -81,13 +82,13 @@ class LessonItemDialog extends BaseStateless {
             ),
           ),
           Positioned(
-              top: AppConstant.defaultSpacing * 2,
-              left: AppConstant.defaultSpacing * 2,
+              top: AppConstant.defaultSpacing * 3.5,
+              left: AppConstant.defaultSpacing * 3.5,
               child: _buildHeroGameIndex()),
           if (!isCurrentGame)
             Positioned(
-              right: AppConstant.defaultSpacing * 2,
-              top: 0,
+              right: AppConstant.defaultSpacing * 8,
+              top: AppConstant.defaultSpacing * 2,
               child: Hero(
                 tag: "game_item_trophy_${game.id}",
                 child: Image(
@@ -96,7 +97,32 @@ class LessonItemDialog extends BaseStateless {
                   width: AppConstant.defaultSpacing * 10,
                 ),
               ),
-            )
+            ),
+          Positioned(
+              top: 0,
+              right: 0,
+              child: Hero(
+                tag: "game_item_closebtn_${game.id}",
+                child: ClipOval(
+                  child: Material(
+                    color: Colors.redAccent, // button color
+                    child: InkWell(
+                      splashColor: appTheme.warningColor, // inkwell color
+                      child: SizedBox(
+                          width: AppConstant.defaultSpacing * 7,
+                          height: AppConstant.defaultSpacing * 7,
+                          child: Icon(
+                            Icons.close,
+                            color: Colors.white,
+                            size: 32,
+                          )),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ),
+              )),
         ],
       ),
     );

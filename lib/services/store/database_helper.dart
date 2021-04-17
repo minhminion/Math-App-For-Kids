@@ -7,17 +7,18 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-  static final _dbName = 'math_app_for_kids.db';
-  static final _dbVersion = 1;
+  DatabaseHelper._();
 
-  static final String lessonTable = 'Lessons';
+  static final DatabaseHelper dbHelper = DatabaseHelper._();
+
+  static final String gameClaimTable = 'GameClaims';
   static final String gameTable = 'Games';
   static final String gameTypeTable = 'GameTypes';
-  static final String gameClaimTable = 'GameClaims';
+  static final String lessonTable = 'Lessons';
 
-  DatabaseHelper._();
-  static final DatabaseHelper dbHelper = DatabaseHelper._();
   static Database _database;
+  static final _dbName = 'math_app_for_kids.db';
+  static final _dbVersion = 1;
 
   Future<Database> get database async {
     if (_database != null) return _database;
@@ -655,15 +656,17 @@ class DatabaseHelper {
 
   _onUpgrade(Database db, int oldVersion, int newVersion) async {
     var batch = db.batch();
-    switch (oldVersion) {
-      case 1:
-        // _insertGameToDbV2(batch);
-        // _insertGameToDbV3(batch);
-        break;
+    if (oldVersion != newVersion) {
+      switch (oldVersion) {
+        case 1:
+          _insertGameToDbV2(batch);
+          _insertGameToDbV3(batch);
+          break;
 
-      case 2:
-        // _insertGameToDbV3(batch);
-        break;
+        case 2:
+          _insertGameToDbV3(batch);
+          break;
+      }
     }
     await batch.commit();
   }

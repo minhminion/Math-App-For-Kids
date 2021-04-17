@@ -22,16 +22,19 @@ class GameQuestion extends BaseStateless {
     switch (_gameData.gameType) {
       case GameType.countingGame:
         return CountingGameQuestions(
+          key: ValueKey(_gameData.id),
           gameData: _gameData as CountingGame,
         );
 
       case GameType.additionAndSubtractionGame:
         return AdditionAndSubtractionGameQuestion(
+          key: ValueKey(_gameData.id),
           gameData: _gameData as AdditionAndSubtractionGame,
         );
 
       case GameType.comparasionGame:
         return ComparasionGameQuestion(
+          key: ValueKey(_gameData.id),
           gameData: _gameData as ComparasionGame,
         );
       default:

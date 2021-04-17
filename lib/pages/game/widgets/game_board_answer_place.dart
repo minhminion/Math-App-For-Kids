@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/bubble.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/game/widgets/game_option_item.dart';
+import 'package:math_app_for_kid/pages/game/widgets/game_option_list.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
@@ -18,7 +19,7 @@ class GameAnswerPlace extends StatefulWidget {
 
 class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace>
     with TickerProviderStateMixin {
-  int result = 0;
+  OptionItem result;
   GameProvider _gameProvider;
   CharacterProvider _characterProvider;
   AnimationController _controller;
@@ -54,8 +55,8 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace>
             padding: EdgeInsets.only(
                 left: _offsetAnimation.value + 60.0,
                 right: 60.0 - _offsetAnimation.value),
-            child: DragTarget<int>(onAccept: (value) async {
-              if (_gameProvider.checkResult(value)) {
+            child: DragTarget<OptionItem>(onAccept: (value) async {
+              if (_gameProvider.checkResult(value.value)) {
                 // Change Character Type
                 _characterProvider.changeAnimation(CharacterType.success);
                 _characterProvider.showBubble(BubbleType.success);
@@ -83,7 +84,8 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace>
             }, builder: (context, candicates, reject) {
               return context.watch<GameProvider>().isComplete
                   ? GameOptionItem.option(
-                      value: result,
+                      value: result.value,
+                      color: result.color,
                     )
                   : GameOptionItem(
                       text: Text(

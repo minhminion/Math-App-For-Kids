@@ -31,6 +31,7 @@ dependencies:
   path_provider: ^2.0.1
   provider: ^5.0.0
   rive: ^0.7.2
+  lottie: ^1.0.1
   scrollable_positioned_list: ^0.1.10
   sqflite: ^2.0.0+3
   xml: ^5.0.0
@@ -79,6 +80,7 @@ flutter:
     - assets/base/images/others/
     - assets/base/images/carousel/
     - assets/base/audios/
+    - assets/base/lottie/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

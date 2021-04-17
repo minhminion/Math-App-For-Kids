@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:math_app_for_kid/models/local/bubble.dart';
 import 'package:math_app_for_kid/utils/app_assets.dart';
 import 'package:rive/rive.dart';
 
-enum CharacterType { success, fail, idle, start }
+enum CharacterType { success, fail, idle, start, talk }
 
 class CharacterProvider extends ChangeNotifier {
   CharacterProvider() {
@@ -13,8 +15,8 @@ class CharacterProvider extends ChangeNotifier {
 
   AppAssets assets = AppAssets.origin();
   Artboard riveArtboard;
-  CharacterType _characterType = CharacterType.idle;
-  List<MixinAnimation> _mixinController = List<MixinAnimation>.filled(4, null);
+  CharacterType _characterType = CharacterType.start;
+  List<MixinAnimation> _mixinController = List<MixinAnimation>.filled(5, null);
 
   Bubble _bubble;
 
@@ -32,6 +34,8 @@ class CharacterProvider extends ChangeNotifier {
     riveArtboard = file.mainArtboard
       ..addController(_mixinController[CharacterType.idle.index] =
           MixinAnimation("Idle", CharacterType.idle))
+      // ..addController(_mixinController[CharacterType.talk.index] =
+      //     MixinAnimation("Talk", CharacterType.talk))
       ..addController(_mixinController[CharacterType.fail.index] =
           MixinAnimation("False", CharacterType.fail))
       ..addController(_mixinController[CharacterType.success.index] =
@@ -43,7 +47,7 @@ class CharacterProvider extends ChangeNotifier {
   }
 
   void changeAnimation(CharacterType type) {
-    if (riveArtboard == null) return;
+    if (riveArtboard == null || _mixinController[type.index] == null) return;
     // riveArtboard.removeController(_controller);
 
     switch (type) {
@@ -57,11 +61,14 @@ class CharacterProvider extends ChangeNotifier {
         });
         break;
       default: // False, Success, Start
-        _mixinController[type.index].start();
         _mixinController[this.characterType != null
                 ? this.characterType.index
                 : type.index]
             .stop();
+        Timer(Duration(milliseconds: 300), () {
+          _mixinController[type.index].start();
+        });
+
         break;
     }
 

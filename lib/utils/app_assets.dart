@@ -33,6 +33,7 @@ class AppAssets {
   String planet(id) => '$rootAsset/images/planet/planet_$id.png';
   String gameTrophy = '$rootAsset/images/others/game_trophy.png';
   String gameBox = '$rootAsset/images/others/box.png';
+  String glassButton = '$rootAsset/images/others/glass_button.png';
 
   String getShapeImages(ShapeType shapeType, int id) {
     switch (shapeType) {
@@ -65,6 +66,9 @@ class AppAssets {
 
     return audioUrl;
   }
+
+  // LOTTIE
+  String lottieCongratulations = '$rootAsset/lottie/congratulations.json';
 
   ///#endregion
   ///#region VIDEOS
