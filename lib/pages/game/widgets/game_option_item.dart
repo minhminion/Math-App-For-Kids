@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:provider/provider.dart';
@@ -87,7 +87,7 @@ class _GameOptionItemState extends BaseStateful<GameOptionItem>
           child: Material(
             color: Colors.transparent,
             child: Center(
-                child: gameType == GameType.compareGame
+                child: gameType == GameType.comparasionGame
                     ? getCompareString(widget.text.data)
                     : widget.text),
           )),
@@ -96,14 +96,14 @@ class _GameOptionItemState extends BaseStateful<GameOptionItem>
 
   Widget getCompareString(String type) {
     if (type != "?") {
-      CompareGameOption _compareGameOption =
-          CompareGameOption.values[int.parse(type)];
+      ComparasionGameOption _compareGameOption =
+          ComparasionGameOption.values[int.parse(type)];
       switch (_compareGameOption) {
-        case CompareGameOption.greater:
+        case ComparasionGameOption.greater:
           return Text(">");
-        case CompareGameOption.equal:
+        case ComparasionGameOption.equal:
           return Text("=");
-        case CompareGameOption.less:
+        case ComparasionGameOption.less:
           return Text("<");
         default:
           return Text("?");

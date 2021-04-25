@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/game/widgets/game_board_answer_place.dart';
 import 'package:math_app_for_kid/pages/game/widgets/game_board_question.dart';
@@ -24,8 +24,8 @@ class GameBoard extends BaseStateless {
 
   Widget _buildGameBoard(GameType gameType) {
     switch (gameType) {
-      case GameType.countGame:
-      case GameType.mathGame:
+      case GameType.countingGame:
+      case GameType.additionAndSubtractionGame:
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -38,7 +38,7 @@ class GameBoard extends BaseStateless {
             GameAnswerPlace(),
           ],
         );
-      case GameType.compareGame:
+      case GameType.comparasionGame:
         return GameQuestion();
       default:
         return Container();

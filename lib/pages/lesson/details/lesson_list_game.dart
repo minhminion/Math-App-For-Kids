@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/models/local/lessons.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_item_dialog.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_list_game_locked_item.dart';
@@ -20,7 +21,7 @@ class LessonListGames extends StatefulWidget {
 class _LessonListGamesState extends BaseStateful<LessonListGames>
     with TickerProviderStateMixin {
   final _scrollDirection = Axis.horizontal;
-  List<GamePlay> gamePlays;
+  List<Game> gamePlays;
 
   AnimationController _controller;
   Animation<double> _animation;
@@ -41,7 +42,7 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
     _itemScrollController = ItemScrollController();
     _itemPositionsListener = ItemPositionsListener.create();
 
-    gamePlays = widget.lesson.gameplays;
+    gamePlays = widget.lesson.games;
 
     _controller.forward(from: 0.0);
   }
@@ -63,7 +64,7 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    gamePlays = widget.lesson.gameplays;
+    gamePlays = widget.lesson.games;
     if (gamePlays == null || gamePlays.length == 0)
       return FadeTransition(
         opacity: _animation,
@@ -99,7 +100,7 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
     );
   }
 
-  Widget _buildLessonContentItem(GamePlay game, int index, bool isCurrentGame) {
+  Widget _buildLessonContentItem(Game game, int index, bool isCurrentGame) {
     return InkWell(
       borderRadius: BorderRadius.circular(AppConstant.defaultSpacing),
       onTap: () => openGameDialog(game, index),
@@ -165,7 +166,7 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
     _itemScrollController.jumpTo(index: index, alignment: 0);
   }
 
-  void openGameDialog(GamePlay game, int index) {
+  void openGameDialog(Game game, int index) {
     Navigator.push(
         context,
         HeroDialogRoute(
