@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 
 // ignore: must_be_immutable
-class CountGameQuestionItem extends StatefulWidget {
-  CountGameQuestionItem({Key key, this.planetId}) : super(key: key);
+class CountingGameQuestionItem extends StatefulWidget {
+  CountingGameQuestionItem({Key key, this.planetId}) : super(key: key);
 
   int planetId;
 
   @override
-  _CountGameQuestionItemState createState() => _CountGameQuestionItemState();
+  _CountingGameQuestionItemState createState() =>
+      _CountingGameQuestionItemState();
 }
 
-class _CountGameQuestionItemState extends BaseStateful<CountGameQuestionItem>
+class _CountingGameQuestionItemState
+    extends BaseStateful<CountingGameQuestionItem>
     with TickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _animation;

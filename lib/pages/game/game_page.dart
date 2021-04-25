@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/bubble.dart';
-import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/game_board.dart';
 import 'package:math_app_for_kid/pages/game/widgets/common/game_bubble.dart';
 import 'package:math_app_for_kid/pages/game/widgets/common/game_character.dart';

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/widgets/game_board_answer_place.dart';
 
 // ignore: must_be_immutable
-class CompareGameQuestion extends StatelessWidget {
-  CompareGameQuestion({Key key, this.gameData}) : super(key: key);
+class ComparasionGameQuestion extends StatelessWidget {
+  ComparasionGameQuestion({Key key, this.gameData}) : super(key: key);
 
-  CompareGame gameData;
+  ComparasionGame gameData;
 
   @override
   Widget build(BuildContext context) {

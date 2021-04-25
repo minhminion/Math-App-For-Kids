@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:provider/provider.dart';

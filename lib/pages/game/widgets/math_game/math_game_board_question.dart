@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
 
 // ignore: must_be_immutable
-class MathGameQuestion extends StatelessWidget {
-  MathGameQuestion({Key key, this.gameData}) : super(key: key);
+class AdditionAndSubtractionGameQuestion extends StatelessWidget {
+  AdditionAndSubtractionGameQuestion({Key key, this.gameData})
+      : super(key: key);
 
-  MathGame gameData;
+  AdditionAndSubtractionGame gameData;
 
   @override
   Widget build(BuildContext context) {

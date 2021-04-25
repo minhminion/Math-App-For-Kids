@@ -1,5 +1,5 @@
 import 'package:math_app_for_kid/models/local/bubble.dart';
-import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
 
 class AppAssets {
   AppAssets._();

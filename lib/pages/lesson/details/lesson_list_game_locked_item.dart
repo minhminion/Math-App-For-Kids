@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
 
 class LockedGameItem extends StatefulWidget {
   LockedGameItem({Key key, @required this.gamePlay}) : super(key: key);
 
-  final GamePlay gamePlay;
+  final Game gamePlay;
 
   @override
   _LockedGameItemState createState() => _LockedGameItemState();

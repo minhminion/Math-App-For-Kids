@@ -1,15 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/widgets/counter_game/count_game_question_item.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 
 // ignore: must_be_immutable
-class CountGameQuestions extends BaseStateless {
-  CountGameQuestions({Key key, this.gameData}) : super(key: key);
+class CountingGameQuestions extends BaseStateless {
+  CountingGameQuestions({Key key, this.gameData}) : super(key: key);
 
-  CounterGame gameData;
+  CountingGame gameData;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class CountGameQuestions extends BaseStateless {
                   width: size,
                   top: (Random().nextDouble() * (constraints.maxHeight - size)),
                   left: (Random().nextDouble() * (constraints.maxWidth - size)),
-                  child: CountGameQuestionItem(
+                  child: CountingGameQuestionItem(
                     key: Key(i.toString()),
                     planetId: planetId,
                   )),

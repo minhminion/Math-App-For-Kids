@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/game/widgets/game_option_item.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
@@ -13,7 +13,7 @@ class GameOptionList extends StatefulWidget {
 }
 
 class _GameOptionListState extends BaseStateful<GameOptionList> {
-  GamePlay _gameData;
+  Game _gameData;
 
   @override
   void initDependencies(BuildContext context) {
@@ -32,7 +32,8 @@ class _GameOptionListState extends BaseStateful<GameOptionList> {
             borderRadius: BorderRadius.circular(8.0)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: _gameData.options.map<Widget>(_buildOptionItem).toList(),
+          children:
+              _getGameOptions(_gameData).map<Widget>(_buildOptionItem).toList(),
         ));
   }
 
@@ -67,5 +68,19 @@ class _GameOptionListState extends BaseStateful<GameOptionList> {
       decoration: BoxDecoration(
           color: Colors.transparent, borderRadius: BorderRadius.circular(8.0)),
     );
+  }
+
+  List<int> _getGameOptions(Game game) {
+    switch (game.gameType) {
+      case GameType.countingGame:
+        return (game as CountingGame).options;
+      case GameType.comparasionGame:
+        return (game as ComparasionGame).options;
+        break;
+      case GameType.additionAndSubtractionGame:
+        return (game as AdditionAndSubtractionGame).options;
+      default:
+        return [];
+    }
   }
 }

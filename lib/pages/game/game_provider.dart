@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:math_app_for_kid/models/local/bubble.dart';
-import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
 import 'package:math_app_for_kid/services/safety/change_notifier_safety.dart';
@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 class GameProvider extends ChangeNotifierSafety {
   LessonProvider _lessonProvider;
 
-  GamePlay game;
+  Game game;
   int _currentGameIndex = 0;
 
   String errorMessage;
@@ -33,12 +33,12 @@ class GameProvider extends ChangeNotifierSafety {
     context.read<CharacterProvider>().changeAnimation(CharacterType.idle);
     context.read<CharacterProvider>().showBubble(BubbleType.hello);
 
-    if (gameId == game?.id && game.gameType != GameType.shapeGame) return;
+    // if (gameId == game?.id && game.gameType != GameType.shapeGame) return;
 
     this.isLoading = true;
     notifyListeners();
 
-    this._currentGameIndex = _lessonProvider.currentLesson.gameplays
+    this._currentGameIndex = _lessonProvider.currentLesson.games
         .indexWhere((element) => element.id == gameId);
 
     await getGameById(gameId: gameId);
@@ -54,11 +54,16 @@ class GameProvider extends ChangeNotifierSafety {
     this.rejecteds = [];
 
     try {
-      Map<String, dynamic> response =
-          await DatabaseHelper.dbHelper.getById(GamePlay.tableName, gameId);
+      Map<String, dynamic> gameResponse = await DatabaseHelper.dbHelper
+          .getById(DatabaseHelper.gameTable, gameId);
 
-      if (response.isNotEmpty) {
-        GameType newGameType = GameType.values[response['gameType'] as int];
+      if (gameResponse.isNotEmpty) {
+        Map<String, dynamic> gameClaims =
+            await DatabaseHelper.dbHelper.getGameClaimsByGameId(gameId);
+
+        Map<String, dynamic> response = {...gameResponse, ...gameClaims};
+
+        GameType newGameType = GameType.values[response['gameTypeId']];
 
         // Load character
         if (game == null || newGameType != game.gameType) {
@@ -68,32 +73,35 @@ class GameProvider extends ChangeNotifierSafety {
           _context.read<CharacterProvider>().setRive(bytes);
         }
 
-        switch (GameType.values[response['gameType'] as int]) {
-          case GameType.countGame:
-            this.game = CounterGame.fromMap(response);
+        switch (newGameType) {
+          case GameType.countingGame:
+            this.game = CountingGame.fromMap(response);
             break;
-          case GameType.mathGame:
-            this.game = MathGame.fromMap(response);
+          case GameType.additionAndSubtractionGame:
+            this.game = AdditionAndSubtractionGame.fromMap(response);
             break;
-          case GameType.compareGame:
-            this.game = CompareGame.fromMap(response);
+          case GameType.comparasionGame:
+            this.game = ComparasionGame.fromMap(response);
             break;
           case GameType.shapeGame:
             this.game = ShapeGame.fromMap(response)..createListShape();
+            break;
+          default:
             break;
         }
       }
 
       return true;
     } catch (e) {
+      print(e);
       return false;
     }
   }
 
   bool checkResult(dynamic value) {
     switch (this.game.gameType) {
-      case GameType.countGame:
-        CounterGame game = this.game;
+      case GameType.countingGame:
+        CountingGame game = this.game;
         if (value == game.result) {
           isComplete = true;
         } else {
@@ -101,8 +109,8 @@ class GameProvider extends ChangeNotifierSafety {
           isComplete = false;
         }
         break;
-      case GameType.mathGame:
-        MathGame game = this.game;
+      case GameType.additionAndSubtractionGame:
+        AdditionAndSubtractionGame game = this.game;
         if (value == game.result) {
           isComplete = true;
         } else {
@@ -111,8 +119,8 @@ class GameProvider extends ChangeNotifierSafety {
         }
         break;
 
-      case GameType.compareGame:
-        CompareGame game = this.game;
+      case GameType.comparasionGame:
+        ComparasionGame game = this.game;
         if (value == game.result) {
           isComplete = true;
         } else {
@@ -147,7 +155,7 @@ class GameProvider extends ChangeNotifierSafety {
       _context.read<CharacterProvider>().changeAnimation(CharacterType.idle);
 
     // Not last game
-    List<GamePlay> gamePlays = _lessonProvider.currentLesson.gameplays;
+    List<Game> gamePlays = _lessonProvider.currentLesson.games;
     if (_currentGameIndex < gamePlays.length) {
       this._currentGameIndex++;
 

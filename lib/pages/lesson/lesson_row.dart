@@ -17,8 +17,8 @@ class LessonRow extends BaseStateless {
           tag: "lesson_image_${lesson.id}",
           child: WProgessCircular(
             size: 80.0,
-            progessPercent: lesson.gameplays.length > 0
-                ? lesson.completedGame / lesson.gameplays.length
+            progessPercent: lesson.games.length > 0
+                ? lesson.completedGame / lesson.games.length
                 : 0,
             child: Image(
               image: AssetImage('assets/base/images/lesson/${lesson.image}'),

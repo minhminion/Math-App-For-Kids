@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/models/local/game.dart';
+import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class LessonItemDialog extends BaseStateless {
   final double iconSize = 80.0;
 
-  final GamePlay game;
+  final Game game;
   final int gameIndex;
 
   LessonItemDialog({Key key, this.game, this.gameIndex = 0}) : super(key: key);

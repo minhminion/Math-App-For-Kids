@@ -60,8 +60,8 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
     return Hero(
       tag: "lesson_image_${lesson.id}",
       child: WProgessCircular(
-        progessPercent: lesson.gameplays.length > 0
-            ? lesson.completedGame / lesson.gameplays.length
+        progessPercent: lesson.games.length > 0
+            ? lesson.completedGame / lesson.games.length
             : 0,
         child: Image(
           image: AssetImage('assets/base/images/lesson/${lesson.image}'),
