@@ -60,5 +60,3 @@ class GamePlayPage extends BaseStateless {
     ]);
   }
 }
-
-class _charaterProvider {}

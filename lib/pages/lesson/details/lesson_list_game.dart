@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/games.dart';
-import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/models/local/lessons.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_item_dialog.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_list_game_locked_item.dart';
