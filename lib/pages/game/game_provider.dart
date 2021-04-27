@@ -146,6 +146,11 @@ class GameProvider extends ChangeNotifierSafety {
       default:
     }
 
+    // Update game isCompleted to DB
+    if (isComplete) {
+      DatabaseHelper.dbHelper.updateGame(game..isCompleted = true);
+    }
+
     notifyListeners();
     return isComplete;
   }

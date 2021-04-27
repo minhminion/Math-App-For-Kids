@@ -1,6 +1,5 @@
 import 'dart:math';
 
-// import 'package:math_app_for_kid/models/local/gameClaims.dart';
 import 'package:math_app_for_kid/utils/app_assets.dart';
 
 enum GameType {
@@ -45,24 +44,25 @@ class Game {
         'result': result,
         'isCompleted': isCompleted == true ? 1 : 0,
         'lessonId': lessonId,
-        'gameType': gameType,
+        'gameTypeId': gameType.index,
       };
 }
 
 class CountingGame extends Game {
-  CountingGame(
-      {int id,
-      bool isCompleted,
-      int lessonId,
-      GameType gameType,
-      int result,
-      this.options})
-      : super(
-            id: id,
-            gameType: gameType,
-            isCompleted: isCompleted,
-            lessonId: lessonId,
-            result: result);
+  CountingGame({
+    int id,
+    bool isCompleted,
+    int lessonId,
+    GameType gameType,
+    int result,
+    this.options,
+  }) : super(
+          id: id,
+          gameType: gameType,
+          isCompleted: isCompleted,
+          lessonId: lessonId,
+          result: result,
+        );
 
   List<int> options;
 
@@ -80,22 +80,23 @@ class CountingGame extends Game {
 }
 
 class AdditionAndSubtractionGame extends Game {
-  AdditionAndSubtractionGame(
-      {int id,
-      bool isCompleted,
-      int lessonId,
-      GameType gameType,
-      int result,
-      this.operator,
-      this.options,
-      this.numA,
-      this.numB})
-      : super(
-            id: id,
-            gameType: gameType,
-            isCompleted: isCompleted,
-            lessonId: lessonId,
-            result: result);
+  AdditionAndSubtractionGame({
+    int id,
+    bool isCompleted,
+    int lessonId,
+    GameType gameType,
+    int result,
+    this.operator,
+    this.options,
+    this.numA,
+    this.numB,
+  }) : super(
+          id: id,
+          gameType: gameType,
+          isCompleted: isCompleted,
+          lessonId: lessonId,
+          result: result,
+        );
 
   String operator;
   int numA;
@@ -105,35 +106,37 @@ class AdditionAndSubtractionGame extends Game {
   @override
   factory AdditionAndSubtractionGame.fromMap(Map<String, dynamic> map) =>
       AdditionAndSubtractionGame(
-          id: map['id'],
-          options: [map['option1'], map['option2'], map['option3']]
-              .map((data) => int.parse(data))
-              .toList(),
-          result: int.parse(map['result']),
-          isCompleted: map['isCompleted'] == 1 ? true : false,
-          lessonId: map['lessonId'],
-          gameType: GameType.values[map['gameTypeId'] as int],
-          numA: int.parse(map['numA']),
-          numB: int.parse(map['numB']),
-          operator: map['operator']);
+        id: map['id'],
+        options: [map['option1'], map['option2'], map['option3']]
+            .map((data) => int.parse(data))
+            .toList(),
+        result: int.parse(map['result']),
+        isCompleted: map['isCompleted'] == 1 ? true : false,
+        lessonId: map['lessonId'],
+        gameType: GameType.values[map['gameTypeId'] as int],
+        numA: int.parse(map['numA']),
+        numB: int.parse(map['numB']),
+        operator: map['operator'],
+      );
 }
 
 class ComparasionGame extends Game {
-  ComparasionGame(
-      {int id,
-      bool isCompleted,
-      int lessonId,
-      GameType gameType,
-      this.options,
-      int result,
-      this.numA,
-      this.numB})
-      : super(
-            id: id,
-            gameType: gameType,
-            isCompleted: isCompleted,
-            lessonId: lessonId,
-            result: result);
+  ComparasionGame({
+    int id,
+    bool isCompleted,
+    int lessonId,
+    GameType gameType,
+    this.options,
+    int result,
+    this.numA,
+    this.numB,
+  }) : super(
+          id: id,
+          gameType: gameType,
+          isCompleted: isCompleted,
+          lessonId: lessonId,
+          result: result,
+        );
 
   int numA;
   int numB;
@@ -155,19 +158,20 @@ class ComparasionGame extends Game {
 }
 
 class ShapeGame extends Game {
-  ShapeGame(
-      {int id,
-      bool isCompleted,
-      lessonId,
-      GameType gameType,
-      int result,
-      this.numberCorrect})
-      : super(
-            id: id,
-            gameType: gameType,
-            isCompleted: isCompleted,
-            lessonId: lessonId,
-            result: result);
+  ShapeGame({
+    int id,
+    bool isCompleted,
+    lessonId,
+    GameType gameType,
+    int result,
+    this.numberCorrect,
+  }) : super(
+          id: id,
+          gameType: gameType,
+          isCompleted: isCompleted,
+          lessonId: lessonId,
+          result: result,
+        );
 
   int numberCorrect = 3;
   List<ShapeGameItem> listAcceptItem = [];

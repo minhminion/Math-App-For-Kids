@@ -1,6 +1,5 @@
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:math_app_for_kid/services/store/database_helper.dart';
 
 class MyTestPage extends StatefulWidget {
   @override
@@ -8,23 +7,9 @@ class MyTestPage extends StatefulWidget {
 }
 
 class _MyTestPageState extends State<MyTestPage> {
-  AudioPlayer advancedPlayer;
-  AudioCache audioCache;
-
   @override
   void initState() {
     super.initState();
-    initAudio();
-  }
-
-  initAudio() {
-    advancedPlayer = AudioPlayer();
-    audioCache = AudioCache(fixedPlayer: advancedPlayer);
-  }
-
-  playAudio() {
-    advancedPlayer.stop();
-    audioCache.play('base/audios/hello_audio.mp3');
   }
 
   @override
@@ -35,23 +20,24 @@ class _MyTestPageState extends State<MyTestPage> {
         title: Text('Text page'),
       ),
       body: Center(
-        child: Column(
-          children: [
-            TextButton(
-              onPressed: () {
-                playAudio();
-              },
-              child: Text('Play audio'),
-            ),
-            TextButton(
-              onPressed: () => advancedPlayer.pause(),
-              child: Text('Pause audio'),
-            ),
-            TextButton(
-              onPressed: () => advancedPlayer.stop(),
-              child: Text('Stop audio'),
-            ),
-          ],
+        child: TextButton(
+          child: Text('Click me'),
+          onPressed: () async {
+            // var testGame = CountingGame(
+            //   id: 1,
+            //   result: 2,
+            //   isCompleted: true,
+            //   lessonId: 1,
+            //   gameType: GameType.countingGame,
+            //   options: [3, 4, 5],
+            // );
+            // var update = await DatabaseHelper.dbHelper.updateGame(testGame);
+            // print(update);
+            var games = await DatabaseHelper.dbHelper.getGameByLessonId(1);
+            games.forEach((game) {
+              print('${game.toMap()} + ${game.gameType}');
+            });
+          },
         ),
       ),
     );
