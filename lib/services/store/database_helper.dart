@@ -48,6 +48,8 @@ class DatabaseHelper {
     _insertLessons(batch);
     _insertGameTypes(batch);
     _insertGames(batch);
+    // _insertGameToDbV2(batch);
+    // _insertGameToDbV3(batch);
 
     await batch.commit();
   }
@@ -651,11 +653,17 @@ class DatabaseHelper {
     ''');
   }
 
-  //Test migration
   _onUpgrade(Database db, int oldVersion, int newVersion) async {
     var batch = db.batch();
-    if (oldVersion != _dbVersion) {
-      _insertGameToDbV2(batch);
+    switch (oldVersion) {
+      case 1:
+        // _insertGameToDbV2(batch);
+        // _insertGameToDbV3(batch);
+        break;
+
+      case 2:
+        // _insertGameToDbV3(batch);
+        break;
     }
     await batch.commit();
   }
@@ -687,6 +695,36 @@ class DatabaseHelper {
     ''');
     batch.execute('''INSERT INTO GameClaims(gameId, key, value)
     VALUES (32, 'option3', '6')
+    ''');
+  }
+
+  void _insertGameToDbV3(Batch batch) {
+    batch
+        .execute('''INSERT INTO Games(lessonId, gameTypeId, result, isCompleted)
+    VALUES (1, 1, '8', 0)
+    ''');
+    batch.execute('''INSERT INTO GameClaims(gameId, key, value)
+    VALUES (33, 'option1', '6')
+    ''');
+    batch.execute('''INSERT INTO GameClaims(gameId, key, value)
+    VALUES (33, 'option2', '7')
+    ''');
+    batch.execute('''INSERT INTO GameClaims(gameId, key, value)
+    VALUES (33, 'option3', '8')
+    ''');
+
+    batch
+        .execute('''INSERT INTO Games(lessonId, gameTypeId, result, isCompleted)
+    VALUES (1, 1, '4', 0)
+    ''');
+    batch.execute('''INSERT INTO GameClaims(gameId, key, value)
+    VALUES (34, 'option1', '4')
+    ''');
+    batch.execute('''INSERT INTO GameClaims(gameId, key, value)
+    VALUES (34, 'option2', '5')
+    ''');
+    batch.execute('''INSERT INTO GameClaims(gameId, key, value)
+    VALUES (34, 'option3', '6')
     ''');
   }
 
