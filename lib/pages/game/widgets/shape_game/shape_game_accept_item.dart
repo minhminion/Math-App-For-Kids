@@ -2,7 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/pages/game/widgets/common/game_success.dart';
+import 'package:math_app_for_kid/services/app/audio_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
+import 'package:math_app_for_kid/utils/app_sounds.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class ShapeGameAcceptItem extends StatefulWidget {
@@ -49,6 +52,10 @@ class _ShapeGameAcceptItemState extends BaseStateful<ShapeGameAcceptItem>
   @override
   Widget build(BuildContext context) {
     // animationCotroller.forward();
+    context
+        .read<AudioProvider>()
+        .playAudio(AudioType.fx, AppSounds.fxMultimediaAlarm);
+
     super.build(context);
     return Stack(
       children: [

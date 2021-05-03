@@ -4,6 +4,7 @@ import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/services/app/app_dialog.dart';
 import 'package:math_app_for_kid/services/app/app_loading.dart';
+import 'package:math_app_for_kid/services/app/audio_provider.dart';
 import 'package:math_app_for_kid/services/app/auth_provider.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
 import 'package:math_app_for_kid/services/cache/cache.dart';
@@ -52,7 +53,8 @@ Future<void> myMain() async {
           lazy: false,
         ),
         ChangeNotifierProvider<LessonProvider>(create: (_) => LessonProvider()),
-        ChangeNotifierProvider<GameProvider>(create: (_) => GameProvider())
+        ChangeNotifierProvider<GameProvider>(create: (_) => GameProvider()),
+        ChangeNotifierProvider<AudioProvider>(create: (_) => AudioProvider())
       ],
       child: MyApp(),
     ),
@@ -66,13 +68,14 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
 
     SystemChrome.setEnabledSystemUIOverlays([]);
     // Init Page (Check User is logged)
+    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final bool hasCredential = true;
       if (hasCredential) {}
@@ -81,13 +84,27 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive) {
+      context.read<AudioProvider>().pauseAll();
+    } else if (state == AppLifecycleState.resumed) {
+      context.read<AudioProvider>().resumeAll();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final AppRoute appRoute = context.watch<AppRoute>();
     final AppTheme appTheme = context.appTheme();
+
+    context
+        .read<AudioProvider>()
+        .playAudio(AudioType.music, "base/audios/background_audio.mp3");
 
     return MaterialApp(
       navigatorKey: appRoute.navigatorKey,

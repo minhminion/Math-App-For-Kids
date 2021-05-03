@@ -39,7 +39,7 @@ class GamePlayPage extends BaseStateless {
               selector: (_, _charaterProvider) => _charaterProvider.bubble,
               builder: (_, bubble, __) => Material(
                 color: Colors.transparent,
-                child: GameBubble(bubble: bubble),
+                child: GameBubble(bubbleType: bubble.type),
               ),
             ),
             Expanded(child: GameCharacter()),

@@ -6,10 +6,12 @@ import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/widgets/common/game_character.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/game/widgets/shape_game/shape_game_accept_item.dart';
+import 'package:math_app_for_kid/services/app/audio_provider.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
+import 'package:math_app_for_kid/utils/app_sounds.dart';
 import 'package:math_app_for_kid/widgets/w_draw_triangle.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +24,7 @@ class _ShapeGameAnswerPlaceState extends BaseStateful<ShapeGameAnswerPlace>
     with TickerProviderStateMixin {
   GameProvider _gameProvider;
   CharacterProvider _characterProvider;
+  AudioProvider _audioProvider;
 
   ShapeGameItem _currentAcceptItem;
 
@@ -36,7 +39,6 @@ class _ShapeGameAnswerPlaceState extends BaseStateful<ShapeGameAnswerPlace>
   Animation<double> _offsetAnimationError;
 
   bool _isAcceptedItem = false;
-
   bool _isFirstTime = true;
 
   @override
@@ -71,6 +73,12 @@ class _ShapeGameAnswerPlaceState extends BaseStateful<ShapeGameAnswerPlace>
   @override
   void initState() {
     super.initState();
+
+    _audioProvider = context.provider<AudioProvider>();
+
+    _audioProvider.playAudio(AudioType.voice,
+        appTheme.assets.getCharacterVoice(BubbleType.hello).voiceUrl);
+
     Timer(Duration(milliseconds: 1300), () {
       _animationQuestionController.forward(from: 0);
       this._isFirstTime = false;
@@ -138,12 +146,27 @@ class _ShapeGameAnswerPlaceState extends BaseStateful<ShapeGameAnswerPlace>
                                 context
                                     .read<CharacterProvider>()
                                     .changeAnimation(CharacterType.success);
-                                _animationQuestionController.reverse();
-                                Timer(Duration(seconds: 2), () {
+
+                                _audioProvider.playAudio(
+                                    AudioType.voice,
+                                    appTheme.assets
+                                        .getCharacterVoice(BubbleType.success)
+                                        .voiceUrl);
+
+                                Timer(Duration(seconds: 3), () {
+                                  _animationQuestionController.reverse();
                                   context.read<GameProvider>().nextGame();
                                 });
                               } else if (!_isAcceptedItem) {
                                 _playAnimation(0);
+                                _audioProvider.playAudio(
+                                    AudioType.voice,
+                                    appTheme.assets
+                                        .getCharacterVoice(BubbleType.error)
+                                        .voiceUrl);
+                                _audioProvider.playAudio(
+                                    AudioType.fx, AppSounds.fxBlinkTwice);
+
                                 // Kiểm tra Character có đang chuyển động fail ?
                                 if (_characterProvider.characterType !=
                                     CharacterType.fail) {
@@ -179,13 +202,6 @@ class _ShapeGameAnswerPlaceState extends BaseStateful<ShapeGameAnswerPlace>
                               } else {
                                 return null;
                               }
-                              // if (isSuccess) {
-                              //   return ShapeGameAcceptItem(
-                              //     animationCotroller: _controller,
-                              //   );
-                              // } else {
-                              //   return null;
-                              // }
                             },
                           ),
                         ),
@@ -249,6 +265,7 @@ class _ShapeGameAnswerPlaceState extends BaseStateful<ShapeGameAnswerPlace>
     switch (type) {
       case 0:
         _animationErrorController.forward(from: 0);
+
         break;
       default:
     }
