@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/game/widgets/game_option_item.dart';
+import 'package:math_app_for_kid/services/app/audio_provider.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
+import 'package:math_app_for_kid/utils/app_sounds.dart';
 import 'package:provider/provider.dart';
 
 class OptionItem {
@@ -75,12 +77,18 @@ class _GameOptionListState extends BaseStateful<GameOptionList> {
                 context
                     .read<CharacterProvider>()
                     .changeAnimation(CharacterType.talk);
+                context
+                    .read<AudioProvider>()
+                    .playAudio(AudioType.fx, AppSounds.fxBubbleBlip);
                 return;
               },
               onDraggableCanceled: (_, __) {
                 context
                     .read<CharacterProvider>()
                     .changeAnimation(CharacterType.idle);
+                context
+                    .read<AudioProvider>()
+                    .playAudio(AudioType.fx, AppSounds.fxBubbleBlip);
                 return;
               },
               child: GameOptionItem.option(

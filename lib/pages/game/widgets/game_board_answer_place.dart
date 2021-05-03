@@ -5,9 +5,11 @@ import 'package:math_app_for_kid/models/local/bubble.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/game/widgets/game_option_item.dart';
 import 'package:math_app_for_kid/pages/game/widgets/game_option_list.dart';
+import 'package:math_app_for_kid/services/app/audio_provider.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
+import 'package:math_app_for_kid/utils/app_sounds.dart';
 import 'package:provider/provider.dart';
 
 class GameAnswerPlace extends StatefulWidget {
@@ -60,6 +62,9 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace>
                 // Change Character Type
                 _characterProvider.changeAnimation(CharacterType.success);
                 _characterProvider.showBubble(BubbleType.success);
+                context
+                    .read<AudioProvider>()
+                    .playAudio(AudioType.fx, AppSounds.fxMultimediaAlarm);
                 setState(() {
                   result = value;
                 });
@@ -70,7 +75,9 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace>
               } else {
                 // Animate Shake effect for answer place
                 _controller.forward();
-
+                context
+                    .read<AudioProvider>()
+                    .playAudio(AudioType.fx, AppSounds.fxBlinkTwice);
                 // Kiểm tra Character có đang chuyển động fail ?
                 if (_characterProvider.characterType != CharacterType.fail) {
                   // Change Character Type

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
+import 'package:math_app_for_kid/services/app/audio_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
+import 'package:math_app_for_kid/utils/app_sounds.dart';
 import 'package:provider/provider.dart';
 
 class ShapeGameOption extends StatefulWidget {
@@ -88,6 +90,16 @@ class _ShapeGameOptionState extends BaseStateful<ShapeGameOption>
           padding: EdgeInsets.all(8.0),
           alignment: Alignment.center,
           child: Draggable<ShapeGameItem>(
+            onDragStarted: () {
+              context
+                  .read<AudioProvider>()
+                  .playAudio(AudioType.fx, AppSounds.fxBubbleBlip);
+            },
+            // onDragEnd: (_) {
+            //   context
+            //       .read<AudioProvider>()
+            //       .playAudio(AudioType.fx, AppSounds.fxBubbleBlip);
+            // },
             data: item,
             feedback: _getItemShape(item.imageUrl),
             childWhenDragging: Container(),

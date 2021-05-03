@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:math_app_for_kid/models/local/bubble.dart';
+import 'package:math_app_for_kid/models/local/characterVoices.dart';
 import 'package:math_app_for_kid/models/local/games.dart';
+import 'package:math_app_for_kid/utils/app_sounds.dart';
 
 class AppAssets {
   AppAssets._();
@@ -49,22 +53,25 @@ class AppAssets {
     return "";
   }
 
-  String getCharacterVoice(BubbleType bubbleType) {
-    String audioUrl = "";
-
+  CharacterVoice getCharacterVoice(BubbleType bubbleType) {
+    CharacterVoice _result;
+    List<CharacterVoice> _characterVoices;
     switch (bubbleType) {
       case BubbleType.success:
-        audioUrl = 'base/audios/success_audio.mp3';
+        _characterVoices = AppSounds.characterSuccessVoice;
+        _result = _characterVoices[Random().nextInt(_characterVoices.length)];
         break;
       case BubbleType.hello:
-        audioUrl = 'base/audios/hello_audio.mp3';
+        _characterVoices = AppSounds.characterIdleVoice;
+        _result = _characterVoices[Random().nextInt(_characterVoices.length)];
         break;
       case BubbleType.error:
-        audioUrl = 'base/audios/error_audio.mp3';
+        _characterVoices = AppSounds.characterFailVoice;
+        _result = _characterVoices[Random().nextInt(_characterVoices.length)];
         break;
     }
 
-    return audioUrl;
+    return _result;
   }
 
   // LOTTIE

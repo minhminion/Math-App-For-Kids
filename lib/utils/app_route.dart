@@ -4,6 +4,7 @@ import 'package:math_app_for_kid/pages/game/game_page.dart';
 import 'package:math_app_for_kid/pages/landing/landing_page.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_detail.dart';
 import 'package:math_app_for_kid/pages/lesson/lesson_list_page.dart';
+import 'package:math_app_for_kid/pages/settings/settings_page.dart';
 import 'package:math_app_for_kid/pages/splash/splash_screen.dart';
 import 'package:math_app_for_kid/widgets/r_fade_route.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class AppRoute {
   static const String lessonRoute = '/lesson';
   static const String lessonDetailRoute = '/lesson-detail';
   static const String gamePlayRoute = '/game-play';
+  static const String settingsRoute = '/settings';
 
   static const String testRoute = '/test';
   static const String dbTestRoute = '/db-test';
@@ -74,6 +76,10 @@ class AppRoute {
       case gamePlayRoute:
         return MaterialPageRoute<dynamic>(
             settings: settings, builder: (_) => GamePlayPage());
+
+      case settingsRoute:
+        return MaterialPageRoute<dynamic>(
+            settings: settings, builder: (_) => SettingsPage());
 
       default:
         return onUnknownRoute(settings);

@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  dio: ^3.0.10
+  dio: ^3.0.0
   flutter_screenutil: ^4.0.3+3
   flutter_spinkit: ^5.0.0
   npreferences: ^3.0.0+1
@@ -80,6 +80,7 @@ flutter:
     - assets/base/images/others/
     - assets/base/images/carousel/
     - assets/base/audios/
+    - assets/base/audios/fx/
     - assets/base/lottie/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
