@@ -74,6 +74,15 @@ class AppAssets {
     return _result;
   }
 
+  List<String> gameCardBackgrounds = [
+    '$rootAsset/images/others/game_card_background_1.png',
+    '$rootAsset/images/others/game_card_background_2.png'
+  ];
+
+  String getGameCardBackground(int gameIndex) {
+    return gameCardBackgrounds[(gameIndex + 1) % gameCardBackgrounds.length];
+  }
+
   // LOTTIE
   String lottieCongratulations = '$rootAsset/lottie/congratulations.json';
 

@@ -48,26 +48,21 @@ class _AdditionAndSubtractionGameQuestionState
     AdditionAndSubtractionGame gameData = widget.gameData;
     return Column(
       children: [
-        Flexible(
-            flex: 3,
-            child: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-              int crossAxisCount =
-                  gameData.numA > gameData.numB ? gameData.numA : gameData.numB;
-              double childAspectRatio = (constraints.maxWidth * 2) /
-                  (crossAxisCount * constraints.maxHeight);
-              return GridView.count(
-                shrinkWrap: true,
-                primary: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: crossAxisCount,
-                childAspectRatio: childAspectRatio,
-                children: _buildListImages(
-                    gameData.numA, gameData.numB, crossAxisCount),
-              );
-            })),
-        SizedBox(
-          height: AppConstant.defaultSpacing * 4,
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.all(AppConstant.defaultSpacing * 2),
+            alignment: Alignment.center,
+            // color: Colors.redAccent,
+            child: Wrap(
+              // direction: Axis.vertical,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              alignment: WrapAlignment.start,
+              runSpacing: AppConstant.defaultSpacing,
+              spacing: AppConstant.defaultSpacing,
+              children: _buildListImages(
+                  gameData.numA, gameData.numB, gameData.operator),
+            ),
+          ),
         ),
         FadeTransition(
           opacity: _animation,
@@ -99,46 +94,65 @@ class _AdditionAndSubtractionGameQuestionState
     );
   }
 
-  List<Widget> _buildListImages(int numberA, int numberB, int crossAxisCount) {
+  List<Widget> _buildListImages(int numberA, int numberB, String operator) {
     List<Widget> list = [];
-
-    // Generate Images for number A
-    for (int i = 1; i <= crossAxisCount; i++) {
-      if (i <= numberA) {
-        list.add(_buildImage(appTheme.assets.planet(1)));
-      } else {
-        list.add(Container(
-          width: double.infinity,
-          height: double.infinity,
-          // child:
-        ));
-      }
+    int total = numberA + numberB;
+    // Generate Images for Addition Game
+    switch (operator) {
+      case "+":
+        for (int i = 1; i <= total; i++) {
+          if (i <= numberA) {
+            list.add(_buildImage(url: appTheme.assets.planet(1)));
+          } else {
+            list.add(_buildImage(url: appTheme.assets.planet(2)));
+          }
+        }
+        break;
+      case "-":
+        String imageUrl = appTheme.assets.planet(1);
+        // Number in Subtraction alway > number B
+        for (int i = 1; i <= numberA; i++) {
+          if (i <= numberA - numberB) {
+            list.add(_buildImage(url: imageUrl));
+          } else {
+            list.add(_buildImage(url: imageUrl, isDisable: true));
+          }
+        }
+        break;
+      default:
     }
 
     // Generate Images for number B
-    for (int i = 1; i <= crossAxisCount; i++) {
-      if (i <= numberB) {
-        list.add(_buildImage(appTheme.assets.planet(2)));
-      } else {
-        list.add(Container(
-          width: double.infinity,
-          height: double.infinity,
-          // child:
-        ));
-      }
-    }
+    // for (int i = 1; i <= crossAxisCount; i++) {
+    //   if (i <= numberB) {
+
+    //   } else {
+    //     list.add(Container(
+    //       width: double.infinity,
+    //       height: double.infinity,
+    //       // child:
+    //     ));
+    //   }
+    // }
 
     return list;
   }
 
-  Widget _buildImage(String url) {
-    return ScaleTransition(
-      scale: _animation,
-      child: Container(
-        padding: EdgeInsets.all(AppConstant.defaultSpacing * 2),
-        alignment: Alignment.center,
-        // color: Colors.redAccent,
-        child: Image(fit: BoxFit.contain, image: AssetImage(url)),
+  Widget _buildImage({String url, bool isDisable = false}) {
+    return Container(
+      height: 80,
+      width: 80,
+      child: ColorFiltered(
+        colorFilter: isDisable
+            ? AppConstant.greyscale
+            : ColorFilter.mode(Colors.transparent, BlendMode.color),
+        child: ScaleTransition(
+          scale: _animation,
+          child: Image(
+            fit: BoxFit.contain,
+            image: AssetImage(url),
+          ),
+        ),
       ),
     );
   }

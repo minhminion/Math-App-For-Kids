@@ -37,6 +37,18 @@ class AppTheme {
   Color errorColor = Color(0xFFFF9671);
   Color warningColor = Color(0xFFF9F871);
 
+  List<Color> _cardColors = [
+    Color(0xFFFFC75F),
+    Color(0xFFFF9671),
+    Color(0xFFFF6F91),
+    Color(0xFFD65DB1),
+    Color(0xFF845EC2),
+  ];
+
+  Color getCardColor(int gameIndex) {
+    return _cardColors[(gameIndex + 1) % _cardColors.length];
+  }
+
   double spacing(double value) {
     return (value * defaultSpacing).floorToDouble();
   }

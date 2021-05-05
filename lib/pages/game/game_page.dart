@@ -7,9 +7,12 @@ import 'package:math_app_for_kid/pages/game/widgets/common/game_character.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/game/widgets/game_option_list.dart';
 import 'package:math_app_for_kid/pages/game/widgets/shape_game/shape_game_board.dart';
+import 'package:math_app_for_kid/pages/lesson/details/lesson_item_dialog.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
+import 'package:math_app_for_kid/utils/app_extension.dart';
+import 'package:math_app_for_kid/widgets/r_hero_dialog_router.dart';
 import 'package:math_app_for_kid/widgets/w_floating_button.dart';
 import 'package:provider/provider.dart';
 
@@ -18,11 +21,25 @@ class GamePlayPage extends BaseStateless {
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    GameProvider _gameProvider = context.provider<GameProvider>();
     return Scaffold(
+        key: ValueKey(_gameProvider.currentGameIndex + 1),
         backgroundColor: appTheme.backgroundColor,
-        floatingActionButton: WFloatingButton(),
+        floatingActionButton: WFloatingButton(
+          onPressed: () {
+            Navigator.pushReplacement(
+                context,
+                HeroDialogRoute(
+                    builder: (BuildContext context) => Center(
+                          child: LessonItemDialog(
+                            game: _gameProvider.game,
+                            gameIndex: _gameProvider.currentGameIndex + 1,
+                          ),
+                        )));
+          },
+        ),
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-        body: _buildGameContent(context.read<GameProvider>().game.gameType));
+        body: _buildGameContent(_gameProvider.game.gameType));
   }
 
   Widget _buildGameContent(GameType gameType) {

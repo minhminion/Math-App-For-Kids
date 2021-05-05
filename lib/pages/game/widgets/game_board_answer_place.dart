@@ -27,13 +27,15 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace>
   AnimationController _controller;
   Animation<double> _offsetAnimation;
 
+  double _shakeValues = 16.0;
+
   @override
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
     _controller = AnimationController(
         duration: const Duration(milliseconds: 500), vsync: this);
 
-    _offsetAnimation = Tween(begin: 0.0, end: 24.0)
+    _offsetAnimation = Tween(begin: 0.0, end: _shakeValues)
         .chain(CurveTween(curve: Curves.elasticIn))
         .animate(_controller)
           ..addStatusListener((status) {
@@ -54,9 +56,9 @@ class _GameAnswerPlaceState extends BaseStateful<GameAnswerPlace>
         animation: _offsetAnimation,
         builder: (context, snapshot) {
           return Container(
-            padding: EdgeInsets.only(
-                left: _offsetAnimation.value + 60.0,
-                right: 60.0 - _offsetAnimation.value),
+            margin: EdgeInsets.only(
+                left: _offsetAnimation.value + _shakeValues,
+                right: _shakeValues - _offsetAnimation.value),
             child: DragTarget<OptionItem>(onAccept: (value) async {
               if (_gameProvider.checkResult(value.value)) {
                 // Change Character Type

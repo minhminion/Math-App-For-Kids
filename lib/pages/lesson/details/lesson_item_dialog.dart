@@ -12,25 +12,32 @@ import 'package:provider/provider.dart';
 class LessonItemDialog extends BaseStateless {
   final double iconSize = 80.0;
 
+  final BuildContext parentContext;
   final Game game;
   final int gameIndex;
 
-  LessonItemDialog({Key key, this.game, this.gameIndex = 0}) : super(key: key);
+  LessonItemDialog({Key key, this.game, this.gameIndex = 0, this.parentContext})
+      : super(key: key);
 
   playGame(int gameId, BuildContext context) async {
     await context
         .provider<GameProvider>()
-        .startGame(gameId: gameId, context: context);
-    Navigator.pushNamed(context, AppRoute.gamePlayRoute, arguments: game.id);
+        .startGame(gameId: gameId, context: parentContext);
+    // Navigator.pushNamed(context, AppRoute.gamePlayRoute, arguments: game.id);
+    Navigator.pushReplacementNamed(context, AppRoute.gamePlayRoute,
+        arguments: game.id);
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     bool isCurrentGame =
         context.watch<LessonProvider>().currentLesson.completedGame ==
             gameIndex - 1;
-
-    super.build(context);
+    String cardBackground = appTheme.assets.getGameCardBackground(gameIndex);
+    double opacity = 0.5;
+    Color cardColor =
+        isCurrentGame ? appTheme.getCardColor(gameIndex) : Colors.grey;
     return Dialog(
       insetPadding: EdgeInsets.symmetric(
           horizontal: AppConstant.defaultSpacing * 3,
@@ -44,7 +51,12 @@ class LessonItemDialog extends BaseStateless {
               margin: EdgeInsets.all(AppConstant.defaultSpacing * 2),
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: isCurrentGame ? Colors.blueAccent : Colors.grey,
+                  color: cardColor,
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                          cardColor.withOpacity(opacity), BlendMode.dstATop),
+                      image: AssetImage(cardBackground)),
                   borderRadius:
                       BorderRadius.circular(AppConstant.defaultSpacing)),
               child: Center(
@@ -84,7 +96,7 @@ class LessonItemDialog extends BaseStateless {
           Positioned(
               top: AppConstant.defaultSpacing * 3.5,
               left: AppConstant.defaultSpacing * 3.5,
-              child: _buildHeroGameIndex()),
+              child: _buildHeroGameIndex(isCurrentGame)),
           if (!isCurrentGame)
             Positioned(
               right: AppConstant.defaultSpacing * 8,
@@ -128,7 +140,7 @@ class LessonItemDialog extends BaseStateless {
     );
   }
 
-  Widget _buildHeroGameIndex() {
+  Widget _buildHeroGameIndex(bool isCurrentGame) {
     return Hero(
       tag: "game_item_index_${game.id}",
       child: Container(
