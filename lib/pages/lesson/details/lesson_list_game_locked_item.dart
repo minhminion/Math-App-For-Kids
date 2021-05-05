@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/games.dart';
+import 'package:math_app_for_kid/services/app/audio_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
+import 'package:math_app_for_kid/utils/app_sounds.dart';
+import 'package:provider/provider.dart';
 
 class LockedGameItem extends StatefulWidget {
   LockedGameItem({Key key, @required this.gamePlay}) : super(key: key);
@@ -36,6 +41,12 @@ class _LockedGameItemState extends BaseStateful<LockedGameItem>
   }
 
   Future<void> _playAnimation() async {
+    Timer(Duration(milliseconds: 560), () {
+      context
+          .read<AudioProvider>()
+          .playAudio(AudioType.fx, AppSounds.fxSuctionPop);
+    });
+
     try {
       await _controller.forward().orCancel;
       await _controller.reverse().orCancel;

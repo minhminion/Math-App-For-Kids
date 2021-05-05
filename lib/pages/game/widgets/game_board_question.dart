@@ -3,7 +3,7 @@ import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/game/widgets/compare_game/compare_game_board_question.dart';
 import 'package:math_app_for_kid/pages/game/widgets/counter_game/count_game_board_question.dart';
-import 'package:math_app_for_kid/pages/game/widgets/math_game/math_game_board_question copy.dart';
+import 'package:math_app_for_kid/pages/game/widgets/math_game/math_game_board_question.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 import 'package:provider/provider.dart';
 

@@ -25,10 +25,16 @@ class _LessonListPageState extends State<LessonListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appTheme.backgroundColor,
-      body: Column(
-        children: <Widget>[
-          LessonListPageBody(),
-        ],
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(appTheme.assets.backgroundLanding_2),
+                fit: BoxFit.cover)),
+        child: Column(
+          children: <Widget>[
+            LessonListPageBody(),
+          ],
+        ),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

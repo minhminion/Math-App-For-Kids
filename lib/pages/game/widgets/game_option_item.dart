@@ -89,7 +89,7 @@ class _GameOptionItemState extends BaseStateful<GameOptionItem>
           decoration: BoxDecoration(
               color: widget.isDisable
                   ? Colors.grey
-                  : widget.color ?? appTheme.successColor,
+                  : widget.color ?? appTheme.primaryColor,
               border: Border.all(color: Colors.white60, width: 4),
               borderRadius:
                   BorderRadius.circular(AppConstant.defaultSpacing * 4.6)),

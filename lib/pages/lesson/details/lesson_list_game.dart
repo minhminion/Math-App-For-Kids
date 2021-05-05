@@ -117,7 +117,7 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
   Widget _buildLessonContentItem(Game game, int index, bool isCurrentGame) {
     double opacity = 0.5;
     Color cardColor =
-        isCurrentGame ? appTheme.getCardColor(index) : Colors.grey;
+        isCurrentGame ? appTheme.getCardColor(index) : appTheme.successColor;
     String cardBackground = appTheme.assets.getGameCardBackground(index);
 
     return InkWell(

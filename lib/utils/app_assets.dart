@@ -29,10 +29,12 @@ class AppAssets {
   /// -----------------
   String icAppIcon = '$rootAsset/app_icon_ad.png';
   String icEmpty = '$rootAsset/ic_empty.png';
-  String characterRiv = '$rootAsset/character/astronaut.riv';
+  String characterRiv = '$rootAsset/character/astronaut_2.riv';
   String characterWithBoxRiv = '$rootAsset/character/astronaut_with_box.riv';
 
-  String backgroundLanding = '$rootAsset/images/bg_landing.png';
+  String backgroundLanding = '$rootAsset/images/bg_landing_2.png';
+  String backgroundLanding_1 = '$rootAsset/images/bg_1.png';
+  String backgroundLanding_2 = '$rootAsset/images/bg_2.png';
 
   String planet(id) => '$rootAsset/images/planet/planet_$id.png';
   String gameTrophy = '$rootAsset/images/others/game_trophy.png';
@@ -85,6 +87,7 @@ class AppAssets {
 
   // LOTTIE
   String lottieCongratulations = '$rootAsset/lottie/congratulations.json';
+  String lottieTutorialArrow = '$rootAsset/lottie/tutorial_arrow.json';
 
   ///#endregion
   ///#region VIDEOS

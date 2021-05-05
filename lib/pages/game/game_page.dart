@@ -25,55 +25,79 @@ class GamePlayPage extends BaseStateless {
     return Scaffold(
         key: ValueKey(_gameProvider.currentGameIndex + 1),
         backgroundColor: appTheme.backgroundColor,
-        floatingActionButton: WFloatingButton(
-          onPressed: () {
-            Navigator.pushReplacement(
-                context,
-                HeroDialogRoute(
-                    builder: (BuildContext context) => Center(
-                          child: LessonItemDialog(
-                            game: _gameProvider.game,
-                            gameIndex: _gameProvider.currentGameIndex + 1,
-                          ),
-                        )));
-          },
+        floatingActionButton: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              left: -28,
+              top: 8,
+              height: 80,
+              child: WFloatingButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context,
+                      HeroDialogRoute(
+                        builder: (BuildContext context) => LessonItemDialog(
+                          game: _gameProvider.game,
+                          gameIndex: _gameProvider.currentGameIndex + 1,
+                        ),
+                      ));
+                },
+              ),
+            ),
+          ],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-        body: _buildGameContent(_gameProvider.game.gameType));
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+        body: Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage(appTheme.assets.backgroundLanding_2))),
+            child: _buildGameContent(_gameProvider.game.gameType)));
   }
 
   Widget _buildGameContent(GameType gameType) {
     if (gameType == GameType.shapeGame) {
       return ShapeGameBoard();
     }
-    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Container(
-        padding: EdgeInsets.all(AppConstant.defaultSpacing * 4),
-        width: 200,
-        child: Column(
-          children: [
-            Selector<CharacterProvider, Bubble>(
-              selector: (_, _charaterProvider) => _charaterProvider.bubble,
-              builder: (_, bubble, __) => Material(
-                color: Colors.transparent,
-                child: GameBubble(bubbleType: bubble.type),
-              ),
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        textDirection: TextDirection.rtl,
+        children: [
+          GameOptionList(),
+
+          // Game Board
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.fromLTRB(
+                  0,
+                  AppConstant.defaultSpacing * 2,
+                  AppConstant.defaultSpacing * 4,
+                  AppConstant.defaultSpacing * 2),
+              child: GameBoard(),
             ),
-            Expanded(child: GameCharacter()),
-            SizedBox(height: 50),
-          ],
-        ),
-      ),
-      // Game Board
-      Expanded(
-        child: Container(
-          margin: EdgeInsets.fromLTRB(0, AppConstant.defaultSpacing * 4,
-              AppConstant.defaultSpacing * 4, AppConstant.defaultSpacing * 4),
-          child: GameBoard(),
-        ),
-      ),
-      // Game Option
-      GameOptionList()
-    ]);
+          ),
+          // Game Option
+          Container(
+            padding: EdgeInsets.all(AppConstant.defaultSpacing * 2),
+            width: 200,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Spacer(
+                  flex: 2,
+                ),
+                Selector<CharacterProvider, Bubble>(
+                  selector: (_, _charaterProvider) => _charaterProvider.bubble,
+                  builder: (_, bubble, __) => Material(
+                    color: Colors.transparent,
+                    child: GameBubble(bubbleType: bubble.type),
+                  ),
+                ),
+                Flexible(flex: 4, child: GameCharacter()),
+              ],
+            ),
+          ),
+        ]);
   }
 }

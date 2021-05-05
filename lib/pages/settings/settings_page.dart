@@ -37,88 +37,92 @@ class SettingsPage extends BaseStateless {
             ),
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _getTitle("Nhạc nền"),
-            Row(
-              children: [
-                Switch(
-                  value: !context.watch<AudioProvider>().muteMusic,
-                  onChanged: (value) {
-                    _audioProvider.mute(AudioType.music, !value);
-                  },
-                  activeTrackColor: Colors.lightGreenAccent,
-                  activeColor: Colors.green,
-                ),
-                Slider(
-                  max: 0.4,
-                  value: context.watch<AudioProvider>().musicVolume,
-                  onChanged: context.watch<AudioProvider>().muteMusic
-                      ? null
-                      : (volume) {
-                          _audioProvider.setVolume(AudioType.music, volume);
-                        },
-                  divisions: 4,
-                )
-              ],
-            ),
-            _getTitle("Giọng nói nhân vật"),
-            Row(
-              children: [
-                Switch(
-                  value: !context.watch<AudioProvider>().muteVoice,
-                  onChanged: (value) {
-                    _audioProvider.mute(AudioType.voice, !value);
-                  },
-                  activeTrackColor: Colors.lightGreenAccent,
-                  activeColor: Colors.green,
-                ),
-                Slider(
-                  value: context.watch<AudioProvider>().voiceVolume,
-                  onChanged: context.watch<AudioProvider>().muteVoice
-                      ? null
-                      : (volume) {
-                          _audioProvider.setVolume(AudioType.voice, volume);
-                        },
-                  divisions: 4,
-                )
-              ],
-            ),
-            _getTitle("Âm thanh hiệu ứng"),
-            Row(
-              children: [
-                Switch(
-                  value: !context.watch<AudioProvider>().muteFx,
-                  onChanged: (value) {
-                    _audioProvider.mute(AudioType.fx, !value);
-                  },
-                  activeTrackColor: Colors.lightGreenAccent,
-                  activeColor: Colors.green,
-                ),
-                Slider(
-                  value: context.watch<AudioProvider>().fxVolume,
-                  onChanged: context.watch<AudioProvider>().muteFx
-                      ? null
-                      : (volume) {
-                          _audioProvider.setVolume(AudioType.fx, volume);
-                        },
-                  divisions: 4,
-                )
-              ],
-            ),
-          ],
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          // color: Colors.blueAccent,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildAudioSetting(
+                title: "Nhạc nền",
+                audioProvider: _audioProvider,
+                sliderValue: context.watch<AudioProvider>().musicVolume,
+                maxSliderValue: 0.4,
+                isMute: context.watch<AudioProvider>().muteMusic,
+                audioType: AudioType.music,
+              ),
+              _buildAudioSetting(
+                title: "Giọng nói nhân vật",
+                audioProvider: _audioProvider,
+                sliderValue: context.watch<AudioProvider>().voiceVolume,
+                isMute: context.watch<AudioProvider>().muteVoice,
+                audioType: AudioType.voice,
+              ),
+              _buildAudioSetting(
+                title: "Âm thanh hiệu ứng",
+                audioProvider: _audioProvider,
+                sliderValue: context.watch<AudioProvider>().fxVolume,
+                isMute: context.watch<AudioProvider>().muteFx,
+                audioType: AudioType.fx,
+              ),
+            ],
+          ),
         ),
         floatingActionButton: WFloatingButton());
   }
 
+  Widget _buildAudioSetting(
+      {String title = "Tiêu đề",
+      @required AudioType audioType,
+      @required AudioProvider audioProvider,
+      @required bool isMute,
+      @required double sliderValue,
+      double maxSliderValue = 1.0}) {
+    return Row(
+      children: [
+        _getTitle(title),
+        SliderTheme(
+          data: SliderThemeData(
+            trackHeight: 16,
+            activeTrackColor: appTheme.getCardColor(4),
+            inactiveTrackColor: appTheme.cardBackgroundColor,
+            thumbColor: Colors.white,
+            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10),
+            overlayColor: Colors.white.withAlpha(32),
+            overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
+          ),
+          child: Slider(
+            max: maxSliderValue,
+            min: 0,
+            value: sliderValue,
+            onChanged: isMute
+                ? null
+                : (volume) {
+                    audioProvider.setVolume(audioType, volume);
+                  },
+            // divisions: 4,
+          ),
+        ),
+        Switch(
+          value: !isMute,
+          onChanged: (value) {
+            audioProvider.mute(audioType, !value);
+          },
+          activeTrackColor: Colors.lightGreenAccent,
+          activeColor: Colors.green,
+        ),
+      ],
+    );
+  }
+
   Widget _getTitle(String text) {
-    return Padding(
+    return Container(
+      width: 240,
       padding: EdgeInsets.all(8.0),
       child: Text(
         text,
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.right,
         style: TextStyle(
           color: Colors.white,
           fontSize: 21.0,

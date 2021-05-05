@@ -1,53 +1,53 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
-import 'package:math_app_for_kid/pages/splash/splash_screen_2.dart';
 import 'package:math_app_for_kid/services/app/character_provider.dart';
+import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 import 'package:math_app_for_kid/utils/app_extension.dart';
-import 'package:math_app_for_kid/widgets/r_fade_route.dart';
+import 'package:math_app_for_kid/utils/app_route.dart';
 import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key key}) : super(key: key);
-
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  fetchAllLesson() async {
-    await context.provider<LessonProvider>().fetchAllLesson();
-
-    // startTime();
+// ignore: must_be_immutable
+class SplashScreen2 extends BaseStateless {
+  startTime(context) async {
+    var duration = new Duration(seconds: 3);
+    return new Timer(
+        duration,
+        () => Navigator.pushNamedAndRemoveUntil(
+            context, AppRoute.routeLanding, (_) => false));
   }
 
   @override
-  void initState() {
-    super.initState();
-
-    fetchAllLesson();
-    // startTime();
-    Timer(
-        Duration(seconds: 3),
-        () => Navigator.push(
-            context,
-            FadeRoute(
-                transitionDuration: Duration(milliseconds: 800),
-                page: SplashScreen2())));
+  void initDependencies(BuildContext context) {
+    super.initDependencies(context);
+    startTime(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final riveArtboard = context.watch<CharacterProvider>().riveArtboard;
-
     return Scaffold(
       backgroundColor: context.appTheme().backgroundColor,
       body: Stack(
         alignment: Alignment.center,
         children: [
+          Container(
+            padding: EdgeInsets.only(left: 300 / 2),
+            width: double.infinity,
+            height: double.infinity,
+            alignment: Alignment.center,
+            child: Text(
+              "M&D Studio",
+              style: TextStyle(
+                fontSize: 60,
+                color: Colors.white,
+              ),
+            ),
+          ),
           Positioned(
+            left: MediaQuery.of(context).size.width / 2 - 300,
             height: 300,
             width: 200,
             child: Hero(
@@ -63,6 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
           ),
+          // Container(child: Text("M&D Studio")),
         ],
       ),
     );

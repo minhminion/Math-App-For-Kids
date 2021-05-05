@@ -8,18 +8,24 @@ class WProgessCircular extends BaseStateless {
   final double size;
   final double progessPercent;
   final Widget child;
+  final double borderWidth;
 
   WProgessCircular(
-      {Key key, @required this.progessPercent, this.size = 100, this.child})
+      {Key key,
+      @required this.progessPercent,
+      this.size = 100,
+      this.child,
+      this.borderWidth = 20})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     return Container(
       height: size,
       width: size,
-      // color: appTheme.successColor,
+      // color: appTheme.primaryColor,
       child: Stack(
         children: [
           ShaderMask(
@@ -30,7 +36,7 @@ class WProgessCircular extends BaseStateless {
                 tileMode: TileMode.repeated,
                 center: Alignment.center,
                 stops: [progessPercent, progessPercent],
-                colors: [appTheme.successColor, Colors.grey.withAlpha(55)],
+                colors: [appTheme.primaryColor, Colors.grey.withAlpha(55)],
               ).createShader(rect);
             },
             child: Container(
@@ -42,10 +48,19 @@ class WProgessCircular extends BaseStateless {
           ),
           Center(
             child: Container(
-              width: size - 20,
-              height: size - 20,
+              width: size - borderWidth,
+              height: size - borderWidth,
               decoration: BoxDecoration(
-                  shape: BoxShape.circle, color: Color(0xFF333366)),
+                shape: BoxShape.circle,
+                color: Color(0xFF333366),
+                boxShadow: [
+                  BoxShadow(
+                    color: appTheme.warningColor.withOpacity(0.5),
+                    blurRadius: 7,
+                    offset: Offset(0, 0), // changes position of shadow
+                  ),
+                ],
+              ),
               child: child,
             ),
           )

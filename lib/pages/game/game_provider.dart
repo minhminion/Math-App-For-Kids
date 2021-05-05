@@ -84,7 +84,8 @@ class GameProvider extends ChangeNotifierSafety {
             this.game = ComparasionGame.fromMap(response);
             break;
           case GameType.shapeGame:
-            this.game = ShapeGame.fromMap(response)..createListShape();
+            this.game = ShapeGame.fromMap(response)
+              ..createListShape(_currentGameIndex);
             break;
           default:
             break;
@@ -161,20 +162,21 @@ class GameProvider extends ChangeNotifierSafety {
     // Not last game
     List<Game> gamePlays = _lessonProvider.currentLesson.games;
     if (_currentGameIndex < gamePlays.length) {
-      this._currentGameIndex++;
+      int _tmpGameIndex = _currentGameIndex + 1;
 
-      if (_lessonProvider.currentLesson.completedGame < _currentGameIndex) {
-        _lessonProvider.updateCurrentLessonCompleteGame(_currentGameIndex);
+      if (_lessonProvider.currentLesson.completedGame < _tmpGameIndex) {
+        _lessonProvider.updateCurrentLessonCompleteGame(_tmpGameIndex);
       }
 
-      if (_currentGameIndex == gamePlays.length) {
+      if (_tmpGameIndex == gamePlays.length) {
         Navigator.pop(_context);
         return;
       }
 
-      int gameId = gamePlays[_currentGameIndex]?.id;
+      int gameId = gamePlays[_tmpGameIndex]?.id;
       await getGameById(gameId: gameId);
 
+      this._currentGameIndex = _tmpGameIndex;
       notifyListeners();
     }
     return;

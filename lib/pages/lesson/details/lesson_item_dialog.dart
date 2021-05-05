@@ -22,7 +22,7 @@ class LessonItemDialog extends BaseStateless {
   playGame(int gameId, BuildContext context) async {
     await context
         .provider<GameProvider>()
-        .startGame(gameId: gameId, context: parentContext);
+        .startGame(gameId: gameId, context: parentContext ?? context);
     // Navigator.pushNamed(context, AppRoute.gamePlayRoute, arguments: game.id);
     Navigator.pushReplacementNamed(context, AppRoute.gamePlayRoute,
         arguments: game.id);
@@ -36,8 +36,9 @@ class LessonItemDialog extends BaseStateless {
             gameIndex - 1;
     String cardBackground = appTheme.assets.getGameCardBackground(gameIndex);
     double opacity = 0.5;
-    Color cardColor =
-        isCurrentGame ? appTheme.getCardColor(gameIndex) : Colors.grey;
+    Color cardColor = isCurrentGame
+        ? appTheme.getCardColor(gameIndex)
+        : appTheme.successColor;
     return Dialog(
       insetPadding: EdgeInsets.symmetric(
           horizontal: AppConstant.defaultSpacing * 3,
@@ -65,7 +66,7 @@ class LessonItemDialog extends BaseStateless {
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40)),
-                          primary: appTheme.successColor,
+                          primary: appTheme.primaryColor,
                           padding:
                               EdgeInsets.all(AppConstant.defaultSpacing * 4)),
                       onPressed: () => playGame(game.id, context),
