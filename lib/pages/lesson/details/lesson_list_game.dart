@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:math_app_for_kid/models/local/games.dart';
 import 'package:math_app_for_kid/models/local/lessons.dart';
+import 'package:math_app_for_kid/pages/game/game_provider.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_item_dialog.dart';
 import 'package:math_app_for_kid/pages/lesson/details/lesson_list_game_locked_item.dart';
+import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
 import 'package:math_app_for_kid/widgets/r_hero_dialog_router.dart';
+import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class LessonListGames extends StatefulWidget {
-  LessonListGames({Key key, this.lesson}) : super(key: key);
-
-  final Lesson lesson;
+  LessonListGames({Key key}) : super(key: key);
 
   @override
   _LessonListGamesState createState() => _LessonListGamesState();
@@ -20,7 +21,9 @@ class LessonListGames extends StatefulWidget {
 class _LessonListGamesState extends BaseStateful<LessonListGames>
     with TickerProviderStateMixin {
   final _scrollDirection = Axis.horizontal;
+  bool _isFirstBuild = true;
   List<Game> gamePlays;
+  Lesson _lesson;
 
   AnimationController _controller;
   Animation<double> _animation;
@@ -32,16 +35,26 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
   @override
   void initDependencies(BuildContext context) {
     super.initDependencies(context);
+
+    _lesson = context.read<LessonProvider>().currentLesson;
+    gamePlays = _lesson.games;
+
+    if (gamePlays != null && gamePlays.length > 3 && !_isFirstBuild) {
+      scrollTo(context.read<GameProvider>().currentGameIndex);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _itemScrollController = ItemScrollController();
+    _itemPositionsListener = ItemPositionsListener.create();
+
     _controller = AnimationController(vsync: this, duration: _animtionDuration);
 
     _animation = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: Interval(0.5, 1.0)),
     );
-
-    _itemScrollController = ItemScrollController();
-    _itemPositionsListener = ItemPositionsListener.create();
-
-    gamePlays = widget.lesson.games;
 
     _controller.forward(from: 0.0);
   }
@@ -50,7 +63,8 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
   void afterFirstBuild(BuildContext context) {
     super.afterFirstBuild(context);
     if (gamePlays != null && gamePlays.length > 3) {
-      scrollTo(widget.lesson.completedGame);
+      scrollTo(_lesson.completedGame);
+      _isFirstBuild = false;
     }
   }
 
@@ -63,7 +77,8 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    gamePlays = widget.lesson.games;
+
+    gamePlays = _lesson.games;
     if (gamePlays == null || gamePlays.length == 0)
       return FadeTransition(
         opacity: _animation,
@@ -91,18 +106,23 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
           itemPositionsListener: _itemPositionsListener,
           itemScrollController: _itemScrollController,
           itemCount: gamePlays.length,
-          itemBuilder: (context, index) => index > widget.lesson.completedGame
+          itemBuilder: (context, index) => index > _lesson.completedGame
               ? LockedGameItem(
                   key: Key(index.toString()), gamePlay: gamePlays[index])
-              : _buildLessonContentItem(gamePlays[index], index + 1,
-                  index == widget.lesson.completedGame)),
+              : _buildLessonContentItem(
+                  gamePlays[index], index + 1, index == _lesson.completedGame)),
     );
   }
 
   Widget _buildLessonContentItem(Game game, int index, bool isCurrentGame) {
+    double opacity = 0.5;
+    Color cardColor =
+        isCurrentGame ? appTheme.getCardColor(index) : Colors.grey;
+    String cardBackground = appTheme.assets.getGameCardBackground(index);
+
     return InkWell(
       borderRadius: BorderRadius.circular(AppConstant.defaultSpacing),
-      onTap: () => openGameDialog(game, index),
+      onTap: () => openGameDialog(game, index, context),
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -112,9 +132,12 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
               margin: EdgeInsets.symmetric(vertical: 0, horizontal: 16.0),
               width: 300,
               decoration: BoxDecoration(
-                  // Color grey: IsCompleted, blueAccent: IsCurrentGame
-                  // ecoration: BoxDecoration(
-                  color: isCurrentGame ? Colors.blueAccent : Colors.grey,
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                          cardColor.withOpacity(opacity), BlendMode.dstATop),
+                      image: AssetImage(cardBackground)),
+                  color: cardColor,
                   border: Border.all(color: Colors.white, width: 4),
                   borderRadius:
                       BorderRadius.circular(AppConstant.defaultSpacing)),
@@ -173,15 +196,15 @@ class _LessonListGamesState extends BaseStateful<LessonListGames>
     _itemScrollController.jumpTo(index: index, alignment: 0);
   }
 
-  void openGameDialog(Game game, int index) {
+  void openGameDialog(Game game, int index, BuildContext parentContext) {
     Navigator.push(
         context,
         HeroDialogRoute(
             builder: (BuildContext context) => Center(
                   child: LessonItemDialog(
-                    game: game,
-                    gameIndex: index,
-                  ),
+                      game: game,
+                      gameIndex: index,
+                      parentContext: parentContext),
                 )));
   }
 }

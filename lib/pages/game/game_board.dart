@@ -37,7 +37,6 @@ class GameBoard extends BaseStateless {
   Widget _buildGameBoard(GameType gameType) {
     switch (gameType) {
       case GameType.countingGame:
-      case GameType.additionAndSubtractionGame:
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -50,6 +49,7 @@ class GameBoard extends BaseStateless {
             GameAnswerPlace(),
           ],
         );
+      case GameType.additionAndSubtractionGame:
       case GameType.comparasionGame:
         return GameQuestion();
       default:

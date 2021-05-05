@@ -50,7 +50,7 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ))
                 : LessonListGames(
-                    lesson: lesson,
+                    key: ValueKey(lesson.id),
                   ),
             _lessonGuideButton(lesson),
           ],
@@ -114,31 +114,44 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
       right: 5,
       top: 50,
       height: 50.0,
-      child: Hero(
-        tag: 'lesson_guide_${lesson.id}',
-        child: TextButton(
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: Text(
-                  'Hướng dẫn',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                  ),
-                ),
-              ),
-              SizedBox(width: 1.0),
-              Icon(
-                Icons.help_outline_outlined,
-                color: Colors.white,
-                size: 40.0,
-              ),
-            ],
+      child: Stack(
+        alignment: Alignment.centerRight,
+        children: [
+          Hero(
+            tag: 'lesson_guide_${lesson.id}',
+            child: Container(
+                decoration: BoxDecoration(
+              color: Colors.blueAccent,
+              borderRadius: BorderRadius.circular(AppConstant.defaultSpacing),
+            )),
           ),
-          onPressed: () => openGuideDialog(lesson.id),
-        ),
+          Hero(
+            tag: 'lesson_guide_title_${lesson.id}',
+            child: Container(
+              width: 160,
+              child: TextButton(
+                child: Row(
+                  children: [
+                    Text(
+                      'Hướng dẫn',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    SizedBox(width: 1.0),
+                    Icon(
+                      Icons.help_outline_outlined,
+                      color: Colors.white,
+                      size: 40.0,
+                    ),
+                  ],
+                ),
+                onPressed: () => openGuideDialog(lesson.id),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
