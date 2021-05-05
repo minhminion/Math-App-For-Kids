@@ -7,7 +7,7 @@ enum GameType {
   countingGame,
   shapeGame,
   comparasionGame,
-  additionAndSubtractionGame
+  additionAndSubtractionGame,
 }
 
 enum ComparasionGameOption { greater, equal, less }
@@ -186,13 +186,16 @@ class ShapeGame extends Game {
       gameType: GameType.values[map['gameTypeId'] as int],
       numberCorrect: int.parse(map['numberCorrect']));
 
-  void createListShape() {
+  void createListShape(int index) {
     ShapeType resultType = ShapeType.values[this.result];
     List<ShapeGameItem> list = [];
     int imageId;
+    bool isFirstGame = index == 0;
+    int _numberCorrect = isFirstGame ? numberCorrect - 1 : numberCorrect;
+    int _totalShape = isFirstGame ? 8 : 9;
 
     // Create result shape item
-    for (int i = 0; i < numberCorrect; i++) {
+    for (int i = 0; i < _numberCorrect; i++) {
       imageId = 1 + Random().nextInt(2);
       list.add(ShapeGameItem(
         i,
@@ -202,7 +205,7 @@ class ShapeGame extends Game {
     }
 
     // Create random shape item
-    for (int i = numberCorrect; i < 9; i++) {
+    for (int i = _numberCorrect; i < _totalShape; i++) {
       ShapeType shapeType;
       do {
         shapeType = ShapeType.values[Random().nextInt(4)];
@@ -218,6 +221,13 @@ class ShapeGame extends Game {
 
     list.shuffle();
 
+    if (isFirstGame)
+      list.add(ShapeGameItem(
+        9,
+        resultType,
+        AppAssets.origin().getShapeImages(resultType, imageId),
+      ));
+      
     this.items = list;
   }
 }

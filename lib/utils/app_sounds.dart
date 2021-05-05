@@ -23,4 +23,5 @@ class AppSounds {
   static String fxBubbleBlip = defaultRoot + "/fx/bubble_blip.mp3";
   static String fxBlinkTwice = defaultRoot + "/fx/blink_twice.mp3";
   static String fxMultimediaAlarm = defaultRoot + "/fx/multimedia_alarm.mp3";
+  static String fxSuctionPop = defaultRoot + "/fx/suction_pop.mp3";
 }

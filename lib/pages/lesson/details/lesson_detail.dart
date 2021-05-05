@@ -5,7 +5,9 @@ import 'package:math_app_for_kid/pages/lesson/details/lesson_list_game.dart';
 import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
+import 'package:math_app_for_kid/utils/app_route.dart';
 import 'package:math_app_for_kid/widgets/r_hero_dialog_router.dart';
+import 'package:math_app_for_kid/widgets/w_floating_button.dart';
 import 'package:math_app_for_kid/widgets/w_progess_circular.dart';
 import 'package:provider/provider.dart';
 
@@ -32,12 +34,31 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
 
     return Scaffold(
       backgroundColor: appTheme.backgroundColor,
-      floatingActionButton: _lessonFloatingButton(),
-      body: Padding(
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          WFloatingButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoute.settingsRoute);
+            },
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          WFloatingButton(),
+        ],
+      ),
+      body: Container(
         padding: EdgeInsets.symmetric(
           vertical: AppConstant.defaultSpacing * 2,
           horizontal: AppConstant.defaultSpacing * 2,
         ),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage(appTheme.assets.backgroundLanding_2),
+          fit: BoxFit.cover,
+        )),
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
@@ -63,6 +84,8 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
     return Hero(
       tag: "lesson_image_${lesson.id}",
       child: WProgessCircular(
+        size: 100.0,
+        borderWidth: 30,
         progessPercent: lesson.games.length > 0
             ? lesson.completedGame / lesson.games.length
             : 0,
@@ -97,18 +120,6 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
         ));
   }
 
-  Container _lessonFloatingButton() {
-    return Container(
-      width: 60.0,
-      height: 60.0,
-      child: FloatingActionButton(
-        onPressed: () => Navigator.of(context).pop(),
-        backgroundColor: appTheme.successColor,
-        child: Icon(Icons.keyboard_return_outlined),
-      ),
-    );
-  }
-
   Widget _lessonGuideButton(Lesson lesson) {
     return Positioned(
       right: 5,
@@ -128,7 +139,6 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
           Hero(
             tag: 'lesson_guide_title_${lesson.id}',
             child: Container(
-              width: 160,
               child: TextButton(
                 child: Row(
                   children: [

@@ -27,10 +27,11 @@ class AppTheme {
   double defaultSpacing = 8.0;
 
   bool isDark = true;
-  Color primaryColor = Color(0xFF845EC2);
+  Color primaryColor = Colors.blue[500];
   Color accentColor = Colors.blueGrey;
   Color backgroundColor = Color(0xFF845EC2);
   Color cardBackgroundColor = Color(0xFF333366);
+  // Color cardBackgroundColor = Color(0xFFDF705E);
   Color headerBgColor = Colors.blueGrey;
 
   Color successColor = Color(0xFF00C9A7);

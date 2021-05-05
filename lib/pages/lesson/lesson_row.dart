@@ -16,7 +16,8 @@ class LessonRow extends BaseStateless {
         child: Hero(
           tag: "lesson_image_${lesson.id}",
           child: WProgessCircular(
-            size: 80.0,
+            size: 100.0,
+            borderWidth: 30,
             progessPercent: lesson.games.length > 0
                 ? lesson.completedGame / lesson.games.length
                 : 0,

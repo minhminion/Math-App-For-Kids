@@ -39,19 +39,19 @@ class AudioProvider extends ChangeNotifier {
   playAudio(AudioType audioType, String audioUrl) async {
     switch (audioType) {
       case AudioType.music:
-        if (!muteMusic) {
+        if (!muteMusic && musicVolume != 0) {
           await _musicAudioCache.loop(audioUrl);
           await _musicAudioPlayer.setVolume(musicVolume);
         }
         break;
       case AudioType.voice:
-        if (!muteVoice) {
+        if (!muteVoice && voiceVolume != 0) {
           await _voiceAudioCache.play(audioUrl);
           await _voiceAudioPlayer.setVolume(voiceVolume);
         }
         break;
       case AudioType.fx:
-        if (!muteFx) {
+        if (!muteFx && fxVolume != 0) {
           await _fxAudioCache.play(audioUrl);
           await _fxAudioPlayer.setVolume(fxVolume);
         }
@@ -59,19 +59,28 @@ class AudioProvider extends ChangeNotifier {
     }
   }
 
-  mute(AudioType audioType, bool isMute) {
+  mute(AudioType audioType, bool isMute) async {
+    AudioPlayerState state;
     switch (audioType) {
       case AudioType.music:
         muteMusic = isMute;
+        state = _musicAudioCache.fixedPlayer.state;
         isMute ? _musicAudioPlayer.stop() : _musicAudioPlayer.resume();
+
         break;
       case AudioType.voice:
         muteVoice = isMute;
-        isMute ? _voiceAudioPlayer.stop() : _voiceAudioPlayer.resume();
+        state = _voiceAudioCache.fixedPlayer.state;
+        if (state != AudioPlayerState.STOPPED) {
+          isMute ? _voiceAudioPlayer.stop() : _voiceAudioPlayer.resume();
+        }
         break;
       case AudioType.fx:
         muteFx = isMute;
-        isMute ? _fxAudioPlayer.stop() : _fxAudioPlayer.resume();
+        state = _fxAudioCache.fixedPlayer.state;
+        if (state != AudioPlayerState.STOPPED) {
+          isMute ? _fxAudioPlayer.stop() : _fxAudioPlayer.resume();
+        }
         break;
     }
 

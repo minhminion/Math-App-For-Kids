@@ -37,7 +37,7 @@ class LessonGuideDialog extends BaseStateless {
             child: Hero(
               tag: 'lesson_guide_title_$lessonId',
               child: Container(
-                width: 160,
+                width: 240,
                 child: Icon(
                   Icons.help_outline_outlined,
                   size: 40.0,

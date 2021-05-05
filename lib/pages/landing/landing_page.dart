@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:math_app_for_kid/pages/landing/test_page.dart';
 import 'package:math_app_for_kid/services/safety/base_stateful.dart';
-import 'package:math_app_for_kid/utils/app_constant.dart';
 import 'package:math_app_for_kid/utils/app_route.dart';
+import 'package:math_app_for_kid/widgets/w_click_button.dart';
 
 class LandingPage extends StatefulWidget {
   LandingPage({Key key}) : super(key: key);
@@ -18,64 +17,26 @@ class _LandingPageState extends BaseStateful<LandingPage> {
 
     return Scaffold(
       backgroundColor: appTheme.backgroundColor,
-      body: Stack(
-        fit: StackFit.expand,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
         alignment: Alignment.center,
-        children: [
-          Image.asset(
-            appTheme.assets.backgroundLanding,
-            fit: BoxFit.cover,
-            alignment: Alignment.bottomCenter,
-            width: double.infinity,
-            height: double.infinity,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: ElevatedButton(
-                  onPressed: () =>
-                      Navigator.pushNamed(context, AppRoute.lessonRoute),
-                  // Navigator.pushNamed(context, AppRoute.testRoute),
-                  child: Icon(
-                    Icons.play_arrow,
-                    size: 70.0,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(
-                          AppConstant.defaultSpacing * 2),
-                    ),
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    primary: appTheme.successColor,
-                  ),
-                ),
-              ),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MyTestPage()),
-                    );
-                  },
-                  child: Icon(
-                    Icons.play_arrow,
-                    size: 70.0,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(
-                          AppConstant.defaultSpacing * 2),
-                    ),
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    primary: appTheme.successColor,
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
+                image: AssetImage(appTheme.assets.backgroundLanding_1))),
+        child: ClickButton(
+            buttonHeight: 100,
+            buttonWidth: 200,
+            // buttonColor: Color(0xFFFFCC00),
+            // elevatorColor: Color(0xFFFF9700),
+            onClick: () => Navigator.pushNamed(context, AppRoute.lessonRoute),
+            child: Icon(
+              Icons.play_arrow,
+              size: 60,
+              color: Colors.white,
+            )),
       ),
     );
   }
