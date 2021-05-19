@@ -109,7 +109,7 @@ class _GameOptionItemState extends BaseStateful<GameOptionItem>
   }
 
   Widget getCompareString(String type) {
-    String text = "";
+    String text = "?";
     if (type != "?") {
       ComparasionGameOption _compareGameOption =
           ComparasionGameOption.values[int.parse(type)];

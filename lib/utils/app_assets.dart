@@ -29,8 +29,10 @@ class AppAssets {
   /// -----------------
   String icAppIcon = '$rootAsset/app_icon_ad.png';
   String icEmpty = '$rootAsset/ic_empty.png';
+
   String characterRiv = '$rootAsset/character/astronaut_2.riv';
   String characterWithBoxRiv = '$rootAsset/character/astronaut_with_box.riv';
+  String characterWithCrown = '$rootAsset/character/crown_astronaunt.png';
 
   String backgroundLanding = '$rootAsset/images/bg_landing_2.png';
   String backgroundLanding_1 = '$rootAsset/images/bg_1.png';
@@ -40,6 +42,7 @@ class AppAssets {
   String gameTrophy = '$rootAsset/images/others/game_trophy.png';
   String gameBox = '$rootAsset/images/others/box.png';
   String glassButton = '$rootAsset/images/others/glass_button.png';
+  String trophyImg = '$rootAsset/images/others/trophy_1.png';
 
   String getShapeImages(ShapeType shapeType, int id) {
     switch (shapeType) {
