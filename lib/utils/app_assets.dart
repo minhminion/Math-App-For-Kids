@@ -32,8 +32,14 @@ class AppAssets {
 
   String characterRiv = '$rootAsset/character/astronaut_2.riv';
   String characterWithBoxRiv = '$rootAsset/character/astronaut_with_box.riv';
-  String characterWithCrown = '$rootAsset/character/crown_astronaunt.png';
+  String characterWithCrown = '$rootAsset/character/crown_astronaut.png';
+  String characterWithHoodie = '$rootAsset/character/hoodie_astronaut.png';
+  String characterWithSuit = '$rootAsset/character/business_astronaut.png';
+  String characterWithHi = '$rootAsset/character/hi_astronaut.png';
+  String characterWithSupermanCape =
+      '$rootAsset/character/superman_astronaut.png';
 
+  String gameTitle = '$rootAsset/images/game_title.png';
   String backgroundLanding = '$rootAsset/images/bg_landing_2.png';
   String backgroundLanding_1 = '$rootAsset/images/bg_1.png';
   String backgroundLanding_2 = '$rootAsset/images/bg_2.png';
@@ -91,9 +97,4 @@ class AppAssets {
   // LOTTIE
   String lottieCongratulations = '$rootAsset/lottie/congratulations.json';
   String lottieTutorialArrow = '$rootAsset/lottie/tutorial_arrow.json';
-
-  ///#endregion
-  ///#region VIDEOS
-  /// -----------------
-  ///#endregion
 }

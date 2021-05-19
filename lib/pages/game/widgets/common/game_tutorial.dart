@@ -43,11 +43,11 @@ class GameTutorial extends BaseStateless {
             ));
       case GameType.comparasionGame:
         return Positioned(
-            bottom: MediaQuery.of(context).size.height / 8,
+            bottom: 0,
             right: -60,
             width: MediaQuery.of(context).size.width / 2 - 180,
             child: Transform.rotate(
-              angle: -0.1,
+              angle: -0.5,
               child: Lottie.asset(
                 appTheme.assets.lottieTutorialArrow,
                 fit: BoxFit.contain,

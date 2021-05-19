@@ -24,4 +24,16 @@ class AppSounds {
   static String fxBlinkTwice = defaultRoot + "/fx/blink_twice.mp3";
   static String fxMultimediaAlarm = defaultRoot + "/fx/multimedia_alarm.mp3";
   static String fxSuctionPop = defaultRoot + "/fx/suction_pop.mp3";
+
+  static String numberVoice(int number) =>
+      '$defaultRoot/number/zalo_number_$number.mp3';
+
+  // Guide
+  // Audio Compare
+  static String getGuideCompareAudio(String value) =>
+      '$defaultRoot/guide/zalo_guide_compare_$value.mp3';
+  static String getGuideMathAudio(String value) =>
+      '$defaultRoot/guide/zalo_guide_math_$value.mp3';
+  static String getGuideShapeAudio(String value) =>
+      '$defaultRoot/guide/zalo_guide_shape_$value.mp3';
 }

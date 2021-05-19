@@ -39,7 +39,7 @@ class SplashScreen2 extends BaseStateless {
             height: double.infinity,
             alignment: Alignment.center,
             child: Text(
-              "M&D Studio",
+              "MK'S Studio",
               style: TextStyle(
                 fontSize: 60,
                 color: Colors.white,
