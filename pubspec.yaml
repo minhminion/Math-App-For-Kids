@@ -43,6 +43,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: any
+  flutter_native_splash: ^1.1.8+4
   flutter_launcher_icons: any # Generate launcher icons
   fluttertoast: ^7.1.8
   lint: any # Setup lint for Dart/Flutter
@@ -54,14 +55,14 @@ dev_dependencies:
 flutter_icons:
   ios: true
   android: true
-  image_path_ios: "assets/base/icons/app_icon_ios.png"
-  image_path_android: "assets/base/icons/app_icon_ad.png"
-  adaptive_icon_background: "assets/base/icons/adaptive_icon_background.png"
-  adaptive_icon_foreground: "assets/base/icons/adaptive_icon_foreground.png"
+  image_path_ios: "assets/base/icons/icon.png"
+  image_path_android: "assets/base/icons/icon.png"
+  adaptive_icon_background: "assets/base/icons/adaptive_icon_background.png" # for Android 8.0+ devices
+  adaptive_icon_foreground: "assets/base/icons/adaptive_icon_foreground.png" # for Android 8.0+ devices
 
 flutter_native_splash:
   image: "assets/base/splash/splash_image.png"
-  color: "#95C4FC"
+  color: "#845EC2"
   android_disable_fullscreen: true
 
 # For information on the generic Dart part of this file, see the
@@ -81,6 +82,8 @@ flutter:
     - assets/base/images/carousel/
     - assets/base/audios/
     - assets/base/audios/fx/
+    - assets/base/audios/number/
+    - assets/base/audios/guide/
     - assets/base/lottie/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

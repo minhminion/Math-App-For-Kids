@@ -53,10 +53,9 @@ class LessonRow extends BaseStateless {
 
   Container _lessonCardContent() => Container(
         constraints: BoxConstraints.expand(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
+          alignment: Alignment.center,
           children: <Widget>[
-            Container(height: 4.0),
             Text(
               lesson.title,
               textAlign: TextAlign.center,

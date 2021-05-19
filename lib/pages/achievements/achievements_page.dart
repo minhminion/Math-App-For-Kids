@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:math_app_for_kid/models/local/lessons.dart';
 import 'package:math_app_for_kid/pages/achievements/achievements_content.dart';
+import 'package:math_app_for_kid/pages/lesson/lession_provider.dart';
 import 'package:math_app_for_kid/services/safety/base_stateless.dart';
 import 'package:math_app_for_kid/utils/app_constant.dart';
-import 'package:math_app_for_kid/utils/app_route.dart';
 import 'package:math_app_for_kid/widgets/w_floating_button.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class AchievementsPage extends BaseStateless {
@@ -37,26 +39,47 @@ class AchievementsPage extends BaseStateless {
               Positioned(
                   bottom: 0,
                   left: 8,
-                  height: 250,
+                  height: 200,
                   child: Image(
-                      image: AssetImage(appTheme.assets.characterWithCrown))),
+                      image: AssetImage(_getCharacterImages(
+                          context.read<LessonProvider>().listLesson)))),
             ],
           )),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          // WFloatingButton(
-          //   icon: Icon(Icons.settings),
-          //   onPressed: () {
-          //     Navigator.pushNamed(context, AppRoute.settingsRoute);
-          //   },
-          // ),
-          // SizedBox(
-          //   height: 16,
-          // ),
           WFloatingButton(),
         ],
       ),
     );
+  }
+
+  String _getCharacterImages(List<Lesson> _listLesson) {
+    String imageUrl = "";
+    int totalCompletedLesson = 0;
+
+    _listLesson.forEach((element) {
+      if (element.completedGame == element.games.length) totalCompletedLesson++;
+    });
+
+    switch (totalCompletedLesson) {
+      case 0:
+        imageUrl = appTheme.assets.characterWithHi;
+        break;
+      case 1:
+        imageUrl = appTheme.assets.characterWithHoodie;
+        break;
+      case 2:
+        imageUrl = appTheme.assets.characterWithSuit;
+        break;
+      case 3:
+        imageUrl = appTheme.assets.characterWithSupermanCape;
+        break;
+      default:
+        imageUrl = appTheme.assets.characterWithCrown;
+        break;
+    }
+
+    return imageUrl;
   }
 }

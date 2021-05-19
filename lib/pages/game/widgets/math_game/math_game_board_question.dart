@@ -97,14 +97,15 @@ class _AdditionAndSubtractionGameQuestionState
   List<Widget> _buildListImages(int numberA, int numberB, String operator) {
     List<Widget> list = [];
     int total = numberA + numberB;
+    double size = total > 8 ? 65 : 80;
     // Generate Images for Addition Game
     switch (operator) {
       case "+":
         for (int i = 1; i <= total; i++) {
           if (i <= numberA) {
-            list.add(_buildImage(url: appTheme.assets.planet(1)));
+            list.add(_buildImage(url: appTheme.assets.planet(1), size: size));
           } else {
-            list.add(_buildImage(url: appTheme.assets.planet(2)));
+            list.add(_buildImage(url: appTheme.assets.planet(2), size: size));
           }
         }
         break;
@@ -113,35 +114,22 @@ class _AdditionAndSubtractionGameQuestionState
         // Number in Subtraction alway > number B
         for (int i = 1; i <= numberA; i++) {
           if (i <= numberA - numberB) {
-            list.add(_buildImage(url: imageUrl));
+            list.add(_buildImage(url: imageUrl, size: size));
           } else {
-            list.add(_buildImage(url: imageUrl, isDisable: true));
+            list.add(_buildImage(url: imageUrl, size: size, isDisable: true));
           }
         }
         break;
       default:
     }
 
-    // Generate Images for number B
-    // for (int i = 1; i <= crossAxisCount; i++) {
-    //   if (i <= numberB) {
-
-    //   } else {
-    //     list.add(Container(
-    //       width: double.infinity,
-    //       height: double.infinity,
-    //       // child:
-    //     ));
-    //   }
-    // }
-
     return list;
   }
 
-  Widget _buildImage({String url, bool isDisable = false}) {
+  Widget _buildImage({String url, double size, bool isDisable = false}) {
     return Container(
-      height: 80,
-      width: 80,
+      height: size,
+      width: size,
       child: ColorFiltered(
         colorFilter: isDisable
             ? AppConstant.greyscale
