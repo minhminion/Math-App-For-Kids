@@ -34,25 +34,47 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
 
     return Scaffold(
       backgroundColor: appTheme.backgroundColor,
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          WFloatingButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              Navigator.pushNamed(context, AppRoute.settingsRoute);
-            },
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          WFloatingButton(),
-        ],
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(left: 28, top: 16),
+        child: Row(
+          verticalDirection: VerticalDirection.down,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            WFloatingButton(),
+            WFloatingButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoute.settingsRoute);
+              },
+            ),
+            // SizedBox(
+            //   height: 16,
+            // ),
+          ],
+        ),
       ),
+      // floatingActionButton: Column(
+      //   mainAxisAlignment: MainAxisAlignment.end,
+      //   children: [
+      //     WFloatingButton(
+      //       icon: Icon(Icons.settings),
+      //       onPressed: () {
+      //         Navigator.pushNamed(context, AppRoute.settingsRoute);
+      //       },
+      //     ),
+      //     SizedBox(
+      //       height: 16,
+      //     ),
+      //     WFloatingButton(),
+      //   ],
+      // ),
       body: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: AppConstant.defaultSpacing * 2,
-          horizontal: AppConstant.defaultSpacing * 2,
+        padding: EdgeInsets.only(
+          top: AppConstant.defaultSpacing * 5,
+          left: AppConstant.defaultSpacing * 2,
+          right: AppConstant.defaultSpacing * 2,
+          bottom: AppConstant.defaultSpacing * 2,
         ),
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -123,7 +145,7 @@ class _LessonDetailPageState extends BaseStateful<LessonDetailPage> {
   Widget _lessonGuideButton(Lesson lesson) {
     return Positioned(
       right: 5,
-      top: 50,
+      top: 56,
       height: 50.0,
       child: Stack(
         alignment: Alignment.centerRight,

@@ -36,20 +36,25 @@ class _LessonListPageState extends State<LessonListPage> {
           ],
         ),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          WFloatingButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              Navigator.pushNamed(context, AppRoute.settingsRoute);
-            },
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          WFloatingButton(),
-        ],
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(left: 28, top: 16),
+        child: Row(
+          verticalDirection: VerticalDirection.down,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            WFloatingButton(),
+            WFloatingButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoute.settingsRoute);
+              },
+            ),
+            // SizedBox(
+            //   height: 16,
+            // ),
+          ],
+        ),
       ),
     );
   }

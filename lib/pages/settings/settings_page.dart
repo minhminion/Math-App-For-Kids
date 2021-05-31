@@ -29,6 +29,17 @@ class SettingsPage extends BaseStateless {
               ),
             ),
           ),
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+                size: 40,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
           automaticallyImplyLeading: false,
           backgroundColor: appTheme.errorColor,
           shape: RoundedRectangleBorder(
@@ -68,8 +79,7 @@ class SettingsPage extends BaseStateless {
               ),
             ],
           ),
-        ),
-        floatingActionButton: WFloatingButton());
+        ));
   }
 
   Widget _buildAudioSetting(

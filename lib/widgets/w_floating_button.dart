@@ -20,7 +20,11 @@ class WFloatingButton extends BaseStateless {
         onPressed: () =>
             onPressed != null ? onPressed() : Navigator.of(context).pop(),
         backgroundColor: appTheme.primaryColor,
-        child: icon ?? Icon(Icons.keyboard_return_outlined),
+        child: icon ??
+            Icon(
+              Icons.arrow_back,
+              size: 40,
+            ),
       ),
     );
   }

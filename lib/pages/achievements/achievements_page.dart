@@ -45,12 +45,18 @@ class AchievementsPage extends BaseStateless {
                           context.read<LessonProvider>().listLesson)))),
             ],
           )),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+      floatingActionButton: Stack(
+        clipBehavior: Clip.none,
         children: [
-          WFloatingButton(),
+          Positioned(
+            left: -28,
+            top: 8,
+            height: 80,
+            child: WFloatingButton(),
+          ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
     );
   }
 
