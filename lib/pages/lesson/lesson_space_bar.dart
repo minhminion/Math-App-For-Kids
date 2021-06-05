@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:math_app_for_kid/utils/app_constant.dart';
 
 class LessonSpaceBar extends StatelessWidget {
   const LessonSpaceBar({Key key}) : super(key: key);
@@ -46,6 +47,7 @@ class LessonSpaceBar extends StatelessWidget {
   Widget getImage() {
     return Container(
       width: double.infinity,
+      margin: EdgeInsets.symmetric(horizontal: AppConstant.defaultSpacing * 12),
       child: Image(
         image: AssetImage('assets/base/images/lesson/bg_appbar_1.png'),
         fit: BoxFit.cover,

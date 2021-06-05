@@ -196,11 +196,11 @@ class ShapeGame extends Game {
 
     // Create result shape item
     for (int i = 0; i < _numberCorrect; i++) {
-      imageId = 1 + Random().nextInt(4);
+      // imageId = 1 + Random().nextInt(4);
       list.add(ShapeGameItem(
         i,
         resultType,
-        AppAssets.origin().getShapeImages(resultType, imageId),
+        AppAssets.origin().getShapeImages(resultType, i),
       ));
     }
 
@@ -215,7 +215,7 @@ class ShapeGame extends Game {
       list.add(ShapeGameItem(
         i,
         shapeType,
-        AppAssets.origin().getShapeImages(shapeType, imageId),
+        AppAssets.origin().getShapeImages(shapeType, i),
       ));
     }
 

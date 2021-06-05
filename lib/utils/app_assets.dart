@@ -46,20 +46,21 @@ class AppAssets {
 
   String planet(id) => '$rootAsset/images/planet/planet_$id.png';
   String gameTrophy = '$rootAsset/images/others/game_trophy.png';
-  String gameBox = '$rootAsset/images/others/box.png';
   String glassButton = '$rootAsset/images/others/glass_button.png';
   String trophyImg = '$rootAsset/images/others/trophy_1.png';
 
-  String getShapeImages(ShapeType shapeType, int id) {
+  String getShapeImages(ShapeType shapeType, int shapeIndex) {
+    int index = (shapeIndex + 1) % 4 + 1;
+
     switch (shapeType) {
       case ShapeType.circle:
-        return '$rootAsset/images/shapes/circle_$id.png';
+        return '$rootAsset/images/shapes/circle_$index.png';
       case ShapeType.square:
-        return '$rootAsset/images/shapes/square_$id.png';
+        return '$rootAsset/images/shapes/square_$index.png';
       case ShapeType.rectangle:
-        return '$rootAsset/images/shapes/rectangle_$id.png';
+        return '$rootAsset/images/shapes/rectangle_$index.png';
       case ShapeType.triangle:
-        return '$rootAsset/images/shapes/triangle_$id.png';
+        return '$rootAsset/images/shapes/triangle_$index.png';
     }
     return "";
   }
